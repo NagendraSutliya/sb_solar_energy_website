@@ -1,11 +1,12 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, MessageCircle, Settings, Users, LogOut, ShieldAlert } from 'lucide-react';
+import { LayoutDashboard, MessageCircle, Settings, Users, LogOut, ShieldAlert, Store } from 'lucide-react';
 
 const AdminLayout = () => {
   const location = useLocation();
   
   const navItems = [
     { name: 'Admin Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Vendor Partners', path: '/admin/vendors', icon: Store },
     { name: 'WhatsApp Bot', path: '/admin/whatsapp', icon: MessageCircle },
     { name: 'User Management', path: '/admin/users', icon: Users },
     { name: 'System Settings', path: '/admin/settings', icon: Settings },
