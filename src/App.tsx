@@ -27,6 +27,7 @@ import WhatsappAdmin from './pages/whatsapp/WhatsappAdmin';
 import WhatsappLogs from './pages/whatsapp/WhatsappLogs';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
+import VendorManagement from './pages/admin/VendorManagement';
 import SystemSettings from './pages/admin/SystemSettings';
 import EnergyDashboard from './pages/energy/EnergyDashboard';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -80,6 +81,7 @@ const App = () => {
             <Route path="whatsapp" element={<WhatsappAdmin />} />
             <Route path="whatsapp/logs" element={<WhatsappLogs />} />
             <Route path="users" element={<UserManagement />} />
+            <Route path="vendors" element={<VendorManagement />} />
             <Route path="settings" element={<SystemSettings />} />
           </Route>
         </Route>

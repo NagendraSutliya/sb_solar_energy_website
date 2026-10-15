@@ -58,9 +58,9 @@ const HeroSlider = () => {
           className="absolute inset-0 z-0"
         >
           <div className="absolute inset-0 bg-slate-900/50 z-10"></div>
-          <img 
-            src={HERO_SLIDES[currentSlide].image} 
-            alt="Solar Panels Background" 
+          <img
+            src={HERO_SLIDES[currentSlide].image}
+            alt="Solar Panels Background"
             className="w-full h-full object-cover transform scale-105"
           />
         </motion.div>
@@ -109,9 +109,8 @@ const HeroSlider = () => {
           <button
             key={idx}
             onClick={() => setCurrentSlide(idx)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              currentSlide === idx ? 'bg-primary w-8' : 'bg-white/50 hover:bg-white w-2'
-            }`}
+            className={`h-2 rounded-full transition-all duration-300 ${currentSlide === idx ? 'bg-primary w-8' : 'bg-white/50 hover:bg-white w-2'
+              }`}
           />
         ))}
       </div>
@@ -147,7 +146,7 @@ const FeaturesSection = () => {
         }
       }
     }, 3000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -178,8 +177,8 @@ const FeaturesSection = () => {
           </h2>
           <div className="w-16 h-1 bg-primary mx-auto rounded-full mt-2"></div>
         </div>
-        
-        <div 
+
+        <div
           ref={scrollRef}
           className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory px-[7.5vw] sm:px-[20vw] md:px-0 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
@@ -231,7 +230,7 @@ const ProductsSection = () => {
         <p className="text-sm md:text-base text-slate-600 max-w-4xl mx-auto mb-6 md:mb-12 font-medium">
           Highly Efficient Array of Solar PV Modules | Inverters | Energy Storage Systems | Premium-Quality At Affordable Price
         </p>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {[
             { title: 'SOLAR PV MODULE', color: 'text-teal-500', img: '/solar_pv.png' },
@@ -291,11 +290,10 @@ const IndustrySection = () => {
                 key={sol.id}
                 onClick={() => setActive(sol)}
                 onMouseEnter={() => setActive(sol)}
-                className={`mx-6 md:mx-0 p-3 md:p-6 rounded-2xl cursor-pointer transition-all duration-300 border-[0.5px] md:border-2 ${
-                  active.id === sol.id 
-                    ? 'bg-white border-primary shadow-xl scale-105' 
-                    : 'bg-transparent border-transparent hover:bg-white/50 hover:border-slate-200'
-                }`}
+                className={`mx-6 md:mx-0 p-3 md:p-6 rounded-2xl cursor-pointer transition-all duration-300 border-[0.5px] md:border-2 ${active.id === sol.id
+                  ? 'bg-white border-primary shadow-xl scale-105'
+                  : 'bg-transparent border-transparent hover:bg-white/50 hover:border-slate-200'
+                  }`}
               >
                 <div className="flex items-start space-x-4">
                   <div className={`p-2 md:p-3 rounded-xl transition-colors ${active.id === sol.id ? 'bg-primary/10 text-primary' : 'bg-slate-200 text-slate-500'}`}>
@@ -305,7 +303,7 @@ const IndustrySection = () => {
                     <h3 className={`text-lg sm:text-xl md:text-2xl font-bold transition-colors ${active.id === sol.id ? 'text-primary' : 'text-slate-800'}`}>{sol.title}</h3>
                     <AnimatePresence>
                       {active.id === sol.id && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -382,7 +380,7 @@ const WhyChooseUsSection = () => {
             We deliver uncompromising quality, transparent pricing, and end-to-end solar solutions that empower you to take control of your energy future.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
           {WHY_CHOOSE_US.map((feature, i) => (
             <div key={i} className="flex flex-col items-center text-center p-3 sm:p-6 md:p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
@@ -466,35 +464,35 @@ const TestimonialsSection = () => {
             Don't just take our word for it. Hear from our satisfied clients across residential, corporate, and industrial sectors.
           </p>
         </div>
-        
+
         <div className="relative group">
           {/* Left Arrow */}
-          <button 
-            onClick={() => scroll('left')} 
+          <button
+            onClick={() => scroll('left')}
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 bg-transparent text-slate-400 p-2 md:p-3 rounded-full hover:bg-primary hover:text-white hover:shadow-xl hover:border-transparent border border-transparent transition-all opacity-80 group-hover:opacity-100 hidden md:block"
           >
             <ChevronLeft className="w-8 h-8" />
           </button>
-          
+
           {/* Scroll Container */}
-          <div 
+          <div
             ref={scrollRef}
             className="flex overflow-x-auto snap-x snap-mandatory gap-8 pt-4 w-full scroll-smooth px-[7.5vw] sm:px-[20vw] lg:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
             {(TESTIMONIALS.length <= 3 ? [...TESTIMONIALS, ...TESTIMONIALS] : TESTIMONIALS).map((testimonial, i) => (
               <div key={i} className="w-[85vw] sm:w-[calc(50%_-_1rem)] lg:w-[calc(33.333%_-_1.333rem)] flex-none snap-center bg-white p-4 md:p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 relative group/card hover:-translate-y-1 flex flex-col">
                 <Quote className="absolute md:top-6 right-6 h-8 w-8 md:h-16 md:w-16 text-slate-50 group-hover/card:text-primary/5 transition-colors duration-300 -z-0" />
-                
+
                 <div className="flex space-x-1 mb-3 md:mb-6 relative z-10">
                   {[...Array(testimonial.rating)].map((_, j) => (
                     <Star key={j} className="h-4 w-4 md:h-5 md:w-5 text-amber-400 fill-amber-400" />
                   ))}
                 </div>
-                
+
                 <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-4 md:mb-8 relative z-10 italic flex-grow">
                   "{testimonial.content}"
                 </p>
-                
+
                 <div className="flex items-center space-x-4 relative z-10 mt-auto">
                   <div className="h-8 w-8 md:h-12 md:w-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold md:text-lg shrink-0">
                     {testimonial.name.charAt(0)}
@@ -509,8 +507,8 @@ const TestimonialsSection = () => {
           </div>
 
           {/* Right Arrow */}
-          <button 
-            onClick={() => scroll('right')} 
+          <button
+            onClick={() => scroll('right')}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 bg-transparent text-slate-400 p-3 rounded-full hover:bg-primary hover:text-white hover:shadow-xl hover:border-transparent border border-transparent transition-all opacity-80 group-hover:opacity-100 hidden md:block"
           >
             <ChevronRight className="w-8 h-8" />
@@ -545,7 +543,7 @@ const BrandsSection = () => {
         </h2>
         <div className="w-24 h-1 bg-[#10b981] mx-auto mt-4 rounded-full"></div>
       </div>
-      
+
       {/* Marquee Wrapper */}
       <div className="relative w-full overflow-hidden flex bg-white py-3 sm:py-6 md:py-10 before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-20 before:bg-gradient-to-r before:from-white before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-20 after:bg-gradient-to-l after:from-white after:to-transparent">
         <motion.div
@@ -577,20 +575,20 @@ const CTASection = () => {
   return (
     <section className="max-w-8xl mx-4 md:mx-10 px-4 sm:px-6 lg:px-8 mb-10 relative z-10">
       <div className="w-full rounded-2xl md:rounded-[30px] py-8 md:py-10 bg-[#0f172a] relative overflow-hidden shadow-2xl flex flex-col justify-center border border-slate-800">
-        <motion.div 
+        <motion.div
           animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0 opacity-30 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:20px_20px] z-0"
         />
-        
+
         <div className="relative z-10 flex flex-col items-center justify-between gap-x-6 gap-y-3 sm:gap-x-6 md:gap-8 text-center px-2 sm:px-4">
-          
+
           {/* Top Section - Reseller CTA */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-5 w-full px-2 sm:px-6 md:px-12">
             <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white px-2 tracking-tight leading-tight max-w-2xl text-center">
               Become a Certified Dealer & Channel Partner
             </h3>
-            
+
             <div className="flex md:flex-wrap items-center justify-center gap-3 shrink-0">
               <Button onClick={() => navigate('/vendor-registration')} className="bg-[#0ea5e9] hover:bg-[#0284c7] text-white border-0 shadow-lg font-bold tracking-wide px-3 sm:px-6 md:px-8 h-6 sm:h-9 md:h-10 text-[10px] sm:text-[14px] hover:-translate-y-1 transition-transform rounded-md">
                 ENROLL NOW
@@ -635,27 +633,27 @@ const SBSolarProtectionNotification = () => {
 
   return (
     <AnimatePresence>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
       >
-        <motion.div 
+        <motion.div
           initial={{ scale: 0.95, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
           className="relative w-full max-w-6xl bg-gradient-to-r from-indigo-50 via-[#eef2ff] to-[#f0f9ff] rounded-2xl shadow-2xl border border-blue-100 p-6 sm:p-8 lg:p-12 max-h-[90vh] overflow-y-auto md:overflow-hidden"
         >
-          <button 
+          <button
             onClick={() => setIsVisible(false)}
             className="absolute top-4 right-4 p-2 bg-white/80 hover:bg-white rounded-full transition-colors text-slate-500 hover:text-slate-800 z-50 shadow-sm"
           >
             <X className="w-5 h-5" />
           </button>
-          
+
           <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-between gap-4 md:gap-0 mt-6 sm:mt-0">
-            
+
             {/* Left Content */}
             <div className="lg:w-1/3 space-y-4 text-center lg:text-left flex flex-col justify-center">
               <div>
@@ -664,13 +662,13 @@ const SBSolarProtectionNotification = () => {
                   SB SOLAR PROTECTION<sup className="text-xl ml-1 font-bold">™</sup>
                 </h2>
               </div>
-              
+
               <p className="text-slate-800 font-bold text-xl leading-snug mx-auto lg:mx-0 max-w-sm">
                 Guaranteed Solar Savings & Protection Plan
               </p>
-              
+
               <div className="pt-2">
-                <Button 
+                <Button
                   onClick={() => {
                     setIsVisible(false);
                     navigate('/sb-solar-protection');
@@ -695,21 +693,21 @@ const SBSolarProtectionNotification = () => {
                   </div>
                   <p className="text-slate-700 font-semibold text-sm leading-tight">Money-back promise at Rs. 8/unit</p>
                 </div>
-                
+
                 <div className="flex items-center space-x-4 bg-white/60 p-3 rounded-xl border border-blue-50/50 shadow-sm hover:bg-white transition-colors">
                   <div className="w-10 h-10 shrink-0 rounded-full bg-blue-100 flex items-center justify-center shadow-inner">
                     <CreditCard className="w-5 h-5 text-blue-600" />
                   </div>
                   <p className="text-slate-700 font-semibold text-sm leading-tight">Regular Proactive maintenance visits</p>
                 </div>
-                
+
                 <div className="flex items-center space-x-4 bg-white/60 p-3 rounded-xl border border-blue-50/50 shadow-sm hover:bg-white transition-colors">
                   <div className="w-10 h-10 shrink-0 rounded-full bg-blue-100 flex items-center justify-center shadow-inner">
                     <Settings className="w-5 h-5 text-blue-600" />
                   </div>
                   <p className="text-slate-700 font-semibold text-sm leading-tight">₹0 Repair & Replacement Cost</p>
                 </div>
-                
+
                 <div className="flex items-center space-x-4 bg-white/60 p-3 rounded-xl border border-blue-50/50 shadow-sm hover:bg-white transition-colors">
                   <div className="w-10 h-10 shrink-0 rounded-full bg-blue-100 flex items-center justify-center shadow-inner">
                     <Smartphone className="w-5 h-5 text-blue-600" />
@@ -767,7 +765,7 @@ const FAQSection = () => {
     <section className="py-14 sm:py-20 bg-slate-50 relative z-10 overflow-hidden border-t border-slate-200/80">
       <AnimatedBackground />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-3">
@@ -788,25 +786,22 @@ const FAQSection = () => {
             return (
               <div
                 key={idx}
-                className={`bg-white rounded-2xl border transition-all duration-200 overflow-hidden ${
-                  isOpen 
-                    ? 'border-primary/50 shadow-md ring-2 ring-primary/5' 
-                    : 'border-slate-200/80 hover:border-slate-300 shadow-xs'
-                }`}
+                className={`bg-white rounded-2xl border transition-all duration-200 overflow-hidden ${isOpen
+                  ? 'border-primary/50 shadow-md ring-2 ring-primary/5'
+                  : 'border-slate-200/80 hover:border-slate-300 shadow-xs'
+                  }`}
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
                   className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
                 >
-                  <span className={`text-sm sm:text-base font-bold transition-colors ${
-                    isOpen ? 'text-primary' : 'text-slate-900'
-                  }`}>
+                  <span className={`text-sm sm:text-base font-bold transition-colors ${isOpen ? 'text-primary' : 'text-slate-900'
+                    }`}>
                     {faq.q}
                   </span>
-                  <div className={`p-1.5 rounded-xl transition-all duration-200 shrink-0 ${
-                    isOpen ? 'bg-primary text-white rotate-180' : 'bg-slate-100 text-slate-500'
-                  }`}>
+                  <div className={`p-1.5 rounded-xl transition-all duration-200 shrink-0 ${isOpen ? 'bg-primary text-white rotate-180' : 'bg-slate-100 text-slate-500'
+                    }`}>
                     <ChevronDown className="w-4 h-4" />
                   </div>
                 </button>
