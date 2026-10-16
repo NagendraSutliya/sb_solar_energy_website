@@ -1,12 +1,37 @@
 import AnimatedBackground from '../components/AnimatedBackground';
+import SbIndustriesEcosystem from '../components/SbIndustriesEcosystem';
 import { Award, Target, Users, Shield, Leaf, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const TEAM_MEMBERS = [
-  { name: 'Rahul Devanda', role: 'Managing Director', initials: 'RD', desc: 'Over 20 years of visionary leadership in the sustainable energy sector.' },
-  { name: 'Rajendrasa Kudi', role: 'Chief Technical Officer', initials: 'RK', desc: 'Expert in solar PV engineering and large-scale grid integration.' },
-  { name: 'Vishal Choudhary', role: 'Head of Operations', initials: 'VC', desc: 'Ensuring seamless project execution and unmatched quality control.' },
-  { name: 'Harphool Choudhary', role: 'Customer Success Manager', initials: 'HC', desc: 'Dedicated to providing 24/7 support and ensuring complete client satisfaction.' }
+  { 
+    name: 'Rahul Devanda', 
+    role: 'Managing Director', 
+    initials: 'RD', 
+    image: '/team/rahul_devanda.jpg', 
+    desc: 'Over 20 years of visionary leadership in the sustainable energy sector.' 
+  },
+  { 
+    name: 'Rajendrasa Kudi', 
+    role: 'Chief Technical Officer', 
+    initials: 'RK', 
+    image: '/team/rajendrasa_kudi.jpg', 
+    desc: 'Expert in solar PV engineering and large-scale grid integration.' 
+  },
+  { 
+    name: 'Vishal Choudhary', 
+    role: 'Head of Operations', 
+    initials: 'VC', 
+    image: '/team/vishal_choudhary.jpg', 
+    desc: 'Ensuring seamless project execution and unmatched quality control.' 
+  },
+  { 
+    name: 'Harphool Choudhary', 
+    role: 'Customer Success Manager', 
+    initials: 'HC', 
+    image: '/team/harphool_choudhary.jpg', 
+    desc: 'Dedicated to providing 24/7 support and ensuring complete client satisfaction.' 
+  }
 ];
 
 const AboutUs = () => {
@@ -82,7 +107,7 @@ const AboutUs = () => {
               <div className="w-16 md:w-20 h-1.5 bg-primary rounded-full mb-6 md:mb-8"></div>
               
               <p className="text-slate-600 text-sm md:text-base font-medium leading-relaxed mb-4 md:mb-6">
-                SB Solar Energy, a proud subsidiary of <strong className="text-primary font-bold">SB Industries</strong>, is an <strong className="text-slate-900 font-bold">ISO 9001:2015 CERTIFIED</strong> company dedicated to engineering the most advanced solar systems in the industry. Based in the heart of India, we have built a profound reputation for integrating high-performance renewable solutions into daily life.
+                SB Solar Energy, a proud flagship division of <a href="#sb-industries" className="text-[#dc2626] hover:text-[#1e3a8a] font-bold underline decoration-red-300 underline-offset-4 transition-colors">SB Industries</a>, is an <strong className="text-slate-900 font-bold">ISO 9001:2015 CERTIFIED</strong> company dedicated to engineering the most advanced solar systems in the industry. Based in the heart of India, we leverage the multi-sector strength of our parent group to deliver reliable, high-yield renewable solutions.
               </p>
               <p className="text-slate-600 text-sm md:text-base font-medium leading-relaxed mb-6 md:mb-8">
                 From residential rooftops to massive utility-scale solar parks, our systems are trusted by over 1,000 businesses, universities, government institutions, and families. We don't just sell panels; we deliver complete energy independence at an affordable price, ensuring long-term sustainability.
@@ -122,6 +147,11 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+      {/* SB Industries Conglomerate & Ecosystem */}
+      <div id="sb-industries">
+        <SbIndustriesEcosystem />
+      </div>
 
       {/* Core Values Section */}
       <section className="py-10 md:py-20 bg-white relative overflow-hidden z-10">
@@ -178,14 +208,42 @@ const AboutUs = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-white rounded-3xl p-6 text-center shadow-sm border border-slate-100 hover:shadow-xl hover:border-primary/20 transition-all duration-300 hover:-translate-y-2 group"
+                className="bg-white rounded-3xl p-6 text-center shadow-sm border border-slate-100 hover:shadow-xl hover:border-primary/20 transition-all duration-300 hover:-translate-y-2 group flex flex-col justify-between"
               >
-                <div className="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-2xl md:text-4xl font-bold text-white tracking-wider">{member.initials}</span>
+                <div>
+                  {/* Photo Container with Gradient Border */}
+                  <div className="relative w-28 h-28 md:w-36 md:h-36 mx-auto rounded-full p-1 bg-gradient-to-tr from-primary via-emerald-400 to-teal-500 shadow-lg shadow-emerald-500/15 mb-5 group-hover:scale-105 transition-all duration-300">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 relative">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                      {/* Initials fallback behind image */}
+                      <div className="absolute inset-0 -z-10 flex items-center justify-center bg-gradient-to-br from-primary to-emerald-400 text-white font-bold text-2xl md:text-3xl">
+                        {member.initials}
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors">
+                    {member.name}
+                  </h3>
+                  <p className="text-primary font-bold text-xs uppercase tracking-wider mb-3">
+                    {member.role}
+                  </p>
+                  <p className="text-slate-500 text-xs md:text-sm leading-relaxed">
+                    {member.desc}
+                  </p>
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-1">{member.name}</h3>
-                <p className="text-primary font-semibold text-xs md:text-sm mb-4 uppercase tracking-wider">{member.role}</p>
-                <p className="text-slate-500 text-sm leading-relaxed">{member.desc}</p>
+
+                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Leadership Team</span>
+                </div>
               </motion.div>
             ))}
           </div>
