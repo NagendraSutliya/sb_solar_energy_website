@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout';
 import PortalLayout from './layouts/PortalLayout';
 import AdminLayout from './layouts/AdminLayout';
@@ -26,6 +26,11 @@ import TicketChat from './pages/tickets/TicketChat';
 import WhatsappAdmin from './pages/whatsapp/WhatsappAdmin';
 import WhatsappLogs from './pages/whatsapp/WhatsappLogs';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import DealsPipeline from './pages/admin/DealsPipeline';
+import ContactsManagement from './pages/admin/ContactsManagement';
+import LeadsManagement from './pages/admin/LeadsManagement';
+import TasksManagement from './pages/admin/TasksManagement';
+import ReportsManagement from './pages/admin/ReportsManagement';
 import UserManagement from './pages/admin/UserManagement';
 import VendorManagement from './pages/admin/VendorManagement';
 import SystemSettings from './pages/admin/SystemSettings';
@@ -77,7 +82,13 @@ const App = () => {
         {/* Protected Admin Routes */}
         <Route element={<ProtectedRoute requiredRole="admin" />}>
           <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="deals" element={<DealsPipeline />} />
+            <Route path="contacts" element={<ContactsManagement />} />
+            <Route path="leads" element={<LeadsManagement />} />
+            <Route path="tasks" element={<TasksManagement />} />
+            <Route path="reports" element={<ReportsManagement />} />
             <Route path="whatsapp" element={<WhatsappAdmin />} />
             <Route path="whatsapp/logs" element={<WhatsappLogs />} />
             <Route path="users" element={<UserManagement />} />

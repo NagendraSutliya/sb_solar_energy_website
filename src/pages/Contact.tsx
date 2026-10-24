@@ -4,7 +4,6 @@ import {
   Phone, 
   Mail, 
   Clock, 
-  Search, 
   ChevronDown, 
   LayoutGrid, 
   List, 
@@ -12,14 +11,9 @@ import {
   AlertCircle, 
   ShieldCheck, 
   Star, 
-  Building2, 
-  RotateCcw, 
-  User, 
   Check, 
-  Zap, 
   Award 
 } from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { useState, useEffect, useMemo } from 'react';
@@ -27,7 +21,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { indiaStatesDistricts } from '../data/indiaStatesDistricts';
 import { getStoredVendors, type Vendor } from '../data/vendorStorage';
 
-const POPULAR_DISTRICTS = ['All', 'Dungarpur', 'Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Sikar', 'Bikaner', 'Ajmer', 'Banswara', 'Bhilwara', 'Alwar'];
+// const POPULAR_DISTRICTS = ['All', 'Dungarpur', 'Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Sikar', 'Bikaner', 'Ajmer', 'Banswara', 'Bhilwara', 'Alwar'];
 
 const Contact = () => {
   const location = useLocation();
@@ -56,13 +50,6 @@ const Contact = () => {
     });
     return counts;
   }, [vendors]);
-
-  const getWhatsAppUrl = (vendor: Vendor) => {
-    const cleanNumber = vendor.contact.replace(/\D/g, '');
-    const number = cleanNumber.startsWith('91') ? cleanNumber : `91${cleanNumber}`;
-    const text = encodeURIComponent(`Hello ${vendor.name}, I found your dealership on the SB Solar website and would like a quote for rooftop solar in ${vendor.district || 'Rajasthan'}.`);
-    return `https://wa.me/${number}?text=${text}`;
-  };
 
   // Contact Form State
   const [contactData, setContactData] = useState({ name: '', email: '', subject: '', message: '' });
