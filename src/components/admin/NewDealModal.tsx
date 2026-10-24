@@ -68,12 +68,12 @@ export const NewDealModal: React.FC<NewDealModalProps> = ({
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-slate-50/50">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-[#f59e0b] flex items-center justify-center text-slate-950 font-bold shadow-xs">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-lg">Create New Deal</h3>
-              <p className="text-xs text-slate-500">Add a new solar deal directly into your pipeline</p>
+              <h3 className="font-bold text-slate-900 text-lg">Create New Deal / Lead</h3>
+              <p className="text-xs text-slate-500">Add a new solar lead directly into your pipeline</p>
             </div>
           </div>
           <button
@@ -96,7 +96,7 @@ export const NewDealModal: React.FC<NewDealModalProps> = ({
               placeholder="e.g. Aarav Sharma, Sunita Patel"
               value={customer}
               onChange={(e) => setCustomer(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
             />
           </div>
 
@@ -205,10 +205,10 @@ export const NewDealModal: React.FC<NewDealModalProps> = ({
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-6 py-2.5 rounded-xl bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 font-bold text-sm shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              Save Deal
+              <Plus className="w-4 h-4 stroke-[3]" />
+              Save Record
             </button>
           </div>
         </form>

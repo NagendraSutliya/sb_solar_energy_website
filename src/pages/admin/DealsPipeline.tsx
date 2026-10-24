@@ -139,9 +139,9 @@ const DealsPipeline: React.FC = () => {
               setActiveStageForNewDeal('qualified');
               setIsNewDealOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#2f5bf8] hover:bg-[#254edb] active:scale-[0.98] text-white rounded-xl text-sm font-medium shadow-sm transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 font-bold rounded-xl text-sm shadow-xs transition-all cursor-pointer whitespace-nowrap"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 stroke-[3]" />
             New deal
           </button>
         </div>
