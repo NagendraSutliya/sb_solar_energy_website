@@ -1,158 +1,206 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Check, Clock, Tag } from 'lucide-react';
-import { getStoredTasks, saveStoredTasks, type Task } from '../../data/crmData';
+import React, { useState } from 'react';
+import { Plus, Check } from 'lucide-react';
+
+interface TaskItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  section: 'today' | 'overdue';
+  completed: boolean;
+}
+
+const INITIAL_TASKS: TaskItem[] = [
+  {
+    id: '1',
+    title: 'Call Aarav about contract',
+    subtitle: '10:30 AM · Deal',
+    section: 'today',
+    completed: false,
+  },
+  {
+    id: '2',
+    title: 'Send proposal to Vikram',
+    subtitle: '1:00 PM · Email',
+    section: 'today',
+    completed: false,
+  },
+  {
+    id: '3',
+    title: 'Follow up with Sneha',
+    subtitle: '4:30 PM · Call',
+    section: 'today',
+    completed: false,
+  },
+  {
+    id: '4',
+    title: 'Verify Aravalli Solar documents',
+    subtitle: 'Yesterday',
+    section: 'overdue',
+    completed: false,
+  },
+  {
+    id: '5',
+    title: 'Update Mahi Solar pricing',
+    subtitle: '2 days ago',
+    section: 'overdue',
+    completed: false,
+  },
+];
 
 const TasksManagement: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTitle, setNewTitle] = useState('');
-  const [newTime, setNewTime] = useState('11:00 AM');
-  const [newType, setNewType] = useState('Deal');
+  const [tasks, setTasks] = useState<TaskItem[]>(INITIAL_TASKS);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    setTasks(getStoredTasks());
-  }, []);
-
-  const handleToggle = (id: string) => {
-    const updated = tasks.map((t) =>
-      t.id === id ? { ...t, completed: !t.completed } : t
-    );
-    setTasks(updated);
-    saveStoredTasks(updated);
+  const toggleTask = (id: string) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
   };
 
-  const handleAddTask = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newTitle.trim()) return;
+  const filteredTasks = tasks.filter((t) =>
+    t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    t.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-    const newTask: Task = {
-      id: `task-${Date.now()}`,
-      title: newTitle.trim(),
-      time: newTime,
-      type: newType,
-      completed: false,
-    };
-
-    const updated = [...tasks, newTask];
-    setTasks(updated);
-    saveStoredTasks(updated);
-    setNewTitle('');
-  };
+  const todayTasks = filteredTasks.filter((t) => t.section === 'today');
+  const overdueTasks = filteredTasks.filter((t) => t.section === 'overdue');
 
   return (
     <div className="space-y-6 pb-12 font-sans">
+      {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
-            Tasks & Activities
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Tasks
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            Stay on top of customer follow-ups, calls, and contract signings
+            3 due today · 2 overdue
           </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-2xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+          />
+
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4 stroke-[3]" />
+            New task
+          </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Task List */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-100 shadow-2xs space-y-4">
-          <h2 className="text-base font-bold text-slate-900 mb-2">Upcoming Tasks</h2>
-
-          <div className="divide-y divide-slate-100">
-            {tasks.map((task) => (
-              <div
-                key={task.id}
-                onClick={() => handleToggle(task.id)}
-                className="py-3.5 flex items-start gap-4 hover:bg-slate-50/80 px-2 rounded-xl transition-all cursor-pointer group"
-              >
+      {/* 2 Column Layout matching Tasks.png */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        {/* Left Column: Task lists (7 Cols) */}
+        <div className="lg:col-span-8 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs space-y-6">
+          {/* Today Section */}
+          <div>
+            <h2 className="text-base font-bold text-slate-900 pb-3 border-b border-slate-100">
+              Today
+            </h2>
+            <div className="divide-y divide-slate-50">
+              {todayTasks.map((task) => (
                 <div
-                  className={`w-5 h-5 mt-0.5 rounded-md border flex items-center justify-center transition-all shrink-0 ${
-                    task.completed
-                      ? 'bg-blue-600 border-blue-600 text-white'
-                      : 'border-slate-300 bg-white group-hover:border-slate-400'
-                  }`}
+                  key={task.id}
+                  onClick={() => toggleTask(task.id)}
+                  className="py-3.5 flex items-center justify-between hover:bg-slate-50/70 px-2 rounded-xl transition-all cursor-pointer group"
                 >
-                  {task.completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                </div>
+                  <div>
+                    <p
+                      className={`text-sm font-semibold transition-all ${
+                        task.completed ? 'line-through text-slate-400' : 'text-slate-900'
+                      }`}
+                    >
+                      {task.title}
+                    </p>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {task.subtitle}
+                    </p>
+                  </div>
 
-                <div className="flex-1">
-                  <p
-                    className={`text-sm font-semibold transition-all ${
-                      task.completed ? 'line-through text-slate-400' : 'text-slate-800'
+                  <div
+                    className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all shrink-0 ${
+                      task.completed
+                        ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
+                        : 'border-slate-300 bg-white group-hover:border-slate-400'
                     }`}
                   >
-                    {task.title}
-                  </p>
-                  <div className="flex items-center gap-3 text-xs text-slate-400 mt-1">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5" />
-                      {task.time}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Tag className="w-3.5 h-3.5" />
-                      {task.type}
-                    </span>
+                    {task.completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Overdue Section */}
+          <div>
+            <h2 className="text-base font-bold text-slate-900 pb-3 border-b border-slate-100">
+              Overdue
+            </h2>
+            <div className="divide-y divide-slate-50">
+              {overdueTasks.map((task) => (
+                <div
+                  key={task.id}
+                  onClick={() => toggleTask(task.id)}
+                  className="py-3.5 flex items-center justify-between hover:bg-slate-50/70 px-2 rounded-xl transition-all cursor-pointer group"
+                >
+                  <div>
+                    <p
+                      className={`text-sm font-semibold transition-all ${
+                        task.completed ? 'line-through text-slate-400' : 'text-slate-900'
+                      }`}
+                    >
+                      {task.title}
+                    </p>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      {task.subtitle}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all shrink-0 ${
+                      task.completed
+                        ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
+                        : 'border-slate-300 bg-white group-hover:border-slate-400'
+                    }`}
+                  >
+                    {task.completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Add Quick Task Form */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-2xs h-fit">
-          <h2 className="text-base font-bold text-slate-900 mb-4">Add Quick Task</h2>
-          <form onSubmit={handleAddTask} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                Task Title
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. Call client for subsidy paper signing"
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-              />
-            </div>
+        {/* Right Column: This week summary (4 Cols) */}
+        <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs h-fit">
+          <h2 className="text-base font-bold text-slate-900 mb-2">
+            This week
+          </h2>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                Time
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. 2:30 PM"
-                value={newTime}
-                onChange={(e) => setNewTime(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-              />
+          <div className="mt-4">
+            <div className="text-4xl font-extrabold text-slate-900 tracking-tight">
+              12
             </div>
+            <p className="text-xs text-slate-500 font-medium mt-1">
+              tasks planned
+            </p>
+          </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                Type
-              </label>
-              <select
-                value={newType}
-                onChange={(e) => setNewType(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-              >
-                <option value="Deal">Deal</option>
-                <option value="Call">Call</option>
-                <option value="Email">Email</option>
-                <option value="Meeting">Meeting</option>
-                <option value="Site Survey">Site Survey</option>
-              </select>
+          <div className="mt-8">
+            <div className="text-4xl font-extrabold text-slate-900 tracking-tight">
+              8
             </div>
-
-            <button
-              type="submit"
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl shadow-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <Plus className="w-4 h-4" />
-              Add Task
-            </button>
-          </form>
+            <p className="text-xs text-slate-500 font-medium mt-1">
+              completed
+            </p>
+          </div>
         </div>
       </div>
     </div>

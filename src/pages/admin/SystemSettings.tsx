@@ -1,77 +1,192 @@
-import { Save, Bell, Shield, Database, Globe } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check } from 'lucide-react';
 
-const SystemSettings = () => {
+const SystemSettings: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'General' | 'Notifications' | 'Integrations'>('General');
+  const [companyName, setCompanyName] = useState('SB Solar Energy');
+  const [supportPhone, setSupportPhone] = useState('+91 70232 04464');
+  const [email, setEmail] = useState('hello@sbsolar.com');
+  const [defaultState, setDefaultState] = useState('Rajasthan');
+
+  // Notifications states matching Settings.png
+  const [notifyLead, setNotifyLead] = useState(true);
+  const [notifyVendor, setNotifyVendor] = useState(true);
+  const [weeklyReport, setWeeklyReport] = useState(false);
+
+  const [savedToast, setSavedToast] = useState(false);
+
+  const handleSave = () => {
+    setSavedToast(true);
+    setTimeout(() => setSavedToast(false), 2500);
+  };
+
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-slate-900">System Settings</h1>
-        <p className="text-sm text-slate-500">Configure global application preferences.</p>
+    <div className="space-y-6 pb-12 font-sans">
+      {/* Top Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Settings
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Manage your workspace
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <input
+            type="text"
+            placeholder="Search"
+            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-2xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+          />
+
+          <button
+            type="button"
+            onClick={handleSave}
+            className="px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+          >
+            Save changes
+          </button>
+        </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="flex flex-col md:flex-row">
-          
-          {/* Settings Sidebar */}
-          <div className="w-full md:w-64 bg-slate-50 border-r border-slate-200 p-4 space-y-2 shrink-0">
-            <button className="w-full flex items-center gap-3 px-4 py-3 bg-white rounded-xl shadow-sm border border-slate-200 text-indigo-700 font-medium text-sm">
-              <Globe className="h-4 w-4" /> General
-            </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors font-medium text-sm">
-              <Bell className="h-4 w-4" /> Notifications
-            </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors font-medium text-sm">
-              <Shield className="h-4 w-4" /> Security
-            </button>
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors font-medium text-sm">
-              <Database className="h-4 w-4" /> Backup
-            </button>
+      {savedToast && (
+        <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold rounded-xl animate-in fade-in">
+          ✓ Changes saved successfully!
+        </div>
+      )}
+
+      {/* Tabs */}
+      <div className="flex items-center gap-8 border-b border-slate-200 text-sm font-medium">
+        {(['General', 'Notifications', 'Integrations'] as const).map((tab) => (
+          <button
+            key={tab}
+            type="button"
+            onClick={() => setActiveTab(tab)}
+            className={`pb-2.5 transition-all cursor-pointer ${
+              activeTab === tab
+                ? 'border-b-2 border-[#f59e0b] text-slate-900 font-bold'
+                : 'text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Form Fields Card */}
+      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xs space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">
+              Company name
+            </label>
+            <input
+              type="text"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            />
           </div>
 
-          {/* Settings Content */}
-          <div className="flex-1 p-6 md:p-8 space-y-8">
-            <div>
-              <h2 className="text-lg font-semibold text-slate-900 mb-4 border-b border-slate-100 pb-2">General Settings</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
-                  <input type="text" defaultValue="SB Solar Energy" className="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Support Email</label>
-                  <input type="email" defaultValue="support@sbsolar.com" className="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Support Phone</label>
-                  <input type="text" defaultValue="+91 7023204664" className="w-full p-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50" />
-                </div>
-              </div>
-            </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">
+              Support phone
+            </label>
+            <input
+              type="text"
+              value={supportPhone}
+              onChange={(e) => setSupportPhone(e.target.value)}
+              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            />
+          </div>
 
-            <div>
-              <h2 className="text-lg font-semibold text-slate-900 mb-4 border-b border-slate-100 pb-2">Maintenance Mode</h2>
-              <div className="flex items-center justify-between p-4 bg-amber-50 border border-amber-100 rounded-xl">
-                <div>
-                  <p className="text-sm font-semibold text-amber-900">Enable Maintenance Mode</p>
-                  <p className="text-xs text-amber-700 mt-1">This will prevent customers from logging in.</p>
-                </div>
-                <div className="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
-                  <input type="checkbox" className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-slate-300 appearance-none cursor-pointer transition-transform" />
-                  <label className="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 cursor-pointer"></label>
-                </div>
-              </div>
-            </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            />
+          </div>
 
-            <div className="pt-6 border-t border-slate-100 flex justify-end gap-3">
-              <button className="px-5 py-2.5 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
-                Cancel
-              </button>
-              <button className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-sm">
-                <Save className="h-4 w-4" /> Save Changes
-              </button>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-2">
+              Default state
+            </label>
+            <input
+              type="text"
+              value={defaultState}
+              onChange={(e) => setDefaultState(e.target.value)}
+              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Notifications Card */}
+      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xs">
+        <h2 className="text-base font-bold text-slate-900 mb-6">
+          Notifications
+        </h2>
+
+        <div className="divide-y divide-slate-100">
+          <div
+            onClick={() => setNotifyLead(!notifyLead)}
+            className="py-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/70 px-2 rounded-xl transition-colors"
+          >
+            <span className="text-sm font-medium text-slate-800">
+              Email me on new lead
+            </span>
+            <div
+              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+                notifyLead
+                  ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
+                  : 'border-slate-300 bg-white'
+              }`}
+            >
+              {notifyLead && <Check className="w-3.5 h-3.5 stroke-[3]" />}
             </div>
           </div>
-          
+
+          <div
+            onClick={() => setNotifyVendor(!notifyVendor)}
+            className="py-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/70 px-2 rounded-xl transition-colors"
+          >
+            <span className="text-sm font-medium text-slate-800">
+              WhatsApp alerts for vendors
+            </span>
+            <div
+              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+                notifyVendor
+                  ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
+                  : 'border-slate-300 bg-white'
+              }`}
+            >
+              {notifyVendor && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+            </div>
+          </div>
+
+          <div
+            onClick={() => setWeeklyReport(!weeklyReport)}
+            className="py-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/70 px-2 rounded-xl transition-colors"
+          >
+            <span className="text-sm font-medium text-slate-800">
+              Weekly report
+            </span>
+            <div
+              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+                weeklyReport
+                  ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
+                  : 'border-slate-300 bg-white'
+              }`}
+            >
+              {weeklyReport && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+            </div>
+          </div>
         </div>
       </div>
     </div>

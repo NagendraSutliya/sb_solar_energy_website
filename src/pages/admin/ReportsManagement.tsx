@@ -1,100 +1,165 @@
-import React from 'react';
-import { TrendingUp, Download } from 'lucide-react';
-import { REVENUE_MONTHS } from '../../data/crmData';
+import React, { useState } from 'react';
 
 const ReportsManagement: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // 12 months bars: 11 soft amber bars + 12th highlighted in dark amber
+  const monthlyDeals = [
+    { month: 'Nov', height: '32%' },
+    { month: 'Dec', height: '46%' },
+    { month: 'Jan', height: '40%' },
+    { month: 'Feb', height: '62%' },
+    { month: 'Mar', height: '54%' },
+    { month: 'Apr', height: '72%' },
+    { month: 'May', height: '68%' },
+    { month: 'Jun', height: '80%' },
+    { month: 'Jul', height: '74%' },
+    { month: 'Aug', height: '88%' },
+    { month: 'Sep', height: '84%' },
+    { month: 'Oct', height: '100%', isCurrent: true },
+  ];
+
+  const topVendors = [
+    {
+      name: 'SunPower Jaipur',
+      leads: 42,
+      won: 18,
+      conversion: '43%',
+    },
+    {
+      name: 'Lakecity Solar',
+      leads: 31,
+      won: 14,
+      conversion: '45%',
+    },
+    {
+      name: 'Aravalli Solar',
+      leads: 27,
+      won: 9,
+      conversion: '33%',
+    },
+  ];
+
+  const filteredVendors = topVendors.filter((v) =>
+    v.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="space-y-6 pb-12 font-sans">
+      {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
-            Sales & Pipeline Reports
+          <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Reports
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            Deep dive into monthly revenue velocity, win rates, and team performance
+            Last 12 months
           </p>
         </div>
 
-        <button
-          type="button"
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl text-sm font-medium shadow-2xs transition-all cursor-pointer"
-        >
-          <Download className="w-4 h-4 text-slate-500" />
-          Export CSV
-        </button>
+        <div className="flex items-center gap-3">
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-2xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+          />
+
+          <button
+            type="button"
+            className="px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+          >
+            Export CSV
+          </button>
+        </div>
       </div>
 
-      {/* Summary KPI Highlights */}
+      {/* 3 Metric Cards matching Reports.png */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Total Pipeline Value
+        {/* Card 1: Dark Navy Hero Card */}
+        <div className="bg-[#0c1222] text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+          <span className="text-xs font-medium text-slate-400 block">
+            Revenue
           </span>
-          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
-            ₹52.8 Lakhs
-          </div>
-          <div className="text-xs text-emerald-600 font-semibold mt-2 flex items-center gap-1">
-            <TrendingUp className="w-3.5 h-3.5" /> +14.2% quarterly growth
+          <div className="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight">
+            ₹1.9Cr
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Average Deal Size
+        {/* Card 2: Deals won */}
+        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
+          <span className="text-xs font-medium text-slate-500 block">
+            Deals won
           </span>
-          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
-            ₹2,84,000
-          </div>
-          <div className="text-xs text-blue-600 font-semibold mt-2">
-            Commercial & Residential Rooftop
+          <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
+            214
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Closed Win Rate
+        {/* Card 3: Avg deal size */}
+        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
+          <span className="text-xs font-medium text-slate-500 block">
+            Avg deal size
           </span>
-          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
-            32.0%
-          </div>
-          <div className="text-xs text-slate-500 font-medium mt-2">
-            Industry benchmark: 28%
+          <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
+            ₹2.4L
           </div>
         </div>
       </div>
 
-      {/* Monthly Breakdown Table */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-2xs">
+      {/* Deals won by month Bar Chart */}
+      <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs">
+        <h2 className="text-base font-bold text-slate-900 mb-6">
+          Deals won by month
+        </h2>
+
+        <div className="h-52 flex items-end justify-between gap-2 sm:gap-4 px-2">
+          {monthlyDeals.map((bar, idx) => (
+            <div key={idx} className="flex-1 flex flex-col items-center h-full justify-end group">
+              <div
+                style={{ height: bar.height }}
+                className={`w-full rounded-t-lg transition-all duration-300 ${
+                  bar.isCurrent
+                    ? 'bg-[#f59e0b] shadow-sm shadow-amber-500/20'
+                    : 'bg-[#fef3c7] hover:bg-[#fde68a]'
+                }`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Top vendors Table */}
+      <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs overflow-hidden">
         <h2 className="text-base font-bold text-slate-900 mb-4">
-          Past 12 Months Revenue Realization
+          Top vendors
         </h2>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                <th className="pb-3 pr-4">Month</th>
-                <th className="pb-3 px-4">Achieved Revenue</th>
-                <th className="pb-3 px-4">Deals Closed</th>
-                <th className="pb-3 pl-4 text-right">Performance Status</th>
+                <th className="pb-3 pr-4">Vendor</th>
+                <th className="pb-3 px-4">Leads</th>
+                <th className="pb-3 px-4">Won</th>
+                <th className="pb-3 pl-4">Conversion</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50 text-sm">
-              {REVENUE_MONTHS.slice().reverse().map((item, idx) => (
+              {filteredVendors.map((vendor, idx) => (
                 <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 pr-4 font-semibold text-slate-900">
-                    {item.month} 2026
+                  <td className="py-3.5 pr-4 font-semibold text-slate-900 whitespace-nowrap">
+                    {vendor.name}
                   </td>
-                  <td className="py-3 px-4 font-bold text-blue-600">
-                    {item.value}
+                  <td className="py-3.5 px-4 text-slate-700 whitespace-nowrap">
+                    {vendor.leads}
                   </td>
-                  <td className="py-3 px-4 text-slate-600">
-                    {Math.floor(12 + Math.random() * 8)} closed
+                  <td className="py-3.5 px-4 text-slate-700 whitespace-nowrap">
+                    {vendor.won}
                   </td>
-                  <td className="py-3 pl-4 text-right">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
-                      Target Exceeded
-                    </span>
+                  <td className="py-3.5 pl-4 font-bold text-slate-900 whitespace-nowrap">
+                    {vendor.conversion}
                   </td>
                 </tr>
               ))}
