@@ -96,7 +96,7 @@ const UserManagement: React.FC = () => {
       </div>
 
       {/* Team Members Table */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -104,16 +104,16 @@ const UserManagement: React.FC = () => {
                 <th className="pb-4 pr-4">User</th>
                 <th className="pb-4 px-4">Email</th>
                 <th className="pb-4 px-4">Role</th>
-                <th className="pb-4 pl-4 text-right">Status</th>
+                <th className="pb-4 pl-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm">
               {filteredMembers.map((member) => (
                 <tr key={member.id} className="hover:bg-slate-50/70 transition-colors">
                   {/* User with avatar */}
                   <td className="py-4 pr-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-amber-100 text-amber-800">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[#fae8c8] text-[#8a5316]">
                         {member.initials}
                       </div>
                       <span className="font-semibold text-slate-900 whitespace-nowrap">
@@ -130,10 +130,10 @@ const UserManagement: React.FC = () => {
                   {/* Role Badge */}
                   <td className="py-4 px-4 whitespace-nowrap">
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                      className={`py-1 rounded-full text-xs font-semibold ${
                         member.role === 'Admin'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-slate-100 text-slate-700'
+                          ? 'w-36 px-4 block text-left bg-[#d4f8db] text-[#14532d]'
+                          : 'inline-block px-3.5 bg-[#e2e8f0] text-slate-700'
                       }`}
                     >
                       {member.role}
@@ -141,7 +141,7 @@ const UserManagement: React.FC = () => {
                   </td>
 
                   {/* Status */}
-                  <td className="py-4 pl-4 text-right font-medium text-slate-700 whitespace-nowrap">
+                  <td className="py-4 pl-4 font-medium text-slate-800 whitespace-nowrap">
                     {member.status}
                   </td>
                 </tr>
@@ -152,7 +152,7 @@ const UserManagement: React.FC = () => {
       </div>
 
       {/* Permissions Table */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs overflow-hidden">
         <h2 className="text-base font-bold text-slate-900 mb-4">
           Permissions
         </h2>
@@ -168,7 +168,7 @@ const UserManagement: React.FC = () => {
                 <th className="pb-4 pl-4">Viewer</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm">
               {permissions.map((perm) => (
                 <tr key={perm.area} className="hover:bg-slate-50/70 transition-colors">
                   <td className="py-4 pr-4 font-semibold text-slate-900 whitespace-nowrap">

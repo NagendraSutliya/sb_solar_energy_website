@@ -75,7 +75,7 @@ const SystemSettings: React.FC = () => {
       </div>
 
       {/* Form Fields Card */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xs space-y-6">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-2">
@@ -85,7 +85,7 @@ const SystemSettings: React.FC = () => {
               type="text"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+              className="w-full px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
             />
           </div>
 
@@ -97,7 +97,7 @@ const SystemSettings: React.FC = () => {
               type="text"
               value={supportPhone}
               onChange={(e) => setSupportPhone(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+              className="w-full px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
             />
           </div>
 
@@ -109,7 +109,7 @@ const SystemSettings: React.FC = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+              className="w-full px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
             />
           </div>
 
@@ -121,14 +121,14 @@ const SystemSettings: React.FC = () => {
               type="text"
               value={defaultState}
               onChange={(e) => setDefaultState(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+              className="w-full px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
             />
           </div>
         </div>
       </div>
 
       {/* Notifications Card */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-xs">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs">
         <h2 className="text-base font-bold text-slate-900 mb-6">
           Notifications
         </h2>
@@ -142,10 +142,10 @@ const SystemSettings: React.FC = () => {
               Email me on new lead
             </span>
             <div
-              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+              className={`w-5 h-5 rounded flex items-center justify-center transition-all ${
                 notifyLead
-                  ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
-                  : 'border-slate-300 bg-white'
+                  ? 'bg-[#f59e0b] text-white font-bold'
+                  : 'border-2 border-slate-300 bg-white'
               }`}
             >
               {notifyLead && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -160,10 +160,10 @@ const SystemSettings: React.FC = () => {
               WhatsApp alerts for vendors
             </span>
             <div
-              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+              className={`w-5 h-5 rounded flex items-center justify-center transition-all ${
                 notifyVendor
-                  ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
-                  : 'border-slate-300 bg-white'
+                  ? 'bg-[#f59e0b] text-white font-bold'
+                  : 'border-2 border-slate-300 bg-white'
               }`}
             >
               {notifyVendor && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -178,10 +178,10 @@ const SystemSettings: React.FC = () => {
               Weekly report
             </span>
             <div
-              className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${
+              className={`w-5 h-5 rounded flex items-center justify-center transition-all ${
                 weeklyReport
-                  ? 'bg-[#f59e0b] border-[#f59e0b] text-slate-950 font-bold'
-                  : 'border-slate-300 bg-white'
+                  ? 'bg-[#f59e0b] text-white font-bold'
+                  : 'border-2 border-slate-300 bg-white'
               }`}
             >
               {weeklyReport && <Check className="w-3.5 h-3.5 stroke-[3]" />}

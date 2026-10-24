@@ -67,12 +67,12 @@ const ContactsManagement: React.FC = () => {
   const getTagStyle = (tag: ContactItem['tag']) => {
     switch (tag) {
       case 'Customer':
-        return 'bg-emerald-100 text-emerald-800';
+        return 'bg-[#d4f8db] text-[#14532d]';
       case 'Lead':
-        return 'bg-amber-100 text-amber-800';
+        return 'bg-[#fef3c7] text-[#92400e]';
       case 'Vendor':
       default:
-        return 'bg-slate-100 text-slate-700';
+        return 'bg-[#e2e8f0] text-slate-700';
     }
   };
 
@@ -103,12 +103,12 @@ const ContactsManagement: React.FC = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-2xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            className="px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
           />
 
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             Add contact
@@ -121,27 +121,27 @@ const ContactsManagement: React.FC = () => {
         {filtered.map((contact) => (
           <div
             key={contact.id}
-            className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+            className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[#fae8c8] text-[#8a5316] flex items-center justify-center font-bold text-xs shrink-0">
                   {contact.initials}
                 </div>
-                <h3 className="font-bold text-slate-900 text-base">
+                <h3 className="font-bold text-slate-900 text-sm">
                   {contact.name}
                 </h3>
               </div>
 
-              <div className="mt-4 space-y-1 text-xs text-slate-500">
+              <div className="mt-3.5 space-y-1 text-xs text-slate-500">
                 <p>{contact.city}</p>
-                <p className="font-medium text-slate-600">{contact.phone}</p>
+                <p>{contact.phone}</p>
               </div>
             </div>
 
             <div className="mt-5">
               <span
-                className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getTagStyle(
+                className={`block w-full px-4 py-1.5 rounded-full text-xs font-semibold text-left ${getTagStyle(
                   contact.tag
                 )}`}
               >

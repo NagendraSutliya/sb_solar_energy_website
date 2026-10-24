@@ -113,14 +113,14 @@ const DealsPipeline: React.FC = () => {
               key={column.id}
               onDragOver={handleDragOver}
               onDrop={() => handleDrop(column.id)}
-              className="bg-[#edf2f7]/80 rounded-2xl p-3.5 flex flex-col gap-3 min-h-[580px] border border-slate-200/50"
+              className="bg-[#eaeff6] rounded-2xl p-4 flex flex-col gap-3 min-h-[560px]"
             >
               {/* Column Header */}
-              <div className="flex items-center justify-between px-2 py-1">
+              <div className="flex items-center justify-between px-1 py-0.5">
                 <h3 className="font-bold text-slate-900 text-sm">
                   {column.label}
                 </h3>
-                <span className="text-slate-400 font-semibold text-sm">
+                <span className="text-slate-900 font-bold text-sm">
                   {column.count}
                 </span>
               </div>
@@ -132,7 +132,7 @@ const DealsPipeline: React.FC = () => {
                     key={deal.id}
                     draggable
                     onDragStart={() => handleDragStart(deal.id)}
-                    className="bg-white rounded-2xl p-4 shadow-2xs border border-transparent hover:border-slate-200/80 hover:shadow-md transition-all cursor-grab active:cursor-grabbing group"
+                    className="bg-white rounded-2xl p-4 shadow-xs hover:shadow-md transition-all cursor-grab active:cursor-grabbing group"
                   >
                     <h4 className="font-bold text-slate-900 text-sm group-hover:text-amber-600 transition-colors">
                       {deal.customer}
@@ -142,14 +142,14 @@ const DealsPipeline: React.FC = () => {
                       {deal.projectType}
                     </p>
 
-                    <div className="text-base font-bold text-slate-900 mt-2.5">
+                    <div className="text-sm font-bold text-slate-900 mt-3">
                       ₹{deal.value.toLocaleString('en-IN')}
                     </div>
                   </div>
                 ))}
 
                 {columnDeals.length === 0 && (
-                  <div className="h-28 border-2 border-dashed border-slate-200 rounded-xl flex items-center justify-center text-xs text-slate-400">
+                  <div className="h-28 border-2 border-dashed border-slate-300/70 rounded-xl flex items-center justify-center text-xs text-slate-400">
                     Drop deals here
                   </div>
                 )}

@@ -82,14 +82,14 @@ const LeadsManagement: React.FC = () => {
   const getStatusBadgeStyle = (status: LeadItem['status']) => {
     switch (status) {
       case 'Contacted':
-        return 'bg-amber-100 text-amber-800';
+        return 'bg-[#fef3c7] text-[#92400e]';
       case 'Quoted':
-        return 'bg-emerald-100 text-emerald-800';
+        return 'bg-[#d4f8db] text-[#14532d]';
       case 'Lost':
         return 'bg-rose-100 text-rose-800';
       case 'New':
       default:
-        return 'bg-slate-100 text-slate-700';
+        return 'bg-[#e2e8f0] text-slate-700';
     }
   };
 
@@ -122,13 +122,13 @@ const LeadsManagement: React.FC = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-2xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+            className="px-4 py-2.5 bg-white border border-slate-200/80 rounded-xl text-sm text-slate-800 placeholder-slate-400 w-56 sm:w-64 shadow-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
           />
 
           <button
             type="button"
             onClick={() => setIsNewLeadOpen(true)}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             New lead
@@ -136,17 +136,17 @@ const LeadsManagement: React.FC = () => {
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+      {/* Filter Tabs matching Leads.png */}
+      <div className="flex items-center gap-2.5 overflow-x-auto pb-1">
         {filterTabs.map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setActiveFilter(tab)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+            className={`px-5 py-2 rounded-full text-sm font-medium transition-all cursor-pointer whitespace-nowrap ${
               activeFilter === tab
-                ? 'bg-slate-900 text-white shadow-2xs'
-                : 'bg-white text-slate-700 border border-slate-200/80 hover:bg-slate-50'
+                ? 'bg-[#0f172a] text-white shadow-xs'
+                : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
             }`}
           >
             {tab}
@@ -155,7 +155,7 @@ const LeadsManagement: React.FC = () => {
       </div>
 
       {/* Leads Table Container */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -168,13 +168,13 @@ const LeadsManagement: React.FC = () => {
                 <th className="pb-4 pl-4">Assigned</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm">
               {filteredLeads.map((lead) => (
                 <tr key={lead.id} className="hover:bg-slate-50/70 transition-colors">
                   {/* Name with Avatar */}
                   <td className="py-4 pr-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-amber-100 text-amber-800">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[#fae8c8] text-[#8a5316]">
                         {lead.initials}
                       </div>
                       <span className="font-semibold text-slate-900 whitespace-nowrap">
@@ -201,9 +201,11 @@ const LeadsManagement: React.FC = () => {
                   {/* Status Badge */}
                   <td className="py-4 px-4 whitespace-nowrap">
                     <span
-                      className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadgeStyle(
-                        lead.status
-                      )}`}
+                      className={`py-1 rounded-full text-xs font-semibold ${
+                        lead.status === 'Quoted'
+                          ? 'w-36 px-4 block text-left bg-[#d4f8db] text-[#14532d]'
+                          : `inline-block px-3 ${getStatusBadgeStyle(lead.status)}`
+                      }`}
                     >
                       {lead.status}
                     </span>

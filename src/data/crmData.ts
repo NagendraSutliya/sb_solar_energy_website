@@ -24,7 +24,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-1',
     name: 'Sneha Rao',
     customer: 'Sneha Rao',
-    projectType: 'Rooftop solar, 5 kW',
+    projectType: 'Rooftop 5 kW',
     value: 190000,
     stage: 'qualified',
     tag: 'Call Thu',
@@ -36,7 +36,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-2',
     name: 'Karan Joshi',
     customer: 'Karan Joshi',
-    projectType: 'Commercial, 20 kW',
+    projectType: 'Commercial 20 kW',
     value: 640000,
     stage: 'qualified',
     tag: 'New',
@@ -48,7 +48,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-3',
     name: 'Vikram Khanna',
     customer: 'Vikram Khanna',
-    projectType: 'Solar pump system',
+    projectType: 'Solar pump',
     value: 275000,
     stage: 'proposal_sent',
     tag: 'Follow up',
@@ -60,7 +60,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-4',
     name: 'Meera Iyer',
     customer: 'Meera Iyer',
-    projectType: 'Rooftop solar, 3 kW',
+    projectType: 'Rooftop 3 kW',
     value: 125000,
     stage: 'proposal_sent',
     tag: 'Viewed',
@@ -72,7 +72,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-5',
     name: 'Priya Mehta',
     customer: 'Priya Mehta',
-    projectType: 'Hotel solar, 50 kW',
+    projectType: 'Hotel 50 kW',
     value: 310000,
     stage: 'negotiation',
     tag: 'Discount ask',
@@ -84,7 +84,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-6',
     name: 'Aarav Sharma',
     customer: 'Aarav Sharma',
-    projectType: 'Factory rooftop, 100 kW',
+    projectType: 'Factory 100 kW',
     value: 420000,
     stage: 'closing',
     tag: 'Contract out',
@@ -96,7 +96,7 @@ export const INITIAL_DEALS: Deal[] = [
     id: 'deal-7',
     name: 'Nisha Verma',
     customer: 'Nisha Verma',
-    projectType: 'Residential, 4 kW',
+    projectType: 'Residential 4 kW',
     value: 160000,
     stage: 'closing',
     tag: 'Verbal yes',
@@ -155,8 +155,8 @@ export const STAGE_CONFIG = [
 export const OWNERS = ['All owners', 'Rahul', 'Neha', 'Aman'] as const;
 
 // Storage helpers
-const STORAGE_KEY_DEALS = 'sb_solar_crm_deals_v1';
-const STORAGE_KEY_TASKS = 'sb_solar_crm_tasks_v1';
+const STORAGE_KEY_DEALS = 'sb_solar_crm_deals_v2';
+const STORAGE_KEY_TASKS = 'sb_solar_crm_tasks_v2';
 
 export function getStoredDeals(): Deal[] {
   try {

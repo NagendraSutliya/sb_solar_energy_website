@@ -14,28 +14,28 @@ const AdminDashboard: React.FC = () => {
       initials: 'AS',
       name: 'Aarav Sharma',
       stage: 'Closing',
-      stageStyle: 'bg-emerald-100 text-emerald-800',
+      stageStyle: 'bg-[#d4f8db] text-[#14532d]',
       value: '₹4,20,000',
     },
     {
       initials: 'PM',
       name: 'Priya Mehta',
       stage: 'Negotiation',
-      stageStyle: 'bg-amber-100 text-amber-800',
+      stageStyle: 'bg-[#fef3c7] text-[#92400e]',
       value: '₹3,10,000',
     },
     {
       initials: 'VK',
       name: 'Vikram Khanna',
       stage: 'Proposal',
-      stageStyle: 'bg-slate-100 text-slate-700',
+      stageStyle: 'bg-[#e2e8f0] text-slate-700',
       value: '₹2,75,000',
     },
     {
       initials: 'SR',
       name: 'Sneha Rao',
       stage: 'Qualified',
-      stageStyle: 'bg-slate-100 text-slate-700',
+      stageStyle: 'bg-[#e2e8f0] text-slate-700',
       value: '₹1,90,000',
     },
   ];
@@ -120,7 +120,7 @@ const AdminDashboard: React.FC = () => {
       {/* 4 Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
         {/* Card 1: Revenue this month (Dark Navy Hero Card) */}
-        <div className="bg-[#0c1222] text-white rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-[#0d1527] text-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-400 block">
             Revenue this month
           </span>
@@ -135,7 +135,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Card 2: Open deals */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
             Open deals
           </span>
@@ -143,14 +143,14 @@ const AdminDashboard: React.FC = () => {
             64
           </div>
           <div className="mt-3">
-            <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-100">
+            <span className="inline-flex items-center gap-1 bg-[#e6f4ea] text-[#137333] text-xs font-bold px-2.5 py-0.5 rounded-full">
               ▲ 8 this week
             </span>
           </div>
         </div>
 
         {/* Card 3: Win rate */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
             Win rate
           </span>
@@ -158,14 +158,14 @@ const AdminDashboard: React.FC = () => {
             32%
           </div>
           <div className="mt-3">
-            <span className="inline-flex items-center gap-1 bg-rose-50 text-rose-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-rose-100">
+            <span className="inline-flex items-center gap-1 bg-[#fce8e6] text-[#c5221f] text-xs font-bold px-2.5 py-0.5 rounded-full">
               ▼ 2.1%
             </span>
           </div>
         </div>
 
         {/* Card 4: New leads */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
             New leads
           </span>
@@ -173,7 +173,7 @@ const AdminDashboard: React.FC = () => {
             128
           </div>
           <div className="mt-3">
-            <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-100">
+            <span className="inline-flex items-center gap-1 bg-[#e6f4ea] text-[#137333] text-xs font-bold px-2.5 py-0.5 rounded-full">
               ▲ 18%
             </span>
           </div>
@@ -183,7 +183,7 @@ const AdminDashboard: React.FC = () => {
       {/* Middle Row: Revenue Smooth Area Chart & Lead Sources Donut Chart */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left: Revenue Area Chart (7 Cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-7 bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold text-slate-900">
               Revenue
@@ -288,7 +288,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Right: Lead Sources Donut Chart (5 Cols) */}
-        <div className="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <h2 className="text-base font-bold text-slate-900 mb-2">
             Lead sources
           </h2>
@@ -373,7 +373,7 @@ const AdminDashboard: React.FC = () => {
       {/* Bottom Row: Top deals & Recent activity */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left: Top deals Table (7 Cols) */}
-        <div className="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs overflow-hidden">
+        <div className="lg:col-span-7 bg-white rounded-2xl p-6 shadow-xs overflow-hidden">
           <h2 className="text-base font-bold text-slate-900 mb-4">
             Top deals
           </h2>
@@ -387,13 +387,13 @@ const AdminDashboard: React.FC = () => {
                   <th className="pb-3 pl-4 text-right">Value</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50 text-sm">
+              <tbody className="divide-y divide-slate-100 text-sm">
                 {filteredDeals.map((deal, idx) => (
                   <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
                     {/* Customer */}
                     <td className="py-3.5 pr-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-amber-100 text-amber-800">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 bg-[#fae8c8] text-[#8a5316]">
                           {deal.initials}
                         </div>
                         <span className="font-semibold text-slate-900 whitespace-nowrap">
@@ -405,7 +405,11 @@ const AdminDashboard: React.FC = () => {
                     {/* Stage Badge */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <span
-                        className={`inline-block px-3 py-0.5 rounded-full text-xs font-semibold ${deal.stageStyle}`}
+                        className={`py-1 rounded-full text-xs font-semibold ${
+                          deal.stage === 'Closing'
+                            ? 'w-36 px-4 block text-left bg-[#d4f8db] text-[#14532d]'
+                            : `inline-block px-4 ${deal.stageStyle}`
+                        }`}
                       >
                         {deal.stage}
                       </span>
@@ -423,7 +427,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Right: Recent activity (5 Cols) */}
-        <div className="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs">
+        <div className="lg:col-span-5 bg-white rounded-2xl p-6 shadow-xs">
           <h2 className="text-base font-bold text-slate-900 mb-4">
             Recent activity
           </h2>

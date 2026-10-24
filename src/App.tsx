@@ -56,7 +56,6 @@ const App = () => {
           <Route path="/sb-solar-protection" element={<SbSolarProtection />} />
           <Route path="/emi-solar-plan" element={<EmiSolarPlan onOpenQuoteModal={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))} />} />
           <Route path="/typography-test" element={<TypographyTest />} />
-          <Route path="*" element={<Home />} />
         </Route>
 
         {/* Standalone Pages (No Navbar/Sidebar) */}
@@ -96,6 +95,9 @@ const App = () => {
             <Route path="settings" element={<SystemSettings />} />
           </Route>
         </Route>
+
+        {/* Global Fallback Route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       {/* Floating WhatsApp Button (Global) */}

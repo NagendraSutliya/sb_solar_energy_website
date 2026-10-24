@@ -98,13 +98,13 @@ const TasksManagement: React.FC = () => {
       {/* 2 Column Layout matching Tasks.png */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left Column: Task lists (7 Cols) */}
-        <div className="lg:col-span-8 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs space-y-6">
+        <div className="lg:col-span-8 bg-white rounded-2xl p-6 md:p-8 shadow-xs space-y-6">
           {/* Today Section */}
           <div>
             <h2 className="text-base font-bold text-slate-900 pb-3 border-b border-slate-100">
               Today
             </h2>
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-slate-100">
               {todayTasks.map((task) => (
                 <div
                   key={task.id}
@@ -143,7 +143,7 @@ const TasksManagement: React.FC = () => {
             <h2 className="text-base font-bold text-slate-900 pb-3 border-b border-slate-100">
               Overdue
             </h2>
-            <div className="divide-y divide-slate-50">
+            <div className="divide-y divide-slate-100">
               {overdueTasks.map((task) => (
                 <div
                   key={task.id}
@@ -179,7 +179,7 @@ const TasksManagement: React.FC = () => {
         </div>
 
         {/* Right Column: This week summary (4 Cols) */}
-        <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs h-fit">
+        <div className="lg:col-span-4 bg-white rounded-2xl p-6 md:p-8 shadow-xs h-fit">
           <h2 className="text-base font-bold text-slate-900 mb-2">
             This week
           </h2>

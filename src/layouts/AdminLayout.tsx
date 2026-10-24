@@ -30,13 +30,12 @@ const AdminLayout: React.FC = () => {
     { name: 'Tasks', path: '/admin/tasks', icon: CheckSquare, badge: '3' },
   ];
 
-  // Manage Navigation items matching Dashboard v2
+  // Manage Navigation items matching requirements screenshots
   const manageNavItems = [
     { name: 'Vendors', path: '/admin/vendors', icon: Store },
     { name: 'Reports', path: '/admin/reports', icon: BarChart3 },
     { name: 'Users & roles', path: '/admin/users', icon: ShieldCheck },
     { name: 'Settings', path: '/admin/settings', icon: Sliders },
-    { name: 'WhatsApp Bot', path: '/admin/whatsapp', icon: MessageCircle },
   ];
 
   const handleLogout = () => {
@@ -47,7 +46,7 @@ const AdminLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#f8fafc] font-sans text-slate-800">
+    <div className="min-h-screen flex bg-[#f4f6fa] font-sans text-slate-800">
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0c1222] border-b border-slate-800/80 px-4 flex items-center justify-between z-40">
         <div className="flex items-center gap-2.5">
@@ -84,23 +83,22 @@ const AdminLayout: React.FC = () => {
         }`}
       >
         {/* Brand Header */}
-        <div className="p-6 pb-6 flex items-center justify-between border-b border-slate-800/60">
+        <div className="p-6 pb-6 flex items-center justify-between">
           <Link 
             to="/admin/dashboard" 
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center gap-3 group"
           >
-            <img 
-              src="/sb_logo.png" 
-              alt="SB Solar Energy" 
-              className="h-9 w-auto object-contain rounded-lg p-0.5 bg-white/10 shadow-xs group-hover:scale-105 transition-transform"
-            />
+            <div className="w-8 h-8 rounded-xl bg-[#f59e0b] flex items-center justify-center shrink-0 shadow-xs">
+              <img 
+                src="/sb_logo.png" 
+                alt="SB" 
+                className="h-5 w-auto object-contain brightness-0"
+              />
+            </div>
             <div>
-              <span className="font-heading font-extrabold text-sm tracking-tight text-white block leading-tight">
-                SB SOLAR <span className="text-amber-400">ENERGY</span>
-              </span>
-              <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block mt-0.5">
-                Admin Panel
+              <span className="font-heading font-extrabold text-base tracking-tight text-white block leading-tight">
+                SB Solar Energy
               </span>
             </div>
           </Link>
@@ -114,10 +112,10 @@ const AdminLayout: React.FC = () => {
         </div>
 
         {/* Navigation Sections */}
-        <div className="flex-1 overflow-y-auto px-4 py-5 space-y-6 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-6 custom-scrollbar">
           {/* MAIN SECTION */}
           <div>
-            <span className="px-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
+            <span className="px-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
               Main
             </span>
             <nav className="space-y-1">
@@ -130,7 +128,7 @@ const AdminLayout: React.FC = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm transition-all ${
                       isActive
-                        ? 'bg-[#f59e0b] text-slate-950 font-bold shadow-sm'
+                        ? 'bg-[#f59e0b] text-slate-950 font-bold shadow-xs'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-medium'
                     }`}
                   >
@@ -154,7 +152,7 @@ const AdminLayout: React.FC = () => {
 
           {/* MANAGE SECTION */}
           <div>
-            <span className="px-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
+            <span className="px-3.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
               Manage
             </span>
             <nav className="space-y-1">
@@ -167,7 +165,7 @@ const AdminLayout: React.FC = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm transition-all ${
                       isActive
-                        ? 'bg-[#f59e0b] text-slate-950 font-bold shadow-sm'
+                        ? 'bg-[#f59e0b] text-slate-950 font-bold shadow-xs'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/60 font-medium'
                     }`}
                   >
@@ -179,16 +177,16 @@ const AdminLayout: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer / User Profile & Logout */}
-        <div className="p-4 border-t border-slate-800/80 bg-[#090e1b]">
-          <div className="bg-[#111827]/90 border border-slate-800/90 rounded-2xl p-3 flex items-center justify-between">
+        {/* Footer / User Profile matching Dashboard.png bottom left card */}
+        <div className="p-4 bg-[#0c1222]">
+          <div className="bg-[#141d33] rounded-2xl p-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#f59e0b] text-slate-950 flex items-center justify-center font-extrabold text-sm shadow-xs">
+              <div className="w-10 h-10 rounded-full bg-[#f59e0b] text-slate-950 flex items-center justify-center font-extrabold text-sm shadow-xs shrink-0">
                 R
               </div>
               <div className="text-left">
-                <p className="text-xs font-bold text-white leading-tight">Rahul</p>
-                <p className="text-[10px] text-slate-400">Admin</p>
+                <p className="text-sm font-bold text-white leading-tight">Rahul</p>
+                <p className="text-xs text-slate-400">Admin</p>
               </div>
             </div>
 
@@ -213,9 +211,9 @@ const AdminLayout: React.FC = () => {
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 md:ml-64 flex flex-col min-h-screen pt-16 md:pt-0">
-        <div className="p-6 md:p-8 lg:p-10 max-w-7xl w-full mx-auto flex-1">
+      {/* Main Content Area - Full Canvas Width on Cool Gray Background */}
+      <main className="flex-1 md:ml-64 flex flex-col min-h-screen pt-16 md:pt-0 bg-[#f4f6fa]">
+        <div className="p-6 md:p-8 lg:p-10 w-full flex-1">
           <Outlet />
         </div>
       </main>

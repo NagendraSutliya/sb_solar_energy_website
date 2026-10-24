@@ -78,7 +78,7 @@ const ReportsManagement: React.FC = () => {
       {/* 3 Metric Cards matching Reports.png */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Card 1: Dark Navy Hero Card */}
-        <div className="bg-[#0c1222] text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+        <div className="bg-[#0d1527] text-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-400 block">
             Revenue
           </span>
@@ -88,7 +88,7 @@ const ReportsManagement: React.FC = () => {
         </div>
 
         {/* Card 2: Deals won */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
             Deals won
           </span>
@@ -98,7 +98,7 @@ const ReportsManagement: React.FC = () => {
         </div>
 
         {/* Card 3: Avg deal size */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
             Avg deal size
           </span>
@@ -109,20 +109,20 @@ const ReportsManagement: React.FC = () => {
       </div>
 
       {/* Deals won by month Bar Chart */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs">
         <h2 className="text-base font-bold text-slate-900 mb-6">
           Deals won by month
         </h2>
 
-        <div className="h-52 flex items-end justify-between gap-2 sm:gap-4 px-2">
+        <div className="h-56 flex items-end justify-between gap-2 sm:gap-4 px-2">
           {monthlyDeals.map((bar, idx) => (
             <div key={idx} className="flex-1 flex flex-col items-center h-full justify-end group">
               <div
                 style={{ height: bar.height }}
-                className={`w-full rounded-t-lg transition-all duration-300 ${
+                className={`w-full rounded-md transition-all duration-300 ${
                   bar.isCurrent
-                    ? 'bg-[#f59e0b] shadow-sm shadow-amber-500/20'
-                    : 'bg-[#fef3c7] hover:bg-[#fde68a]'
+                    ? 'bg-[#f59e0b]'
+                    : 'bg-[#fae5c7]'
                 }`}
               />
             </div>
@@ -131,7 +131,7 @@ const ReportsManagement: React.FC = () => {
       </div>
 
       {/* Top vendors Table */}
-      <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xs overflow-hidden">
         <h2 className="text-base font-bold text-slate-900 mb-4">
           Top vendors
         </h2>
@@ -140,25 +140,25 @@ const ReportsManagement: React.FC = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-slate-100 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                <th className="pb-3 pr-4">Vendor</th>
-                <th className="pb-3 px-4">Leads</th>
-                <th className="pb-3 px-4">Won</th>
-                <th className="pb-3 pl-4">Conversion</th>
+                <th className="pb-4 pr-4">Vendor</th>
+                <th className="pb-4 px-4">Leads</th>
+                <th className="pb-4 px-4">Won</th>
+                <th className="pb-4 pl-4">Conversion</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 text-sm">
+            <tbody className="divide-y divide-slate-100 text-sm">
               {filteredVendors.map((vendor, idx) => (
                 <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3.5 pr-4 font-semibold text-slate-900 whitespace-nowrap">
+                  <td className="py-4 pr-4 font-semibold text-slate-900 whitespace-nowrap">
                     {vendor.name}
                   </td>
-                  <td className="py-3.5 px-4 text-slate-700 whitespace-nowrap">
+                  <td className="py-4 px-4 text-slate-700 whitespace-nowrap">
                     {vendor.leads}
                   </td>
-                  <td className="py-3.5 px-4 text-slate-700 whitespace-nowrap">
+                  <td className="py-4 px-4 text-slate-700 whitespace-nowrap">
                     {vendor.won}
                   </td>
-                  <td className="py-3.5 pl-4 font-bold text-slate-900 whitespace-nowrap">
+                  <td className="py-4 pl-4 font-medium text-slate-900 whitespace-nowrap">
                     {vendor.conversion}
                   </td>
                 </tr>
