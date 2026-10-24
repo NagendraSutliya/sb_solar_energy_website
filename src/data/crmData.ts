@@ -155,8 +155,8 @@ export const STAGE_CONFIG = [
 export const OWNERS = ['All owners', 'Rahul', 'Neha', 'Aman'] as const;
 
 // Storage helpers
-const STORAGE_KEY_DEALS = 'sb_orbit_deals_v1';
-const STORAGE_KEY_TASKS = 'sb_orbit_tasks_v1';
+const STORAGE_KEY_DEALS = 'sb_solar_crm_deals_v1';
+const STORAGE_KEY_TASKS = 'sb_solar_crm_tasks_v1';
 
 export function getStoredDeals(): Deal[] {
   try {
@@ -174,7 +174,7 @@ export function getStoredDeals(): Deal[] {
 export function saveStoredDeals(deals: Deal[]): void {
   try {
     localStorage.setItem(STORAGE_KEY_DEALS, JSON.stringify(deals));
-    window.dispatchEvent(new CustomEvent('orbit-deals-updated'));
+    window.dispatchEvent(new CustomEvent('sb-crm-deals-updated'));
   } catch (e) {
     console.error('Failed to save deals to localStorage', e);
   }
@@ -196,7 +196,7 @@ export function getStoredTasks(): Task[] {
 export function saveStoredTasks(tasks: Task[]): void {
   try {
     localStorage.setItem(STORAGE_KEY_TASKS, JSON.stringify(tasks));
-    window.dispatchEvent(new CustomEvent('orbit-tasks-updated'));
+    window.dispatchEvent(new CustomEvent('sb-crm-tasks-updated'));
   } catch (e) {
     console.error('Failed to save tasks to localStorage', e);
   }

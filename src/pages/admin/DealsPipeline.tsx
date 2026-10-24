@@ -23,9 +23,9 @@ const DealsPipeline: React.FC = () => {
     };
 
     loadDeals();
-    window.addEventListener('orbit-deals-updated', loadDeals);
+    window.addEventListener('sb-crm-deals-updated', loadDeals);
     return () => {
-      window.removeEventListener('orbit-deals-updated', loadDeals);
+      window.removeEventListener('sb-crm-deals-updated', loadDeals);
     };
   }, []);
 

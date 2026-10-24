@@ -21,10 +21,10 @@ const AdminDashboard: React.FC = () => {
     };
 
     loadData();
-    window.addEventListener('orbit-tasks-updated', loadData);
+    window.addEventListener('sb-crm-tasks-updated', loadData);
 
     return () => {
-      window.removeEventListener('orbit-tasks-updated', loadData);
+      window.removeEventListener('sb-crm-tasks-updated', loadData);
     };
   }, []);
 

@@ -51,10 +51,14 @@ const AdminLayout: React.FC = () => {
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 px-4 flex items-center justify-between z-40">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#2f5bf8] flex items-center justify-center text-white font-bold shadow-xs">
-            <span className="text-sm">O</span>
-          </div>
-          <span className="font-bold text-slate-900 text-base">Orbit CRM</span>
+          <img 
+            src="/sb_logo.png" 
+            alt="SB Solar Energy" 
+            className="h-7 w-auto object-contain rounded"
+          />
+          <span className="font-heading font-extrabold text-slate-900 text-sm tracking-tight leading-tight">
+            SB SOLAR <span className="text-primary">ENERGY</span>
+          </span>
         </div>
         <button
           type="button"
@@ -73,29 +77,30 @@ const AdminLayout: React.FC = () => {
         />
       )}
 
-      {/* Sidebar - Matching Orbit CRM in mockups */}
+      {/* Sidebar - SB Solar Energy Admin */}
       <aside 
         className={`w-60 bg-white border-r border-slate-200/70 flex flex-col fixed h-full z-50 transition-transform duration-300 md:translate-x-0 ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="p-6 pb-6 flex items-center justify-between border-b border-slate-100/60">
+        <div className="p-5 pb-5 flex items-center justify-between border-b border-slate-100">
           <Link 
             to="/admin/dashboard" 
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center gap-3 group"
           >
-            {/* Blue squircle logo matching mockups */}
-            <div className="w-8 h-8 rounded-xl bg-[#2f5bf8] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
-              <div className="w-3.5 h-3.5 rounded-sm bg-white/20 border border-white/50" />
-            </div>
+            <img 
+              src="/sb_logo.png" 
+              alt="SB Solar Energy" 
+              className="h-10 w-auto object-contain rounded-lg shadow-2xs group-hover:scale-105 transition-transform"
+            />
             <div>
-              <span className="font-extrabold text-lg text-slate-900 tracking-tight block leading-tight">
-                Orbit CRM
+              <span className="font-heading font-extrabold text-sm tracking-tight text-slate-900 block leading-tight">
+                SB SOLAR <span className="text-primary">ENERGY</span>
               </span>
-              <span className="text-[10px] text-slate-400 font-medium block">
-                SB Solar Energy
+              <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider block mt-0.5">
+                Admin Panel
               </span>
             </div>
           </Link>
