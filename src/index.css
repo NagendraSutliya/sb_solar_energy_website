@@ -68,4 +68,11 @@
   .stat-label {
     @apply text-xs sm:text-sm font-semibold text-slate-600;
   }
+  .scroll-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
 }

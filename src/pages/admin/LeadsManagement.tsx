@@ -128,7 +128,7 @@ const LeadsManagement: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsNewLeadOpen(true)}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#f59e0b] hover:bg-amber-600 active:scale-[0.98] text-slate-950 rounded-xl text-sm font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             New lead
