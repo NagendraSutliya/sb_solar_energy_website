@@ -201,25 +201,25 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
       </section>
 
       {/* Key Highlights / Numbers */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 relative z-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 relative z-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3.5">
           {[
             { label: 'Starting Interest Rate', val: '6.0% p.a.', desc: 'Under PM Surya Ghar Scheme', icon: BadgePercent, color: 'text-amber-600 bg-amber-50' },
             { label: 'Govt Subsidy Credit', val: 'Up to ₹78,000', desc: 'Direct to Bank Account', icon: Landmark, color: 'text-green-600 bg-green-50' },
             { label: 'Collateral Needed', val: '₹0 / Zero', desc: '100% Paperless Approval', icon: ShieldCheck, color: 'text-blue-600 bg-blue-50' },
             { label: 'Loan Tenure', val: 'Up to 5-10 Yrs', desc: 'Flexible Monthly Repayment', icon: Calendar, color: 'text-purple-600 bg-purple-50' }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white rounded-2xl p-4 sm:p-5 shadow-lg border border-slate-100 flex flex-col justify-between">
-              <div className="flex items-center justify-between mb-2">
-                <span className={`p-2.5 rounded-xl ${item.color}`}>
-                  <item.icon className="w-5 h-5" />
+            <div key={idx} className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-3.5 2xl:p-4 shadow-sm hover:shadow-md border border-slate-100 flex flex-col justify-between transition-shadow">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className={`p-1.5 rounded-lg ${item.color}`}>
+                  <item.icon className="w-4 h-4" />
                 </span>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Verified</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Verified</span>
               </div>
               <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{item.val}</div>
-                <div className="text-sm font-bold text-slate-800 mt-1">{item.label}</div>
-                <div className="text-xs text-slate-500 mt-0.5 leading-relaxed">{item.desc}</div>
+                <div className="text-base sm:text-lg 2xl:text-xl font-extrabold text-slate-900 tracking-tight">{item.val}</div>
+                <div className="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">{item.label}</div>
+                <div className="text-[11px] text-slate-500 mt-0.5 leading-snug line-clamp-1">{item.desc}</div>
               </div>
             </div>
           ))}
@@ -227,57 +227,26 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
       </section>
 
       {/* Interactive EMI & Savings Calculator */}
-      <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-24">
-        <div className="text-center max-w-3xl mx-auto mb-10">
+      <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12 2xl:py-16 scroll-mt-24">
+        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
           <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-block mb-3">
             Real-Time Solar Financing Calculator
           </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
             Calculate Your Solar EMI &amp; Savings
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base mt-2">
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 mt-2">
             Compare banking reducing rate vs flat rate, explore instant loan presets, and see how your solar electricity savings offset your monthly EMI.
           </p>
 
-          {/* Mode Switcher Tabs */}
-          <div className="inline-flex p-1.5 bg-slate-200/80 rounded-2xl mt-6 shadow-inner max-w-full overflow-x-auto">
-            <button
-              type="button"
-              onClick={() => setCalcMode('reducing')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer flex items-center gap-2 whitespace-nowrap ${
-                calcMode === 'reducing'
-                  ? 'bg-white text-slate-900 shadow-md scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <TrendingUp className="w-4 h-4 text-emerald-600" />
-              Reducing Balance Rate
-              <span className="hidden sm:inline text-[10px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                Banking Standard
-              </span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setCalcMode('flat')}
-              className={`px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer flex items-center gap-2 whitespace-nowrap ${
-                calcMode === 'flat'
-                  ? 'bg-white text-slate-900 shadow-md scale-[1.02]'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Percent className="w-4 h-4 text-amber-600" />
-              Flat Interest Rate
-              <span className="hidden sm:inline text-[10px] font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
-                NBFC / Simple
-              </span>
-            </button>
-          </div>
+         
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           {/* Controls Column */}
-          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-200/80 space-y-7">
-            {/* System Capacity Slider & Presets */}
+          <div className="lg:col-span-7 bg-white p-5 sm:p-6 2xl:p-8 rounded-3xl shadow-xl border border-slate-200/80 flex flex-col justify-between h-full">
+            <div className="space-y-5 md:space-y-6">
+              {/* System Capacity Slider & Presets */}
             <div>
               <div className="flex justify-between items-center mb-2">
                 <label className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
@@ -489,9 +458,10 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                 <span>40%</span>
               </div>
             </div>
+          </div>
 
-            {/* Quick Cost & Subsidy Breakdown */}
-            <div className="bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 space-y-2.5 text-sm">
+          {/* Quick Cost & Subsidy Breakdown */}
+          <div className="mt-5 md:mt-6 bg-slate-50 rounded-2xl p-4 sm:p-5 border border-slate-200 space-y-2.5 text-sm">
               <div className="flex justify-between text-slate-600">
                 <span>Approximate System Cost:</span>
                 <span className="font-semibold text-slate-800">₹{baseCost.toLocaleString('en-IN')}</span>
@@ -512,23 +482,74 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
           </div>
 
           {/* Results Summary Column */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950 text-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-slate-800 relative overflow-hidden">
-              
+          <div className="lg:col-span-5 flex flex-col justify-between gap-4 h-full">
+            <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950 text-white rounded-3xl p-5 sm:p-6 2xl:p-7 shadow-2xl border border-slate-800 relative overflow-hidden flex-1 flex flex-col justify-between">
+              <div>
+                {/* Calculation Mode Switcher Tabs - Lighter Background Container */}
+              <div className="mb-5 bg-white rounded-2xl p-2.5 shadow-lg border border-slate-100 text-slate-800">
+                <div className="flex items-center justify-between px-1.5 pt-0.5 pb-2">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+                    Loan Calculation Type
+                  </span>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    calcMode === 'reducing' 
+                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
+                      : 'bg-amber-100 text-amber-800 border border-amber-300'
+                  }`}>
+                    {calcMode === 'reducing' ? '✓ Reducing Balance' : '✓ Flat Rate'}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80">
+                  <button
+                    type="button"
+                    onClick={() => setCalcMode('reducing')}
+                    className={`py-2 px-2.5 rounded-lg font-bold text-xs transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
+                      calcMode === 'reducing'
+                        ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25 ring-1 ring-emerald-500'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                    }`}
+                  >
+                    <TrendingUp className={`w-3.5 h-3.5 ${calcMode === 'reducing' ? 'text-white' : 'text-emerald-600'}`} />
+                    <span>Reducing Rate</span>
+                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                      calcMode === 'reducing' 
+                        ? 'bg-black/20 text-white' 
+                        : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                    }`}>
+                      Bank
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCalcMode('flat')}
+                    className={`py-2 px-2.5 rounded-lg font-bold text-xs transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
+                      calcMode === 'flat'
+                        ? 'bg-amber-500 text-white shadow-md shadow-amber-500/25 ring-1 ring-amber-400'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
+                    }`}
+                  >
+                    <Percent className={`w-3.5 h-3.5 ${calcMode === 'flat' ? 'text-white' : 'text-amber-600'}`} />
+                    <span>Flat Rate</span>
+                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                      calcMode === 'flat' 
+                        ? 'bg-black/20 text-white' 
+                        : 'bg-amber-50 text-amber-700 border border-amber-200'
+                    }`}>
+                      NBFC
+                    </span>
+                  </button>
+                </div>
+              </div>
+
               {/* Monthly EMI Header */}
               <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-amber-400 font-bold uppercase tracking-wider">
-                      Calculated Monthly EMI
-                    </span>
-                    <span className="text-[10px] uppercase font-bold bg-amber-400/20 text-amber-300 px-2 py-0.5 rounded-full">
-                      {calcMode === 'reducing' ? 'Reducing' : 'Flat'}
-                    </span>
-                  </div>
-                  <div className="text-3xl sm:text-4xl font-black text-amber-400 mt-1">
+                  <span className="text-xs text-amber-400 font-bold uppercase tracking-wider block">
+                    Calculated Monthly EMI
+                  </span>
+                  <div className="text-2xl sm:text-3xl 2xl:text-4xl font-black text-amber-400 mt-1">
                     ₹{emi.toLocaleString('en-IN')}
-                    <span className="text-sm font-normal text-slate-400"> / month</span>
+                    <span className="text-xs sm:text-sm font-normal text-slate-400"> / month</span>
                   </div>
                 </div>
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
@@ -632,9 +653,10 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Action Buttons: WhatsApp, Copy, Apply */}
-              <div className="pt-4 space-y-2.5">
+            {/* Action Buttons: WhatsApp, Copy, Apply */}
+            <div className="pt-4 space-y-2.5">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
@@ -671,7 +693,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
             </div>
 
             {/* Subsidy Note Card */}
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-3.5">
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-4.5 flex items-start gap-3.5 shrink-0">
               <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
               <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                 <strong className="text-slate-900 block font-bold mb-0.5">PM Surya Ghar Subsidy Guaranteed</strong>

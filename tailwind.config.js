@@ -18,8 +18,9 @@ export default {
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+        heading: ['Outfit', 'sans-serif'],
         outfit: ['Outfit', 'sans-serif'],
+        jakarta: ['Plus Jakarta Sans', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
       },

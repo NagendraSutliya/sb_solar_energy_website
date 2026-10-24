@@ -47,7 +47,7 @@ const HeroSlider = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
 
   return (
-    <div className="relative h-[450px] md:h-[550px] w-full overflow-hidden bg-slate-900">
+    <div className="relative h-[420px] sm:h-[460px] md:h-[480px] lg:h-[500px] 2xl:h-[550px] w-full overflow-hidden bg-slate-900">
       <AnimatePresence initial={false}>
         <motion.div
           key={currentSlide}
@@ -77,18 +77,18 @@ const HeroSlider = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="max-w-4xl text-center mx-auto"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 md:mb-6 text-white leading-tight drop-shadow-lg uppercase">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-extrabold tracking-tight mb-3 md:mb-4 2xl:mb-6 text-white leading-[1.15] drop-shadow-md uppercase">
                 {HERO_SLIDES[currentSlide].title}
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-yellow-400 mb-8 md:mb-10 font-medium drop-shadow-md max-w-3xl mx-auto">
+              <p className="text-xs sm:text-sm md:text-base 2xl:text-lg text-emerald-100/90 mb-5 md:mb-7 2xl:mb-10 font-normal leading-relaxed drop-shadow-sm max-w-3xl mx-auto">
                 {HERO_SLIDES[currentSlide].subtitle}
               </p>
-              <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
-                <Button onClick={() => navigate('/contact')} size="sm" className="group rounded-full shadow-xl shadow-primary/20 hover:scale-105 transition-transform md:h-14 md:px-8 md:text-lg sm:h-11 sm:px-6 sm:text-base">
+              <div className="flex flex-wrap gap-2.5 sm:gap-4 justify-center">
+                <Button onClick={() => navigate('/contact')} size="sm" className="group rounded-full shadow-xl shadow-primary/20 hover:scale-105 transition-transform h-10 px-5 text-sm md:h-12 md:px-7 md:text-base 2xl:h-14 2xl:px-8 2xl:text-lg">
                   Let's Start Now
-                  <Pointer className="rotate-90 ml-2 h-3 w-4 md:h-4 md:w-5 group-hover:translate-x-1 transition-transform" />
+                  <Pointer className="rotate-90 ml-2 h-3.5 w-4 md:h-4 md:w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button onClick={() => navigate('/products')} size="sm" variant="outline" className="text-white border-white rounded-full hover:bg-white hover:text-slate-900 hover:scale-105 transition-transform md:h-14 md:px-8 md:text-lg sm:h-11 sm:px-6 sm:text-base bg-white/5 backdrop-blur-sm">
+                <Button onClick={() => navigate('/products')} size="sm" variant="outline" className="text-white border-white rounded-full hover:bg-white hover:text-slate-900 hover:scale-105 transition-transform h-10 px-5 text-sm md:h-12 md:px-7 md:text-base 2xl:h-14 2xl:px-8 2xl:text-lg bg-white/5 backdrop-blur-sm">
                   View Our Products
                 </Button>
               </div>
@@ -151,15 +151,15 @@ const FeaturesSection = () => {
   }, []);
 
   return (
-    <section className="py-10 md:py-20 bg-slate-50 relative z-10 overflow-hidden">
+    <section className="py-10 md:py-14 2xl:py-20 bg-slate-50 relative z-10 overflow-hidden">
       <AnimatedBackground />
       <div className="max-w-7xl mx-auto md:px-5 lg:px-8 relative z-10">
-        <div className="text-center mb-10 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3 md:mb-4 flex flex-wrap justify-center items-center gap-x-2 leading-tight">
+        <div className="text-center mb-8 md:mb-10 2xl:mb-12">
+          <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-bold text-slate-900 tracking-tight mb-3 md:mb-4 flex flex-wrap justify-center items-center gap-x-2 leading-tight">
             <span>Power Your Home With <span className="text-primary">Solar</span> At</span>
             <span className="inline-flex items-center">
               <span className="mr-2">Zero</span>
-              <span className="relative inline-block h-[1.2em] w-[140px] md:w-[270px] overflow-hidden text-left align-bottom">
+              <span className="relative inline-block h-[1.2em] w-[130px] sm:w-[180px] md:w-[220px] 2xl:w-[270px] overflow-hidden text-left align-bottom">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={wordIndex}
@@ -180,7 +180,7 @@ const FeaturesSection = () => {
 
         <div
           ref={scrollRef}
-          className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory px-[7.5vw] sm:px-[20vw] md:px-0 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="flex md:grid md:grid-cols-3 gap-5 md:gap-6 2xl:gap-8 overflow-x-auto snap-x snap-mandatory px-[7.5vw] sm:px-[20vw] md:px-0 scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
         >
           {[
             {
@@ -199,16 +199,16 @@ const FeaturesSection = () => {
               icon: Sun
             }
           ].map((feature, i) => (
-            <div key={i} className="min-w-[85vw] sm:min-w-[60vw] md:min-w-0 snap-center bg-white p-5 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-              <div className="flex items-center space-x-3 md:space-x-4 mb-4 md:mb-6">
-                <div className="h-10 w-10 md:h-14 md:w-14 shrink-0 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
-                  <feature.icon className="h-5 w-5 md:h-7 md:w-7 text-primary group-hover:text-white transition-colors duration-300" />
+            <div key={i} className="min-w-[85vw] sm:min-w-[60vw] md:min-w-0 snap-center bg-white p-5 md:p-6 2xl:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+              <div className="flex items-center space-x-3 md:space-x-4 mb-3 md:mb-5 2xl:mb-6">
+                <div className="h-10 w-10 md:h-12 md:w-12 2xl:h-14 2xl:w-14 shrink-0 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                  <feature.icon className="h-5 w-5 md:h-6 md:w-6 2xl:h-7 2xl:w-7 text-primary group-hover:text-white transition-colors duration-300" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-slate-900">{feature.title}</h3>
+                <h3 className="text-base md:text-lg 2xl:text-xl font-bold text-slate-900">{feature.title}</h3>
               </div>
-              <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-4 md:mb-6">{feature.desc}</p>
-              <a href="tel:07023204664" className="text-primary font-semibold inline-flex items-center group-hover:text-primary-hover transition-colors">
-                Learn more <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed mb-3 md:mb-5 2xl:mb-6">{feature.desc}</p>
+              <a href="tel:07023204664" className="text-primary font-semibold text-xs sm:text-sm md:text-base inline-flex items-center group-hover:text-primary-hover transition-colors">
+                Learn more <ArrowRight className="ml-1 h-3.5 w-3.5 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           ))}
@@ -220,18 +220,18 @@ const FeaturesSection = () => {
 
 const ProductsSection = () => {
   return (
-    <section className="py-10 md:py-20 bg-white relative z-10 overflow-hidden">
+    <section className="py-10 md:py-14 2xl:py-20 bg-white relative z-10 overflow-hidden">
       <AnimatedBackground />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 className="text-2xl md:text-4xl font-bold tracking-tight mb-2 md:mb-3">
+        <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-bold tracking-tight mb-2 md:mb-3">
           <span className="text-primary">OUR</span> <span className="text-slate-900">PRODUCTS</span>
         </h2>
-        <div className="w-16 h-1 bg-primary mx-auto mb-6 rounded-full"></div>
-        <p className="text-sm md:text-base text-slate-600 max-w-4xl mx-auto mb-6 md:mb-12 font-medium">
+        <div className="w-16 h-1 bg-primary mx-auto mb-4 md:mb-6 rounded-full"></div>
+        <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-4xl mx-auto mb-6 md:mb-10 2xl:mb-12 font-medium">
           Highly Efficient Array of Solar PV Modules | Inverters | Energy Storage Systems | Premium-Quality At Affordable Price
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5 2xl:gap-6">
           {[
             { title: 'SOLAR PV MODULE', color: 'text-teal-500', img: '/solar_pv.png' },
             { title: 'ON GRID INVERTER', color: 'text-orange-500', img: '/prod2.png' },
@@ -243,11 +243,11 @@ const ProductsSection = () => {
             { title: 'STREET LIGHT SYSTEM', color: 'text-indigo-700', img: '/prod8.png' }
           ].map((prod, i) => (
             <div key={i} className="bg-white rounded-xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden group cursor-pointer flex flex-col h-full">
-              <div className="h-32 sm:h-36 md:h-56 w-full p-2 sm:p-3 md:p-6 flex items-center justify-center bg-white">
+              <div className="h-28 sm:h-36 md:h-44 2xl:h-56 w-full p-2 sm:p-3 md:p-5 2xl:p-6 flex items-center justify-center bg-white">
                 <img src={prod.img} alt={prod.title} className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <div className="p-2 md:p-4 flex-grow flex items-center justify-center border-t-2 border-slate-50 bg-slate-50/50">
-                <h3 className={`font-black text-center text-[10px] sm:text-[12px] md:text-[15px] tracking-wide ${prod.color}`}>
+              <div className="p-2 md:p-3.5 flex-grow flex items-center justify-center border-t-2 border-slate-50 bg-slate-50/50">
+                <h3 className={`font-black text-center text-[10px] sm:text-[12px] md:text-[14px] 2xl:text-[15px] tracking-wide ${prod.color}`}>
                   {prod.title}
                 </h3>
               </div>
@@ -270,15 +270,15 @@ const IndustrySection = () => {
   const [active, setActive] = useState(INDUSTRY_SOLUTIONS[0]);
 
   return (
-    <section className="py-10 md:py-20 bg-slate-50 relative z-10 overflow-hidden">
+    <section className="py-10 md:py-14 2xl:py-20 bg-slate-50 relative z-10 overflow-hidden">
       <AnimatedBackground />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-5xl mx-auto mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold tracking-tight mb-2 md:mb-3">
+        <div className="text-center max-w-5xl mx-auto mb-6 md:mb-10 2xl:mb-12">
+          <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-bold tracking-tight mb-2 md:mb-3">
             <span className="text-primary">SOLUTIONS</span> <span className="text-slate-900">WE OFFER</span>
           </h2>
-          <div className="w-16 h-1 bg-primary mx-auto mb-3 md:mb-6 rounded-full"></div>
-          <p className="text-sm md:text-base text-slate-600 font-medium">
+          <div className="w-16 h-1 bg-primary mx-auto mb-3 md:mb-4 2xl:mb-6 rounded-full"></div>
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
             Solar Energy India Provides Solutions For Various Industries, Offering Comprehensive Coverage For Effective And Efficient Safety & Quality.
           </p>
         </div>
@@ -368,26 +368,26 @@ const WHY_CHOOSE_US = [
 
 const WhyChooseUsSection = () => {
   return (
-    <section className="py-10 md:py-20 bg-white relative z-10 overflow-hidden">
+    <section className="py-10 md:py-14 2xl:py-20 bg-white relative z-10 overflow-hidden">
       <AnimatedBackground />
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-6 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold tracking-tight mb-2 md:mb-3">
+        <div className="text-center max-w-4xl mx-auto mb-6 md:mb-10 2xl:mb-12">
+          <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-bold tracking-tight mb-2 md:mb-3">
             <span className="text-slate-900">WHY CHOOSE</span> <span className="text-primary">US</span>
           </h2>
-          <div className="w-16 h-1 bg-primary mx-auto mb-2 md:mb-6 rounded-full"></div>
-          <p className="text-sm md:text-base text-slate-600 font-medium">
+          <div className="w-16 h-1 bg-primary mx-auto mb-2 md:mb-4 2xl:mb-6 rounded-full"></div>
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
             We deliver uncompromising quality, transparent pricing, and end-to-end solar solutions that empower you to take control of your energy future.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 2xl:gap-8">
           {WHY_CHOOSE_US.map((feature, i) => (
-            <div key={i} className="flex flex-col items-center text-center p-3 sm:p-6 md:p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
-              <div className="h-10 w-10 md:h-16 md:w-16 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors duration-300">
-                <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-primary group-hover:text-white transition-colors duration-300" />
+            <div key={i} className="flex flex-col items-center text-center p-3 sm:p-5 md:p-6 2xl:p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
+              <div className="h-10 w-10 md:h-12 md:w-12 2xl:h-16 2xl:w-16 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-4 md:mb-6 group-hover:bg-primary transition-colors duration-300">
+                <feature.icon className="h-5 w-5 md:h-6 md:w-6 2xl:h-8 2xl:w-8 text-primary group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+              <h3 className="text-sm sm:text-base md:text-lg 2xl:text-xl font-bold text-slate-900 mb-2 md:mb-3">{feature.title}</h3>
               <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed">
                 {feature.desc}
               </p>
@@ -452,15 +452,15 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-10 md:py-20 bg-slate-50 relative z-10 overflow-hidden">
+    <section className="py-10 md:py-14 2xl:py-20 bg-slate-50 relative z-10 overflow-hidden">
       <AnimatedBackground />
       <div className="max-w-[1400px] mx-auto lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto mb-6 md:mb-12 px-4 lg:px-0">
-          <h2 className="text-2xl md:text-4xl font-bold tracking-tight mb-2 md:mb-3">
+        <div className="text-center max-w-4xl mx-auto mb-6 md:mb-10 2xl:mb-12 px-4 lg:px-0">
+          <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-bold tracking-tight mb-2 md:mb-3">
             <span className="text-slate-900">WHAT OUR CUSTOMERS</span> <span className="text-primary">SAY</span>
           </h2>
-          <div className="w-16 h-1 bg-primary mx-auto mb-2 md:mb-6 rounded-full"></div>
-          <p className="text-sm md:text-base text-slate-600 font-medium">
+          <div className="w-16 h-1 bg-primary mx-auto mb-2 md:mb-4 2xl:mb-6 rounded-full"></div>
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
             Don't just take our word for it. Hear from our satisfied clients across residential, corporate, and industrial sectors.
           </p>
         </div>
@@ -536,12 +536,15 @@ const BrandsSection = () => {
   ];
 
   return (
-    <section className="py-10 md:py-20 bg-white relative overflow-hidden">
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 md:mb-12 text-center">
-        <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight uppercase">
-          <span className="text-[#8CC63F]">BRANDS</span> WE DEAL IN
+    <section className="py-10 md:py-14 2xl:py-20 bg-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 md:mb-10 2xl:mb-12 text-center">
+        <span className="text-xs font-bold uppercase tracking-wider text-primary block mb-2">
+          Authorized Solar Partnerships
+        </span>
+        <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Brands We Deal In
         </h2>
-        <div className="w-24 h-1 bg-[#10b981] mx-auto mt-4 rounded-full"></div>
+        <div className="w-16 h-1 bg-primary mx-auto mt-3 rounded-full"></div>
       </div>
 
       {/* Marquee Wrapper */}
@@ -762,16 +765,16 @@ const FAQSection = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-20 bg-slate-50 relative z-10 overflow-hidden border-t border-slate-200/80">
+    <section className="py-10 md:py-14 2xl:py-20 bg-slate-50 relative z-10 overflow-hidden border-t border-slate-200/80">
       <AnimatedBackground />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10 2xl:mb-12">
           <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-3">
             <HelpCircle className="w-3.5 h-3.5" /> Frequently Asked Questions
           </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
             Frequently Asked <span className="text-primary">Questions</span>
           </h2>
           <p className="text-slate-600 text-sm sm:text-base mt-2">

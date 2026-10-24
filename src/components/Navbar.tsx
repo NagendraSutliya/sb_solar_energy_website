@@ -74,7 +74,7 @@ const Navbar = () => {
                 alt="SB Solar Energy" 
                 className="h-4 md:h-8 w-auto object-contain rounded shadow-sm group-hover:scale-105 transition-transform duration-300"
               />
-              <span className="font-bold text-sm md:text-base text-slate-900 tracking-tight mt-1 leading-none">
+              <span className="font-heading font-extrabold text-sm md:text-base text-slate-900 tracking-tight mt-1 leading-none">
                 SB SOLAR <span className="text-primary">ENERGY</span>
               </span>
             </Link>

@@ -53,7 +53,7 @@ const Footer = () => {
           <div className="space-y-4">
            <Link to="/" className="flex flex-col items-start space-y-2">
               <img src="/sb_logo.png" alt="Logo" className="h-10 md:h-12 w-auto" />
-              <span className="font-bold text-xl md:text-2xl text-white tracking-tight leading-none">
+              <span className="font-heading font-extrabold text-xl md:text-2xl text-white tracking-tight leading-none">
                 SB SOLAR <span className="text-primary">ENERGY</span>
               </span>
             </Link>

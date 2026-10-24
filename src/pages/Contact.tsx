@@ -36,7 +36,7 @@ const Contact = () => {
   const [selectedState, setSelectedState] = useState('Rajasthan');
   const [selectedDistrict, setSelectedDistrict] = useState(location.state?.district || '');
   const [selectedType, setSelectedType] = useState<'all' | 'dealer' | 'installer' | 'distributor'>('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('table');
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -154,7 +154,7 @@ const Contact = () => {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Page Header */}
-      <section className="relative min-h-[200px] md:h-[300px] flex items-center justify-center bg-fixed bg-cover overflow-hidden z-10"
+      {/* <section className="relative min-h-[200px] md:h-[300px] flex items-center justify-center bg-fixed bg-cover overflow-hidden z-10"
         style={{
           backgroundImage: "url('/contact_hero.png')",
           backgroundPosition: "center 70%" 
@@ -177,7 +177,7 @@ const Contact = () => {
             </p>
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       {/* Tab Switcher */}
       <div className="bg-white shadow-sm border-b border-slate-200 sticky top-[72px] z-40">
@@ -200,60 +200,79 @@ const Contact = () => {
       </div>
 
       {activeTab === 'contact' ? (
-        <section className="py-20 bg-slate-50 relative overflow-hidden z-10">
+        <section className="py-8 md:py-10 bg-slate-50 relative overflow-hidden z-10">
       <AnimatedBackground />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
             
-            {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-8">Get In Touch</h2>
-              
-              <div className="space-y-8">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-white p-3 rounded-full shadow-sm">
-                    <Phone className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-lg mb-1">Phone Number</h3>
-                    <p className="text-slate-600">+91 7023204664</p>
-                  </div>
+            {/* Contact Information Box */}
+            <div className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between h-full">
+              <div>
+                <div className="mb-6">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                    Get In Touch
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                    Have questions about rooftop solar, subsidy, or net metering? Reach out to our technical team directly.
+                  </p>
                 </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 flex items-start gap-3 transition-colors hover:bg-slate-50">
+                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
+                      <Phone className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Phone Support</span>
+                      <a href="tel:+917023204664" className="font-bold text-slate-900 text-sm hover:text-primary transition-colors">
+                        +91 7023204664
+                      </a>
+                    </div>
+                  </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="bg-white p-3 rounded-full shadow-sm">
-                    <Mail className="h-6 w-6 text-primary" />
+                  <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 flex items-start gap-3 transition-colors hover:bg-slate-50">
+                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
+                      <Mail className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Email Us</span>
+                      <a href="mailto:support@sbsolarenergy.in" className="font-bold text-slate-900 text-xs sm:text-sm hover:text-primary transition-colors block truncate">
+                        support@sbsolarenergy.in
+                      </a>
+                      <a href="mailto:sbindustries2121@gmail.com" className="text-[11px] text-slate-500 hover:text-slate-800 block truncate">
+                        sbindustries2121@gmail.com
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-lg mb-1">Email Address</h3>
-                    <p className="text-slate-600 break-all">sbindustries2121@gmail.com</p>
-                    <p className="text-slate-600 break-all">support@sbsolarenergy.in</p>
-                  </div>
-                </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="bg-white p-3 rounded-full shadow-sm">
-                    <MapPin className="h-6 w-6 text-primary" />
+                  <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 flex items-start gap-3 transition-colors hover:bg-slate-50">
+                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
+                      <MapPin className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Head Office</span>
+                      <p className="font-bold text-slate-900 text-sm">
+                        Jaipur, Rajasthan, India
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-lg mb-1">Location</h3>
-                    <p className="text-slate-600">Jaipur, Rajasthan, India</p>
-                  </div>
-                </div>
 
-                <div className="flex items-start space-x-4">
-                  <div className="bg-white p-3 rounded-full shadow-sm">
-                    <Clock className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-lg mb-1">Business Hours</h3>
-                    <p className="text-slate-600">Monday - Saturday: 9:00 AM - 6:00 PM</p>
+                  <div className="p-3.5 rounded-2xl bg-slate-50/80 border border-slate-100 flex items-start gap-3 transition-colors hover:bg-slate-50">
+                    <div className="p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
+                      <Clock className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Business Hours</span>
+                      <p className="font-bold text-slate-900 text-xs sm:text-sm">
+                        Mon – Sat: 9:00 AM – 6:00 PM
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Map Embed */}
-              <div className="mt-10 rounded-2xl overflow-hidden shadow-sm border border-slate-100 h-[250px]">
+              <div className="mt-6 rounded-2xl overflow-hidden shadow-sm border border-slate-200 h-[210px] sm:h-[230px]">
                 <iframe 
                   src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d211.50583965914583!2d75.58637852981474!3d26.986484315565846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1784194048018!5m2!1sen!2sin" 
                   width="100%" 
@@ -268,8 +287,8 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-100 flex flex-col h-full relative">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">Send a Message</h2>
+            <div className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between h-full relative">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-6">Send a Message</h2>
               
               <AnimatePresence>
                 {submitStatus !== 'idle' && (
@@ -329,12 +348,12 @@ const Contact = () => {
         </div>
       </section>
       ) : (
-      <section className="py-12 md:py-16 bg-slate-50/70 border-t border-slate-200 relative overflow-hidden z-10">
+      <section className="py-8 md:py-10 bg-slate-50/70 border-t border-slate-200 relative overflow-hidden z-10">
         <AnimatedBackground />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Quick District Navigation Pills */}
-          <div className="mb-8">
+          {/* <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5 text-primary" /> Popular Coverage Districts in Rajasthan:
@@ -372,14 +391,14 @@ const Contact = () => {
                 );
               })}
             </div>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             
             {/* Left Sidebar (Filters) */}
-            <div className="lg:col-span-1 space-y-6">
+            <div className="lg:col-span-1 space-y-4">
               <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-5">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                {/* <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
                     <Building2 className="h-4 w-4 text-primary" />
                     Filter Partners
@@ -396,10 +415,10 @@ const Contact = () => {
                       <RotateCcw className="h-3 w-3" /> Reset
                     </button>
                   )}
-                </div>
+                </div> */}
 
                 {/* Search Input */}
-                <div>
+                {/* <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1.5">Search by Name or Area</label>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -411,7 +430,7 @@ const Contact = () => {
                       className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* State (Fixed to Rajasthan) */}
                 <div>
@@ -523,10 +542,10 @@ const Contact = () => {
             </div>
 
             {/* Right Main Content */}
-            <div className="lg:col-span-3 space-y-6">
+            <div className="lg:col-span-3 space-y-4">
               
               {/* Regional Guarantee Card for selected district */}
-              <div className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-2xl p-5 sm:p-6 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+              {/* <div className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-2xl p-5 sm:p-6 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
                 <div className="space-y-1.5">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
@@ -560,7 +579,7 @@ const Contact = () => {
                     <FaWhatsapp className="h-4 w-4" />
                   </a>
                 </div>
-              </div>
+              </div> */}
 
               {/* Header and Results Toolbar */}
               <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm">
@@ -627,7 +646,7 @@ const Contact = () => {
                   </div>
                 </div>
               ) : viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[520px] overflow-y-auto pr-1 custom-scrollbar">
                   {filteredVendors.map((vendor) => (
                     <div 
                       key={vendor.id} 
@@ -663,25 +682,13 @@ const Contact = () => {
                           </div>
                         </div>
 
-                        {/* Contact Person & Address */}
-                        <div className="space-y-2 py-2 text-xs text-slate-600 border-t border-slate-100 mt-2">
-                          {vendor.contactPerson && (
-                            <div className="flex items-center text-slate-700 font-medium">
-                              <User className="h-3.5 w-3.5 text-primary mr-2 shrink-0" />
-                              <span>Key Contact: <strong className="text-slate-900">{vendor.contactPerson}</strong></span>
-                            </div>
-                          )}
-
+                        {/* Address */}
+                        <div className="py-2.5 text-xs text-slate-600 border-t border-slate-100 mt-2">
                           <div className="flex items-start">
                             <MapPin className="h-3.5 w-3.5 text-rose-500 mr-2 mt-0.5 shrink-0" />
                             <span className="leading-relaxed">
                               <strong className="text-slate-800">{vendor.district}, {vendor.state}</strong> &bull; {vendor.address}
                             </span>
-                          </div>
-
-                          <div className="flex items-center text-slate-800 font-semibold">
-                            <Phone className="h-3.5 w-3.5 text-indigo-500 mr-2 shrink-0" />
-                            <span>{vendor.contact}</span>
                           </div>
                         </div>
 
@@ -698,32 +705,13 @@ const Contact = () => {
                         </div>
                       </div>
 
-                      {/* Action Buttons */}
-                      <div className="flex items-center gap-2 pt-3 border-t border-slate-100">
-                        <a
-                          href={getWhatsAppUrl(vendor)}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex-1 py-2 px-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
-                          title="Chat on WhatsApp"
-                        >
-                          <FaWhatsapp className="h-3.5 w-3.5" />
-                          <span>WhatsApp</span>
-                        </a>
-
-                        <a
-                          href={`tel:${vendor.contact}`}
-                          className="flex-1 py-2 px-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm"
-                        >
-                          <Phone className="h-3 w-3" />
-                          <span>Call</span>
-                        </a>
-
+                      {/* Action Button */}
+                      <div className="pt-3 border-t border-slate-100">
                         <button
                           onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                          className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all whitespace-nowrap"
+                          className="w-full py-2.5 px-4 bg-primary hover:bg-primary-hover text-white rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
                         >
-                          Get Quote
+                          Request Free Quote
                         </button>
                       </div>
                     </div>
@@ -731,15 +719,15 @@ const Contact = () => {
                 </div>
               ) : (
                 <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto max-h-[520px] overflow-y-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse min-w-[650px]">
-                      <thead className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                      <thead className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 sticky top-0 z-10 shadow-sm">
                         <tr>
-                          <th className="py-3.5 px-4">Partner Name</th>
-                          <th className="py-3.5 px-4">Location</th>
-                          <th className="py-3.5 px-4">Rating</th>
-                          <th className="py-3.5 px-4">Contact</th>
-                          <th className="py-3.5 px-4 text-right">Connect</th>
+                          <th className="py-3.5 px-4 bg-slate-50">Partner Name</th>
+                          <th className="py-3.5 px-4 bg-slate-50">Location</th>
+                          <th className="py-3.5 px-4 bg-slate-50">Rating</th>
+                          <th className="py-3.5 px-4 bg-slate-50">Specialization</th>
+                          <th className="py-3.5 px-4 text-right bg-slate-50">Action</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100 text-xs">
@@ -747,7 +735,13 @@ const Contact = () => {
                           <tr key={vendor.id} className="hover:bg-slate-50/80 transition-colors">
                             <td className="py-3.5 px-4">
                               <div className="font-bold text-slate-900">{vendor.name}</div>
-                              <div className="text-[11px] text-slate-500">Contact: {vendor.contactPerson}</div>
+                              <div className="text-[11px] text-slate-500 capitalize">
+                                {vendor.businessType === 'distributor'
+                                  ? 'Regional Hub / Distributor'
+                                  : vendor.businessType === 'installer'
+                                  ? 'Certified Solar Installer'
+                                  : 'Authorized Solar Dealer'}
+                              </div>
                             </td>
                             <td className="py-3.5 px-4">
                               <span className="font-semibold text-slate-800">{vendor.district}</span>
@@ -760,34 +754,22 @@ const Contact = () => {
                                 ★ {vendor.rating}
                               </span>
                             </td>
-                            <td className="py-3.5 px-4 font-medium text-slate-700 whitespace-nowrap">
-                              {vendor.contact}
+                            <td className="py-3.5 px-4">
+                              <div className="flex flex-wrap gap-1 max-w-[220px]">
+                                {vendor.tags.slice(0, 2).map((tag) => (
+                                  <span key={tag} className="bg-slate-100 text-slate-600 text-[10px] font-medium px-2 py-0.5 rounded">
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
                             </td>
                             <td className="py-3.5 px-4 text-right">
-                              <div className="flex items-center justify-end gap-1.5">
-                                <a
-                                  href={getWhatsAppUrl(vendor)}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="p-1.5 bg-[#25D366] text-white rounded-lg hover:bg-[#20ba59] transition-colors"
-                                  title="WhatsApp"
-                                >
-                                  <FaWhatsapp className="h-3.5 w-3.5" />
-                                </a>
-                                <a
-                                  href={`tel:${vendor.contact}`}
-                                  className="p-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-                                  title="Call"
-                                >
-                                  <Phone className="h-3.5 w-3.5" />
-                                </a>
-                                <button
-                                  onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                                  className="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[11px] font-bold"
-                                >
-                                  Quote
-                                </button>
-                              </div>
+                              <button
+                                onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
+                                className="px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer whitespace-nowrap"
+                              >
+                                Get Quote
+                              </button>
                             </td>
                           </tr>
                         ))}
