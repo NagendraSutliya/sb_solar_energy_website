@@ -9,7 +9,6 @@ import {
   BarChart3, 
   Sliders, 
   Store, 
-  MessageCircle, 
   ShieldCheck, 
   LogOut, 
   Menu, 
