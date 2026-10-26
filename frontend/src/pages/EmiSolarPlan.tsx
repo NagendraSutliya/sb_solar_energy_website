@@ -170,27 +170,27 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-1 block">
+            <span className="text-primary font-bold tracking-widest uppercase text-xs md:text-base mb-1 block">
               Collateral-Free Solar Financing @ 7% Interest p.a.
             </span>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-1.5">
               Solar <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">EMI Plan</span>
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed mb-3">
+            <p className="text-xs md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed mb-3">
               Don&apos;t let upfront cost stop you. Your electricity bill savings will pay for your monthly solar EMI with full PM Surya Ghar Central Subsidy!
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2.5">
               <button
                 onClick={scrollToCalculator}
-                className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95"
+                className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl font-bold text-xs md:text-base shadow-md transition-all flex items-center gap-1.5 cursor-pointer hover:scale-105 active:scale-95"
               >
                 <Calculator className="w-4 h-4" /> Calculate EMI
               </button>
               {onOpenQuoteModal && (
                 <button
                   onClick={onOpenQuoteModal}
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl font-medium text-xs sm:text-sm backdrop-blur-sm transition-all"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl font-medium text-xs md:text-base backdrop-blur-sm transition-all"
                 >
                   Get Free Quote
                 </button>
@@ -218,7 +218,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               </div>
               <div>
                 <div className="text-base sm:text-lg 2xl:text-xl font-extrabold text-slate-900 tracking-tight">{item.val}</div>
-                <div className="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">{item.label}</div>
+                <div className="text-xs md:text-base font-bold text-slate-800 mt-0.5">{item.label}</div>
                 <div className="text-[11px] text-slate-500 mt-0.5 leading-snug line-clamp-1">{item.desc}</div>
               </div>
             </div>
@@ -229,13 +229,13 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
       {/* Interactive EMI & Savings Calculator */}
       <section id="calculator" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12 2xl:py-16 scroll-mt-24">
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10">
-          <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-block mb-3">
+          <span className="text-primary font-bold text-xs md:text-base uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-block mb-3">
             Real-Time Solar Financing Calculator
           </span>
           <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
             Calculate Your Solar EMI &amp; Savings
           </h2>
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 mt-2">
+          <p className="text-xs md:text-base text-slate-600 mt-2">
             Compare banking reducing rate vs flat rate, explore instant loan presets, and see how your solar electricity savings offset your monthly EMI.
           </p>
 
@@ -278,7 +278,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                       setSystemKW(kw);
                       setCustomLoanOverride(null);
                     }}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                    className={`text-xs md:text-base px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
                       systemKW === kw
                         ? 'bg-primary text-white shadow-sm'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -335,7 +335,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                     key={preset.val}
                     type="button"
                     onClick={() => setCustomLoanOverride(preset.val)}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                    className={`text-xs md:text-base px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
                       loanAmount === preset.val
                         ? 'bg-indigo-600 text-white shadow-sm'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -373,7 +373,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                     key={rate}
                     type="button"
                     onClick={() => setInterestRate(rate)}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                    className={`text-xs md:text-base px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
                       interestRate === rate
                         ? 'bg-amber-600 text-white shadow-sm'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -416,7 +416,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                     key={t.yrs}
                     type="button"
                     onClick={() => setTenureYears(t.yrs)}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                    className={`text-xs md:text-base px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
                       tenureYears === t.yrs
                         ? 'bg-blue-600 text-white shadow-sm'
                         : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -451,7 +451,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                 }}
                 className="w-full h-2.5 bg-slate-200 rounded-lg accent-green-600 cursor-pointer"
               />
-              <div className="flex justify-between text-xs text-slate-400 mt-1 font-medium">
+              <div className="flex justify-between text-xs md:text-base text-slate-400 mt-1 font-medium">
                 <span>0% (Zero Down-payment)</span>
                 <span>10%</span>
                 <span>20%</span>
@@ -503,7 +503,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   <button
                     type="button"
                     onClick={() => setCalcMode('reducing')}
-                    className={`py-2 px-2.5 rounded-lg font-bold text-xs transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
+                    className={`py-2 px-2.5 rounded-lg font-bold text-xs md:text-base transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
                       calcMode === 'reducing'
                         ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25 ring-1 ring-emerald-500'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
@@ -522,7 +522,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   <button
                     type="button"
                     onClick={() => setCalcMode('flat')}
-                    className={`py-2 px-2.5 rounded-lg font-bold text-xs transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
+                    className={`py-2 px-2.5 rounded-lg font-bold text-xs md:text-base transition-all duration-200 cursor-pointer flex items-center justify-center gap-1.5 ${
                       calcMode === 'flat'
                         ? 'bg-amber-500 text-white shadow-md shadow-amber-500/25 ring-1 ring-amber-400'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
@@ -544,12 +544,12 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               {/* Monthly EMI Header */}
               <div className="flex items-center justify-between pb-4 border-b border-slate-800">
                 <div>
-                  <span className="text-xs text-amber-400 font-bold uppercase tracking-wider block">
+                  <span className="text-xs md:text-base text-amber-400 font-bold uppercase tracking-wider block">
                     Calculated Monthly EMI
                   </span>
                   <div className="text-2xl sm:text-3xl 2xl:text-4xl font-black text-amber-400 mt-1">
                     ₹{emi.toLocaleString('en-IN')}
-                    <span className="text-xs sm:text-sm font-normal text-slate-400"> / month</span>
+                    <span className="text-xs md:text-base font-normal text-slate-400"> / month</span>
                   </div>
                 </div>
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
@@ -559,7 +559,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
 
               {/* Green Box: Estimated Solar Bill Offset */}
               <div className="my-5 bg-emerald-950/70 border border-emerald-500/30 rounded-2xl p-4">
-                <div className="flex items-center justify-between text-emerald-400 font-bold text-xs uppercase tracking-wider mb-2">
+                <div className="flex items-center justify-between text-emerald-400 font-bold text-xs md:text-base uppercase tracking-wider mb-2">
                   <span className="flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
                     Estimated Solar Bill Offset
@@ -568,7 +568,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                     {monthlyUnits} Units/mo
                   </span>
                 </div>
-                <div className="space-y-1.5 text-xs sm:text-sm">
+                <div className="space-y-1.5 text-xs md:text-base">
                   <div className="flex justify-between items-center text-slate-300">
                     <span>Power Bill Savings:</span>
                     <span className="font-bold text-emerald-400">+ ₹{monthlySavings.toLocaleString('en-IN')} / mo</span>
@@ -589,7 +589,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               {/* Financial Breakdown Table & Donut Chart */}
               <div className="space-y-4 pb-4 border-b border-slate-800">
                 <div className="flex items-center justify-between gap-4">
-                  <div className="space-y-2 text-xs sm:text-sm flex-1">
+                  <div className="space-y-2 text-xs md:text-base flex-1">
                     <div className="flex justify-between">
                       <span className="text-slate-400">Principal Amount:</span>
                       <span className="font-bold text-white">₹{loanAmount.toLocaleString('en-IN')}</span>
@@ -661,14 +661,14 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   <button
                     type="button"
                     onClick={handleShareWhatsApp}
-                    className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-md"
+                    className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs md:text-base flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-md"
                   >
                     <FaWhatsapp className="w-4 h-4" /> Share on WhatsApp
                   </button>
                   <button
                     type="button"
                     onClick={handleCopyQuotation}
-                    className="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-slate-700"
+                    className="w-full py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs md:text-base flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-slate-700"
                   >
                     {copiedToast ? (
                       <>
@@ -695,7 +695,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
             {/* Subsidy Note Card */}
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-4.5 flex items-start gap-3.5 shrink-0">
               <CheckCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-              <div className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div className="text-xs md:text-base text-slate-700 leading-relaxed">
                 <strong className="text-slate-900 block font-bold mb-0.5">PM Surya Ghar Subsidy Guaranteed</strong>
                 SB Solar Energy handles end-to-end DISCOM net metering, government portal registration, and subsidy disbursement assistance right to your bank account.
               </div>
@@ -708,7 +708,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
       <section className="bg-white py-14 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <h3 className="text-xs uppercase font-bold tracking-widest text-slate-400">
+            <h3 className="text-xs md:text-base uppercase font-bold tracking-widest text-slate-400">
               Nationalized &amp; Private Bank Tie-ups
             </h3>
             <p className="text-xl sm:text-2xl font-bold text-slate-800 mt-1">
@@ -727,7 +727,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
             ].map((bank, i) => (
               <div key={i} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-md transition-all text-center flex flex-col justify-center items-center">
                 <Building className="w-6 h-6 text-primary mb-2 opacity-80" />
-                <span className="font-bold text-slate-800 text-xs sm:text-sm leading-tight">{bank.name}</span>
+                <span className="font-bold text-slate-800 text-xs md:text-base leading-tight">{bank.name}</span>
                 <span className="text-[11px] text-slate-500 mt-1">{bank.desc}</span>
               </div>
             ))}
@@ -738,7 +738,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
       {/* How It Works - 4 Steps */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full">
+          <span className="text-primary font-bold text-xs md:text-base uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full">
             Simple 4-Step Process
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
@@ -761,7 +761,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                 <item.icon className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-900 text-base mb-1.5 relative z-10">{item.title}</h3>
-              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed relative z-10">{item.desc}</p>
+              <p className="text-slate-600 text-xs md:text-base leading-relaxed relative z-10">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -771,7 +771,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
       <section id="apply-form" className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 scroll-mt-24">
         <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-200">
           <div className="text-center max-w-xl mx-auto mb-8">
-            <span className="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase">
+            <span className="bg-amber-100 text-amber-800 text-xs md:text-base font-bold px-3 py-1 rounded-full uppercase">
               Quick Application
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
@@ -796,7 +796,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
             <form onSubmit={handleApplySubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  <label className="text-xs md:text-base font-semibold text-slate-700 block mb-1">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -809,7 +809,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  <label className="text-xs md:text-base font-semibold text-slate-700 block mb-1">
                     Mobile Number <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -825,7 +825,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  <label className="text-xs md:text-base font-semibold text-slate-700 block mb-1">
                     City / Pin Code
                   </label>
                   <input
@@ -837,7 +837,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  <label className="text-xs md:text-base font-semibold text-slate-700 block mb-1">
                     Employment / Income Source
                   </label>
                   <select
@@ -854,7 +854,7 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               </div>
 
               {/* Selected Plan Preview */}
-              <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 flex justify-between items-center text-xs sm:text-sm">
+              <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 flex justify-between items-center text-xs md:text-base">
                 <div>
                   <span className="text-slate-600">Selected Plan: </span>
                   <strong className="text-slate-900">{systemKW} kW System</strong>

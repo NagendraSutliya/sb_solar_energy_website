@@ -80,7 +80,7 @@ const HeroSlider = () => {
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl font-extrabold tracking-tight mb-3 md:mb-4 2xl:mb-6 text-white leading-[1.15] drop-shadow-md uppercase">
                 {HERO_SLIDES[currentSlide].title}
               </h1>
-              <p className="text-xs sm:text-sm md:text-base 2xl:text-lg text-emerald-100/90 mb-5 md:mb-7 2xl:mb-10 font-normal leading-relaxed drop-shadow-sm max-w-3xl mx-auto">
+              <p className="text-xs md:text-base 2xl:text-lg text-emerald-100/90 mb-5 md:mb-7 2xl:mb-10 font-normal leading-relaxed drop-shadow-sm max-w-3xl mx-auto">
                 {HERO_SLIDES[currentSlide].subtitle}
               </p>
               <div className="flex flex-wrap gap-2.5 sm:gap-4 justify-center">
@@ -206,8 +206,8 @@ const FeaturesSection = () => {
                 </div>
                 <h3 className="text-base md:text-lg 2xl:text-xl font-bold text-slate-900">{feature.title}</h3>
               </div>
-              <p className="text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed mb-3 md:mb-5 2xl:mb-6">{feature.desc}</p>
-              <a href="tel:07023204664" className="text-primary font-semibold text-xs sm:text-sm md:text-base inline-flex items-center group-hover:text-primary-hover transition-colors">
+              <p className="text-slate-600 text-xs md:text-base leading-relaxed mb-3 md:mb-5 2xl:mb-6">{feature.desc}</p>
+              <a href="tel:07023204664" className="text-primary font-semibold text-xs md:text-base inline-flex items-center group-hover:text-primary-hover transition-colors">
                 Learn more <ArrowRight className="ml-1 h-3.5 w-3.5 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
@@ -227,7 +227,7 @@ const ProductsSection = () => {
           <span className="text-primary">OUR</span> <span className="text-slate-900">PRODUCTS</span>
         </h2>
         <div className="w-16 h-1 bg-primary mx-auto mb-4 md:mb-6 rounded-full"></div>
-        <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-4xl mx-auto mb-6 md:mb-10 2xl:mb-12 font-medium">
+        <p className="text-xs md:text-base text-slate-600 max-w-4xl mx-auto mb-6 md:mb-10 2xl:mb-12 font-medium">
           Highly Efficient Array of Solar PV Modules | Inverters | Energy Storage Systems | Premium-Quality At Affordable Price
         </p>
 
@@ -278,7 +278,7 @@ const IndustrySection = () => {
             <span className="text-primary">SOLUTIONS</span> <span className="text-slate-900">WE OFFER</span>
           </h2>
           <div className="w-16 h-1 bg-primary mx-auto mb-3 md:mb-4 2xl:mb-6 rounded-full"></div>
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
+          <p className="text-xs md:text-base text-slate-600 font-medium">
             Solar Energy India Provides Solutions For Various Industries, Offering Comprehensive Coverage For Effective And Efficient Safety & Quality.
           </p>
         </div>
@@ -309,7 +309,7 @@ const IndustrySection = () => {
                           exit={{ opacity: 0, height: 0 }}
                           className="overflow-hidden"
                         >
-                          <p className="text-slate-600 text-xs md:text-sm leading-relaxed mt-2 pr-4">
+                          <p className="text-slate-600 text-xs md:text-base leading-relaxed mt-2 pr-4">
                             {sol.desc}
                           </p>
                           <div className="mt-4 rounded-xl overflow-hidden shadow-sm block md:hidden h-48 sm:h-64 relative border-2 border-slate-50">
@@ -376,7 +376,7 @@ const WhyChooseUsSection = () => {
             <span className="text-slate-900">WHY CHOOSE</span> <span className="text-primary">US</span>
           </h2>
           <div className="w-16 h-1 bg-primary mx-auto mb-2 md:mb-4 2xl:mb-6 rounded-full"></div>
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
+          <p className="text-xs md:text-base text-slate-600 font-medium">
             We deliver uncompromising quality, transparent pricing, and end-to-end solar solutions that empower you to take control of your energy future.
           </p>
         </div>
@@ -388,7 +388,7 @@ const WhyChooseUsSection = () => {
                 <feature.icon className="h-5 w-5 md:h-6 md:w-6 2xl:h-8 2xl:w-8 text-primary group-hover:text-white transition-colors duration-300" />
               </div>
               <h3 className="text-sm sm:text-base md:text-lg 2xl:text-xl font-bold text-slate-900 mb-2 md:mb-3">{feature.title}</h3>
-              <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed">
+              <p className="text-slate-600 text-xs md:text-base leading-relaxed">
                 {feature.desc}
               </p>
             </div>
@@ -460,7 +460,7 @@ const TestimonialsSection = () => {
             <span className="text-slate-900">WHAT OUR CUSTOMERS</span> <span className="text-primary">SAY</span>
           </h2>
           <div className="w-16 h-1 bg-primary mx-auto mb-2 md:mb-4 2xl:mb-6 rounded-full"></div>
-          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium">
+          <p className="text-xs md:text-base text-slate-600 font-medium">
             Don't just take our word for it. Hear from our satisfied clients across residential, corporate, and industrial sectors.
           </p>
         </div>
@@ -538,7 +538,7 @@ const BrandsSection = () => {
   return (
     <section className="py-10 md:py-14 2xl:py-20 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 md:mb-10 2xl:mb-12 text-center">
-        <span className="text-xs font-bold uppercase tracking-wider text-primary block mb-2">
+        <span className="text-xs md:text-base font-bold uppercase tracking-wider text-primary block mb-2">
           Authorized Solar Partnerships
         </span>
         <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -771,7 +771,7 @@ const FAQSection = () => {
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-10 2xl:mb-12">
-          <span className="text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-3">
+          <span className="text-primary font-bold text-xs md:text-base uppercase tracking-widest bg-primary/10 px-3.5 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-3">
             <HelpCircle className="w-3.5 h-3.5" /> Frequently Asked Questions
           </span>
           <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -817,7 +817,7 @@ const FAQSection = () => {
                     transition={{ duration: 0.2 }}
                     className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0"
                   >
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal border-t border-slate-100 pt-3">
+                    <p className="text-xs md:text-base text-slate-600 leading-relaxed font-normal border-t border-slate-100 pt-3">
                       {faq.a}
                     </p>
                   </motion.div>
@@ -831,18 +831,18 @@ const FAQSection = () => {
         <div className="mt-8 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg border border-slate-700">
           <div>
             <div className="text-sm font-bold text-white">Have more questions about your rooftop?</div>
-            <div className="text-xs text-slate-300 mt-0.5">Our solar technical consultants are ready to assist with free rooftop feasibility assessment.</div>
+            <div className="text-xs md:text-base text-slate-300 mt-0.5">Our solar technical consultants are ready to assist with free rooftop feasibility assessment.</div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0">
             <button
               onClick={() => navigate('/emi-solar-plan')}
-              className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-sm"
+              className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs md:text-base font-bold transition-all cursor-pointer shadow-sm"
             >
               Calculate EMI
             </button>
             <button
               onClick={() => navigate('/contact')}
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer"
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl text-xs md:text-base font-semibold transition-all cursor-pointer"
             >
               Contact Support
             </button>

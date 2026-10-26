@@ -128,26 +128,26 @@ const Services = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-1 block bg-primary/20 backdrop-blur-md px-3.5 py-0.5 rounded-full w-max mx-auto border border-primary/30">
+            <span className="text-primary font-bold tracking-widest uppercase text-xs md:text-base mb-1 block bg-primary/20 backdrop-blur-md px-3.5 py-0.5 rounded-full w-max mx-auto border border-primary/30">
               End-to-End Solar Solutions &amp; EPC Capabilities
             </span>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-1.5">
               Solar <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200">Services &amp; Solutions</span>
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed mb-3">
+            <p className="text-xs md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed mb-3">
               From tailored sector solutions (Residential, Commercial, Industrial) to end-to-end EPC installation and 25-year maintenance.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2.5">
               <button
                 onClick={handleOpenQuote}
-                className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105"
+                className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl font-bold text-xs md:text-base shadow-md transition-all hover:scale-105"
               >
                 Get Free Solar Quote
               </button>
               <button
                 onClick={() => navigate('/emi-solar-plan')}
-                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl font-medium text-xs sm:text-sm backdrop-blur-sm transition-all"
+                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl font-medium text-xs md:text-base backdrop-blur-sm transition-all"
               >
                 Check EMI Solar Plan
               </button>
@@ -161,7 +161,7 @@ const Services = () => {
         <AnimatedBackground />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
+            <span className="text-xs md:text-base uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
               Sector Specializations
             </span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-3 mb-3">
@@ -195,7 +195,7 @@ const Services = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                     />
                     
-                    <div className="absolute top-4 left-4 z-20 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                    <div className="absolute top-4 left-4 z-20 bg-amber-500 text-white text-xs md:text-base font-bold px-3 py-1 rounded-full shadow-md">
                       {sol.badge}
                     </div>
 
@@ -205,7 +205,7 @@ const Services = () => {
                       </div>
                       <div>
                         <span className="font-bold text-slate-900 block leading-tight">{sol.title}</span>
-                        <span className="text-xs text-slate-500">Tier-1 Components &amp; Guaranteed Performance</span>
+                        <span className="text-xs md:text-base text-slate-500">Tier-1 Components &amp; Guaranteed Performance</span>
                       </div>
                     </div>
                   </div>
@@ -228,10 +228,10 @@ const Services = () => {
                   </div>
                   
                   <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200/80 space-y-3">
-                    <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">Key Advantages</h4>
+                    <h4 className="font-bold text-slate-900 text-xs md:text-base uppercase tracking-wider">Key Advantages</h4>
                     <ul className="space-y-2.5">
                       {sol.features.map((feat, idx) => (
-                        <li key={idx} className="flex items-center text-slate-700 text-xs sm:text-sm font-medium">
+                        <li key={idx} className="flex items-center text-slate-700 text-xs md:text-base font-medium">
                           <CheckCircle2 className="h-4 w-4 text-green-600 mr-2.5 flex-shrink-0" />
                           {feat}
                         </li>
@@ -242,7 +242,7 @@ const Services = () => {
                   <div className="flex flex-wrap items-center gap-3 pt-1">
                     <button
                       onClick={handleOpenQuote}
-                      className="bg-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-1.5"
+                      className="bg-primary hover:bg-primary-hover text-white text-xs md:text-base font-bold px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-1.5"
                     >
                       <span>Get Quote for {sol.title.split(' ')[0]}</span>
                       <ArrowRight className="w-4 h-4" />
@@ -250,7 +250,7 @@ const Services = () => {
                     {sol.id === 'residential' && (
                       <button
                         onClick={() => navigate('/emi-solar-plan')}
-                        className="bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5"
+                        className="bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs md:text-base font-bold px-4 py-2.5 rounded-xl transition-all flex items-center gap-1.5"
                       >
                         <Calculator className="w-4 h-4 text-amber-700" />
                         <span>EMI &amp; Subsidy Calculator</span>
@@ -270,7 +270,7 @@ const Services = () => {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
+            <span className="text-xs md:text-base uppercase font-extrabold tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
               Full Lifecycle Capabilities
             </span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-3 mb-3">
@@ -303,7 +303,7 @@ const Services = () => {
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between text-xs md:text-base font-semibold text-primary">
                   <span>Guaranteed Quality</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>

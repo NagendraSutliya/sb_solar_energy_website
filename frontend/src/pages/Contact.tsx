@@ -11,7 +11,6 @@ import {
   AlertCircle, 
   ShieldCheck, 
   Star, 
-  Check, 
   Award 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -155,11 +154,11 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-1.5 block">24/7 Assistance</span>
+            <span className="text-primary font-bold tracking-widest uppercase text-xs md:text-base mb-1.5 block">24/7 Assistance</span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">
               Contact &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Support</span>
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed">
               Get in touch with our expert technical support team for inquiries, quotes, or immediate assistance.
             </p>
           </motion.div>
@@ -199,7 +198,7 @@ const Contact = () => {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                     Get In Touch
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  <p className="text-xs md:text-base text-slate-500 mt-1">
                     Have questions about rooftop solar, subsidy, or net metering? Reach out to our technical team directly.
                   </p>
                 </div>
@@ -223,7 +222,7 @@ const Contact = () => {
                     </div>
                     <div className="min-w-0">
                       <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Email Us</span>
-                      <a href="mailto:support@sbsolarenergy.in" className="font-bold text-slate-900 text-xs sm:text-sm hover:text-primary transition-colors block truncate">
+                      <a href="mailto:support@sbsolarenergy.in" className="font-bold text-slate-900 text-xs md:text-base hover:text-primary transition-colors block truncate">
                         support@sbsolarenergy.in
                       </a>
                       <a href="mailto:sbindustries2121@gmail.com" className="text-[11px] text-slate-500 hover:text-slate-800 block truncate">
@@ -250,7 +249,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <span className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider">Business Hours</span>
-                      <p className="font-bold text-slate-900 text-xs sm:text-sm">
+                      <p className="font-bold text-slate-900 text-xs md:text-base">
                         Mon – Sat: 9:00 AM – 6:00 PM
                       </p>
                     </div>
@@ -337,15 +336,15 @@ const Contact = () => {
       ) : (
       <section className="py-8 md:py-10 bg-slate-50/70 border-t border-slate-200 relative overflow-hidden z-10">
         <AnimatedBackground />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7 xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Quick District Navigation Pills */}
           {/* <div className="mb-8">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs md:text-base font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5 text-primary" /> Popular Coverage Districts in Rajasthan:
               </span>
-              <span className="text-xs text-slate-400 hidden sm:inline">
+              <span className="text-xs md:text-base text-slate-400 hidden sm:inline">
                 Click any district for instant verified dealers
               </span>
             </div>
@@ -362,7 +361,7 @@ const Contact = () => {
                     onClick={() => {
                       setSelectedDistrict(dist === 'All' ? '' : dist);
                     }}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-1.5 rounded-full text-xs md:text-base font-semibold transition-all flex items-center gap-1.5 ${
                       isSelected
                         ? 'bg-primary text-white shadow-md shadow-primary/25 scale-105'
                         : 'bg-white text-slate-700 border border-slate-200 hover:border-primary/50 hover:bg-slate-50'
@@ -397,7 +396,7 @@ const Contact = () => {
                         setSearchQuery('');
                         setSelectedType('all');
                       }}
-                      className="text-xs text-primary hover:underline flex items-center gap-1 font-semibold"
+                      className="text-xs md:text-base text-primary hover:underline flex items-center gap-1 font-semibold"
                     >
                       <RotateCcw className="h-3 w-3" /> Reset
                     </button>
@@ -406,7 +405,7 @@ const Contact = () => {
 
                 {/* Search Input */}
                 {/* <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Search by Name or Area</label>
+                  <label className="block text-xs md:text-base font-bold text-slate-700 mb-1.5">Search by Name or Area</label>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                     <input
@@ -414,7 +413,7 @@ const Contact = () => {
                       placeholder="e.g. Dungarpur, Jaipur, name..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                      className="w-full pl-9 pr-3 py-2 text-xs md:text-base rounded-xl border border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
                     />
                   </div>
                 </div> */}
@@ -422,14 +421,11 @@ const Contact = () => {
                 {/* State (Fixed to Rajasthan) */}
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-bold text-slate-700">State / Region</label>
-                    <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <Check className="h-3 w-3" /> Verified
-                    </span>
+                    <label className="block text-xs md:text-base font-bold text-slate-700">State / Region</label>  
                   </div>
                   <div className="relative">
                     <select
-                      className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-3 pr-8 text-xs font-semibold text-slate-800 outline-none cursor-default"
+                      className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-3 pr-8 text-xs md:text-base font-semibold text-slate-800 outline-none cursor-default"
                       value={selectedState}
                       onChange={(e) => setSelectedState(e.target.value)}
                     >
@@ -443,10 +439,10 @@ const Contact = () => {
 
                 {/* District Select */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Select District</label>
+                  <label className="block text-xs md:text-base font-bold text-slate-700 mb-1.5">Select District</label>
                   <div className="relative">
                     <select
-                      className="w-full appearance-none bg-white border border-slate-200 rounded-xl py-2.5 pl-3 pr-8 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer shadow-sm text-slate-800 font-medium"
+                      className="w-full appearance-none bg-white border border-slate-200 rounded-xl py-2.5 pl-3 pr-8 text-xs md:text-base outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer shadow-sm text-slate-800 font-medium"
                       value={selectedDistrict}
                       onChange={(e) => setSelectedDistrict(e.target.value)}
                     >
@@ -466,9 +462,9 @@ const Contact = () => {
 
                 {/* Partnership Type */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Partner Category</label>
+                  <label className="block text-xs md:text-base font-bold text-slate-700 mb-1.5">Partner Category</label>
                   <select
-                    className="w-full appearance-none bg-white border border-slate-200 rounded-xl py-2.5 pl-3 pr-8 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer shadow-sm text-slate-700"
+                    className="w-full appearance-none bg-white border border-slate-200 rounded-xl py-2.5 pl-3 pr-8 text-xs md:text-base outline-none focus:border-primary focus:ring-1 focus:ring-primary cursor-pointer shadow-sm text-slate-700"
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value as any)}
                   >
@@ -485,26 +481,26 @@ const Contact = () => {
               <div className="bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-2xl p-5 shadow-lg relative overflow-hidden">
                 <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
                 <div className="relative z-10 space-y-3">
-                  <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold">
+                  <div className="flex items-center gap-2 text-emerald-400 text-xs md:text-base font-bold">
                     <ShieldCheck className="h-4 w-4" /> Direct Factory Support
                   </div>
                   <h4 className="font-bold text-white text-sm leading-snug">
                     Can't find an installer near your farm or home?
                   </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs md:text-base text-slate-300 leading-relaxed">
                     Our central engineering team directly provides free site visits, subsidy paperwork, and guaranteed installations across all Rajasthan tehsils.
                   </p>
                   
                   <div className="pt-2 space-y-2">
                     <a
                       href="tel:+917023204664"
-                      className="w-full py-2 px-3 bg-white text-slate-900 hover:bg-slate-100 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+                      className="w-full py-2 px-3 bg-white text-slate-900 hover:bg-slate-100 rounded-xl text-xs md:text-base font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
                     >
                       <Phone className="h-3.5 w-3.5 text-primary" /> +91 70232 04664
                     </a>
                     <button
                       onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                      className="w-full py-2 px-3 bg-primary/90 hover:bg-primary text-white rounded-xl text-xs font-bold transition-colors"
+                      className="w-full py-2 px-3 bg-primary/90 hover:bg-primary text-white rounded-xl text-xs md:text-base font-bold transition-colors"
                     >
                       Request Free Site Survey
                     </button>
@@ -516,12 +512,12 @@ const Contact = () => {
               <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-5 text-center">
                 <Award className="h-8 w-8 text-primary mx-auto mb-2 opacity-80" />
                 <h5 className="font-bold text-slate-800 text-sm">Become a Channel Partner</h5>
-                <p className="text-xs text-slate-500 mt-1 mb-3">
+                <p className="text-xs md:text-base text-slate-500 mt-1 mb-3">
                   Are you a solar installer or dealer in {selectedDistrict || 'Rajasthan'}? Join SB Solar's certified network.
                 </p>
                 <Link
                   to="/vendor-registration"
-                  className="inline-flex items-center text-xs font-bold text-primary hover:text-primary/80"
+                  className="inline-flex items-center text-xs md:text-base font-bold text-primary hover:text-primary/80"
                 >
                   Apply for Dealership &rarr;
                 </Link>
@@ -538,21 +534,21 @@ const Contact = () => {
                     <span className="bg-white/20 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                       Rajasthan Certified Network
                     </span>
-                    <span className="text-emerald-200 text-xs font-medium flex items-center gap-1">
+                    <span className="text-emerald-200 text-xs md:text-base font-medium flex items-center gap-1">
                       <Zap className="h-3.5 w-3.5 text-amber-300" /> PM Surya Ghar: Up to ₹78,000 Subsidy
                     </span>
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold">
                     Authorized Solar Coverage for {selectedDistrict ? `${selectedDistrict} District` : 'All Rajasthan'}
                   </h3>
-                  <p className="text-xs text-emerald-100 max-w-xl leading-relaxed">
+                  <p className="text-xs md:text-base text-emerald-100 max-w-xl leading-relaxed">
                     All listed partners are verified by SB Solar Energy. Enjoy 25 years linear warranty on solar PV modules, Tier-1 inverters, and seamless net metering approvals.
                   </p>
                 </div>
                 <div className="shrink-0 flex items-center gap-2.5 w-full sm:w-auto">
                   <button
                     onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                    className="flex-1 sm:flex-none px-4 py-2.5 bg-white text-emerald-900 hover:bg-emerald-50 rounded-xl text-xs font-bold transition-all shadow-sm whitespace-nowrap"
+                    className="flex-1 sm:flex-none px-4 py-2.5 bg-white text-emerald-900 hover:bg-emerald-50 rounded-xl text-xs md:text-base font-bold transition-all shadow-sm whitespace-nowrap"
                   >
                     Get Free Quote
                   </button>
@@ -573,11 +569,11 @@ const Contact = () => {
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
                     Available Partners
-                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+                    <span className="text-xs md:text-base font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
                       {filteredVendors.length} Verified
                     </span>
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs md:text-base text-slate-500 mt-0.5">
                     Showing authorized dealers and installers in {selectedDistrict ? `${selectedDistrict}, Rajasthan` : 'Rajasthan'}
                   </p>
                 </div>
@@ -608,7 +604,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-slate-800">No independent partner matching your search</h4>
-                    <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
+                    <p className="text-xs md:text-base text-slate-500 max-w-md mx-auto mt-1">
                       Our official SB Solar central engineering division directly serves {selectedDistrict || 'this region'}. You get the exact same factory pricing, warranty, and PM Surya Ghar subsidy!
                     </p>
                   </div>
@@ -616,7 +612,7 @@ const Contact = () => {
                   <div className="pt-2 flex flex-wrap justify-center gap-3">
                     <a
                       href="tel:+917023204664"
-                      className="px-5 py-2.5 bg-primary text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-md hover:bg-primary/90 transition-all"
+                      className="px-5 py-2.5 bg-primary text-white rounded-xl text-xs md:text-base font-bold flex items-center gap-2 shadow-md hover:bg-primary/90 transition-all"
                     >
                       <Phone className="h-4 w-4" /> Call Direct Engineer (+91 70232 04664)
                     </a>
@@ -626,7 +622,7 @@ const Contact = () => {
                         setSearchQuery('');
                         setSelectedType('all');
                       }}
-                      className="px-4 py-2.5 border border-slate-300 text-slate-700 rounded-xl text-xs font-semibold hover:bg-slate-50"
+                      className="px-4 py-2.5 border border-slate-300 text-slate-700 rounded-xl text-xs md:text-base font-semibold hover:bg-slate-50"
                     >
                       View All Rajasthan Partners
                     </button>
@@ -662,7 +658,7 @@ const Contact = () => {
 
                           <div className="flex items-center gap-1 bg-amber-50 border border-amber-200/60 px-2 py-1 rounded-lg shrink-0">
                             <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                            <span className="text-xs font-bold text-amber-900">{vendor.rating}</span>
+                            <span className="text-xs md:text-base font-bold text-amber-900">{vendor.rating}</span>
                             {vendor.reviewCount && (
                               <span className="text-[10px] text-amber-700">({vendor.reviewCount})</span>
                             )}
@@ -670,7 +666,7 @@ const Contact = () => {
                         </div>
 
                         {/* Address */}
-                        <div className="py-2.5 text-xs text-slate-600 border-t border-slate-100 mt-2">
+                        <div className="py-2.5 text-xs md:text-base text-slate-600 border-t border-slate-100 mt-2">
                           <div className="flex items-start">
                             <MapPin className="h-3.5 w-3.5 text-rose-500 mr-2 mt-0.5 shrink-0" />
                             <span className="leading-relaxed">
@@ -696,7 +692,7 @@ const Contact = () => {
                       <div className="pt-3 border-t border-slate-100">
                         <button
                           onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                          className="w-full py-2.5 px-4 bg-primary hover:bg-primary-hover text-white rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
+                          className="w-full py-2.5 px-4 bg-primary hover:bg-primary-hover text-white rounded-xl text-xs md:text-base font-bold transition-all shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
                         >
                           Request Free Quote
                         </button>
@@ -717,7 +713,7 @@ const Contact = () => {
                           <th className="py-3.5 px-4 text-right bg-slate-50">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 text-xs">
+                      <tbody className="divide-y divide-slate-100 text-xs md:text-base">
                         {filteredVendors.map((vendor) => (
                           <tr key={vendor.id} className="hover:bg-slate-50/80 transition-colors">
                             <td className="py-3.5 px-4">
@@ -753,7 +749,7 @@ const Contact = () => {
                             <td className="py-3.5 px-4 text-right">
                               <button
                                 onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                                className="px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer whitespace-nowrap"
+                                className="px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-xs md:text-base font-bold transition-all shadow-sm cursor-pointer whitespace-nowrap"
                               >
                                 Get Quote
                               </button>

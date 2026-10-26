@@ -50,11 +50,11 @@ const AboutUs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-1.5 block">Our Journey</span>
+            <span className="text-primary font-bold tracking-widest uppercase text-xs md:text-base mb-1.5 block">Our Journey</span>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-2 leading-tight">
               Pioneering a Brighter, <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Greener Future</span>
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed">
               Discover the mission, values, and relentless innovation driving SB Solar Energy to the forefront of renewable integration in India.
             </p>
           </motion.div>
@@ -82,7 +82,7 @@ const AboutUs = () => {
               <stat.icon className={`h-5 w-5 md:h-6 md:w-6 ${stat.color} mr-3 group-hover:scale-110 transition-transform`} strokeWidth={2.5} />
               <div className="flex flex-col text-left justify-center">
                 <span className="font-bold text-base md:text-lg text-slate-900 leading-tight">{stat.value}</span>
-                <span className="font-semibold text-xs text-slate-500 uppercase tracking-wider leading-none mt-1">{stat.label}</span>
+                <span className="font-semibold text-xs md:text-base text-slate-500 uppercase tracking-wider leading-none mt-1">{stat.label}</span>
               </div>
             </motion.div>
           ))}
@@ -232,10 +232,10 @@ const AboutUs = () => {
                   <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-1 group-hover:text-primary transition-colors">
                     {member.name}
                   </h3>
-                  <p className="text-primary font-bold text-xs uppercase tracking-wider mb-3">
+                  <p className="text-primary font-bold text-xs md:text-base uppercase tracking-wider mb-3">
                     {member.role}
                   </p>
-                  <p className="text-slate-500 text-xs md:text-sm leading-relaxed">
+                  <p className="text-slate-500 text-xs md:text-base leading-relaxed">
                     {member.desc}
                   </p>
                 </div>

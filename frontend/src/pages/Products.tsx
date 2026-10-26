@@ -31,11 +31,11 @@ const Products = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-primary font-bold tracking-widest uppercase text-xs mb-1.5 block">Premium Catalog</span>
+            <span className="text-primary font-bold tracking-widest uppercase text-xs md:text-base mb-1.5 block">Premium Catalog</span>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-2 leading-tight">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Products</span>
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-base text-slate-200 font-normal max-w-2xl mx-auto leading-relaxed">
               Explore our comprehensive range of high-efficiency solar modules, intelligent inverters, and robust energy storage systems designed for a sustainable future.
             </p>
           </motion.div>
