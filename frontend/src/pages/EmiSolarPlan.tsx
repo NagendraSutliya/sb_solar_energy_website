@@ -43,35 +43,39 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Solar Cost Benchmarks in India (avg ~₹55,000/kW)
-  const baseCost = systemKW * 55000;
+  const baseCost = (systemKW || 0) * 55000;
   
   // PM Surya Ghar subsidy rule: 
   // 1 kW: ₹30,000 | 2 kW: ₹60,000 | 3 kW+: ₹78,000
-  const subsidyAmount = systemKW <= 1 ? 30000 : systemKW <= 2 ? 60000 : 78000;
+  const subsidyAmount = (systemKW || 0) <= 0 ? 0 : (systemKW <= 1 ? 30000 : systemKW <= 2 ? 60000 : 78000);
   
-  const netCostAfterSubsidy = Math.max(10000, baseCost - subsidyAmount);
-  const downPayment = Math.round((netCostAfterSubsidy * downPaymentPercent) / 100);
-  const calculatedLoanAmount = Math.max(10000, netCostAfterSubsidy - downPayment);
+  const netCostAfterSubsidy = Math.max(0, baseCost - subsidyAmount);
+  const downPayment = Math.round((netCostAfterSubsidy * (downPaymentPercent || 0)) / 100);
+  const calculatedLoanAmount = Math.max(0, netCostAfterSubsidy - downPayment);
   const loanAmount = customLoanOverride !== null ? customLoanOverride : calculatedLoanAmount;
 
-  const totalMonths = tenureYears * 12;
+  const totalMonths = (tenureYears || 0) * 12;
 
   // EMI & Repayment calculations based on mode:
   let emi = 0;
   let totalInterest = 0;
   let totalRepayment = 0;
 
-  if (loanAmount > 0 && totalMonths > 0) {
+  if (loanAmount > 0 && totalMonths > 0 && (interestRate || 0) > 0) {
     if (calcMode === 'reducing') {
       const monthlyRate = (interestRate / 100) / 12;
       emi = Math.round((loanAmount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1));
       totalRepayment = emi * totalMonths;
       totalInterest = Math.max(0, totalRepayment - loanAmount);
     } else {
-      totalInterest = Math.round(loanAmount * (interestRate / 100) * tenureYears);
+      totalInterest = Math.round(loanAmount * (interestRate / 100) * (tenureYears || 0));
       totalRepayment = loanAmount + totalInterest;
       emi = Math.round(totalRepayment / totalMonths);
     }
+  } else if (loanAmount > 0 && totalMonths > 0) {
+    emi = Math.round(loanAmount / totalMonths);
+    totalRepayment = loanAmount;
+    totalInterest = 0;
   }
 
   // Monthly electricity units generated (approx 120 units per kW per month in India)
@@ -246,23 +250,37 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
           {/* Controls Column */}
           <div className="lg:col-span-7 bg-white p-5 sm:p-6 2xl:p-8 rounded-3xl shadow-xl border border-slate-200/80 flex flex-col justify-between h-full">
             <div className="space-y-5 md:space-y-6">
-              {/* System Capacity Slider & Presets */}
+              {/* System Capacity Slider, Custom Input & Presets */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
                 <label className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-amber-500 fill-amber-500" />
+                  <Zap className="w-5 h-5 text-amber-500 fill-amber-500 shrink-0" />
                   Rooftop Solar Capacity:
                 </label>
-                <span className="text-xl sm:text-2xl font-black text-primary bg-primary/10 px-3 py-1 rounded-xl">
-                  {systemKW} kW
-                </span>
+                <div className="flex items-center bg-primary/10 border border-primary/30 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-primary focus-within:bg-white transition-all shadow-sm">
+                  <input
+                    type="number"
+                    min={0.5}
+                    max={100}
+                    step={0.1}
+                    value={systemKW === 0 ? '' : systemKW}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      setSystemKW(isNaN(val) ? 0 : val);
+                      setCustomLoanOverride(null);
+                    }}
+                    className="w-16 sm:w-20 text-right font-black text-lg sm:text-xl text-primary bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    placeholder="3"
+                  />
+                  <span className="text-sm sm:text-base font-bold text-primary ml-1.5">kW</span>
+                </div>
               </div>
               <input
                 type="range"
                 min={1}
-                max={10}
+                max={Math.max(10, systemKW)}
                 step={0.5}
-                value={systemKW}
+                value={systemKW || 1}
                 onChange={(e) => {
                   setSystemKW(Number(e.target.value));
                   setCustomLoanOverride(null);
@@ -290,35 +308,48 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               </div>
             </div>
 
-            {/* Solar Loan Amount & Presets */}
+            {/* Solar Loan Amount, Custom Input & Presets */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
                 <label className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-                  <Landmark className="w-5 h-5 text-indigo-600" />
+                  <Landmark className="w-5 h-5 text-indigo-600 shrink-0" />
                   Solar Loan Amount:
                 </label>
                 <div className="flex items-center gap-2">
-                  <span className="text-lg sm:text-xl font-black text-indigo-700 bg-indigo-50 px-3 py-1 rounded-xl">
-                    ₹{loanAmount.toLocaleString('en-IN')}
-                  </span>
+                  <div className="flex items-center bg-indigo-50 border border-indigo-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:bg-white transition-all shadow-sm">
+                    <span className="text-base sm:text-lg font-bold text-indigo-600 mr-1">₹</span>
+                    <input
+                      type="number"
+                      min={10000}
+                      max={5000000}
+                      step={5000}
+                      value={loanAmount === 0 ? '' : loanAmount}
+                      onChange={(e) => {
+                        const val = parseFloat(e.target.value);
+                        setCustomLoanOverride(isNaN(val) ? 0 : val);
+                      }}
+                      className="w-24 sm:w-32 text-right font-black text-base sm:text-lg text-indigo-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      placeholder="140000"
+                    />
+                  </div>
                   {customLoanOverride !== null && (
                     <button
                       type="button"
                       onClick={() => setCustomLoanOverride(null)}
-                      className="text-[11px] text-slate-500 hover:text-slate-800 underline cursor-pointer"
+                      className="text-xs text-indigo-600 hover:text-indigo-800 underline font-semibold cursor-pointer"
                       title="Reset to capacity calculated cost"
                     >
-                      Reset
+                      Auto
                     </button>
                   )}
                 </div>
               </div>
               <input
                 type="range"
-                min={50000}
-                max={1000000}
-                step={10000}
-                value={loanAmount}
+                min={25000}
+                max={Math.max(1000000, loanAmount)}
+                step={5000}
+                value={loanAmount || 25000}
                 onChange={(e) => setCustomLoanOverride(Number(e.target.value))}
                 className="w-full h-2.5 bg-slate-200 rounded-lg accent-indigo-600 cursor-pointer"
               />
@@ -347,23 +378,36 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               </div>
             </div>
 
-            {/* Interest Rate & Presets */}
+            {/* Interest Rate, Custom Input & Presets */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
                 <label className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-                  <BadgePercent className="w-5 h-5 text-amber-600" />
+                  <BadgePercent className="w-5 h-5 text-amber-600 shrink-0" />
                   Interest Rate (% per annum):
                 </label>
-                <span className="text-lg sm:text-xl font-black text-amber-700 bg-amber-50 px-3 py-1 rounded-xl">
-                  {interestRate}% p.a.
-                </span>
+                <div className="flex items-center bg-amber-50 border border-amber-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-amber-600 focus-within:bg-white transition-all shadow-sm">
+                  <input
+                    type="number"
+                    min={1}
+                    max={30}
+                    step={0.05}
+                    value={interestRate === 0 ? '' : interestRate}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      setInterestRate(isNaN(val) ? 0 : val);
+                    }}
+                    className="w-16 sm:w-20 text-right font-black text-base sm:text-lg text-amber-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    placeholder="7"
+                  />
+                  <span className="text-sm sm:text-base font-bold text-amber-700 ml-1.5">% p.a.</span>
+                </div>
               </div>
               <input
                 type="range"
-                min={5}
-                max={15}
+                min={4}
+                max={Math.max(16, interestRate)}
                 step={0.1}
-                value={interestRate}
+                value={interestRate || 4}
                 onChange={(e) => setInterestRate(Number(e.target.value))}
                 className="w-full h-2.5 bg-slate-200 rounded-lg accent-amber-600 cursor-pointer"
               />
@@ -385,23 +429,41 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               </div>
             </div>
 
-            {/* Tenure Slider & Presets */}
+            {/* Tenure Slider, Custom Input & Presets */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
                 <label className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-blue-500" />
+                  <Calendar className="w-5 h-5 text-blue-500 shrink-0" />
                   Loan Repayment Tenure:
                 </label>
-                <span className="text-xl sm:text-2xl font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-xl">
-                  {tenureYears} {tenureYears === 1 ? 'Year' : 'Years'} ({totalMonths} Mos)
-                </span>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center bg-blue-50 border border-blue-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-blue-600 focus-within:bg-white transition-all shadow-sm">
+                    <input
+                      type="number"
+                      min={1}
+                      max={25}
+                      step={1}
+                      value={tenureYears === 0 ? '' : tenureYears}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value, 10);
+                        setTenureYears(isNaN(val) ? 0 : Math.max(0, val));
+                      }}
+                      className="w-14 sm:w-16 text-right font-black text-base sm:text-lg text-blue-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      placeholder="5"
+                    />
+                    <span className="text-xs sm:text-sm font-bold text-blue-600 ml-1">Yrs</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-slate-500">
+                    ({totalMonths} Mos)
+                  </span>
+                </div>
               </div>
               <input
                 type="range"
                 min={1}
-                max={10}
+                max={Math.max(10, tenureYears)}
                 step={1}
-                value={tenureYears}
+                value={tenureYears || 1}
                 onChange={(e) => setTenureYears(Number(e.target.value))}
                 className="w-full h-2.5 bg-slate-200 rounded-lg accent-blue-600 cursor-pointer"
               />
@@ -428,22 +490,41 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
               </div>
             </div>
 
-            {/* Down Payment % */}
+            {/* Down Payment %, Custom Input & Presets */}
             <div>
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
                 <label className="font-bold text-slate-800 text-sm sm:text-base flex items-center gap-2">
-                  <Coins className="w-5 h-5 text-green-600" />
+                  <Coins className="w-5 h-5 text-green-600 shrink-0" />
                   Down Payment:
                 </label>
-                <span className="text-lg sm:text-xl font-black text-green-700 bg-green-50 px-3 py-1 rounded-xl">
-                  {downPaymentPercent}% (₹{downPayment.toLocaleString('en-IN')})
-                </span>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center bg-green-50 border border-green-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-green-600 focus-within:bg-white transition-all shadow-sm">
+                    <input
+                      type="number"
+                      min={0}
+                      max={90}
+                      step={1}
+                      value={downPaymentPercent === 0 ? '' : downPaymentPercent}
+                      onChange={(e) => {
+                        const val = parseFloat(e.target.value);
+                        setDownPaymentPercent(isNaN(val) ? 0 : Math.min(90, Math.max(0, val)));
+                        setCustomLoanOverride(null);
+                      }}
+                      className="w-14 sm:w-16 text-right font-black text-base sm:text-lg text-green-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      placeholder="10"
+                    />
+                    <span className="text-sm sm:text-base font-bold text-green-600 ml-1">%</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-semibold text-slate-600">
+                    (₹{downPayment.toLocaleString('en-IN')})
+                  </span>
+                </div>
               </div>
               <input
                 type="range"
                 min={0}
-                max={40}
-                step={5}
+                max={Math.max(40, downPaymentPercent)}
+                step={1}
                 value={downPaymentPercent}
                 onChange={(e) => {
                   setDownPaymentPercent(Number(e.target.value));
@@ -451,11 +532,30 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                 }}
                 className="w-full h-2.5 bg-slate-200 rounded-lg accent-green-600 cursor-pointer"
               />
-              <div className="flex justify-between text-xs md:text-base text-slate-400 mt-1 font-medium">
-                <span>0% (Zero Down-payment)</span>
-                <span>10%</span>
-                <span>20%</span>
-                <span>40%</span>
+              <div className="flex flex-wrap gap-1.5 mt-2.5">
+                {[
+                  { label: '0% (Zero Down-payment)', val: 0 },
+                  { label: '10%', val: 10 },
+                  { label: '20%', val: 20 },
+                  { label: '30%', val: 30 },
+                  { label: '40%', val: 40 },
+                ].map((preset) => (
+                  <button
+                    key={preset.val}
+                    type="button"
+                    onClick={() => {
+                      setDownPaymentPercent(preset.val);
+                      setCustomLoanOverride(null);
+                    }}
+                    className={`text-xs md:text-base px-2.5 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
+                      downPaymentPercent === preset.val
+                        ? 'bg-green-600 text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
