@@ -628,9 +628,61 @@ const CTASection = () => {
   );
 };
 
+let hasShownProtectionPopupThisSession = false;
+
 const SBSolarProtectionNotification = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const alreadyShown = sessionStorage.getItem('sb_solar_protection_popup_shown');
+      return !alreadyShown && !hasShownProtectionPopupThisSession;
+    } catch {
+      return !hasShownProtectionPopupThisSession;
+    }
+  });
   const navigate = useNavigate();
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
+  useEffect(() => {
+    if (isVisible) {
+      hasShownProtectionPopupThisSession = true;
+      try {
+        sessionStorage.setItem('sb_solar_protection_popup_shown', 'true');
+      } catch {
+        // Fallback in case of storage restrictions
+      }
+    }
+  }, [isVisible]);
+
+  // Lock body scroll when popup is open
+  useEffect(() => {
+    if (isVisible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isVisible]);
+
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+    };
+    if (isVisible) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isVisible]);
 
   if (!isVisible) return null;
 
@@ -640,16 +692,18 @@ const SBSolarProtectionNotification = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        onClick={handleClose}
         className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4"
       >
         <motion.div
           initial={{ scale: 0.95, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
+          onClick={(e) => e.stopPropagation()}
           className="relative w-full max-w-6xl bg-gradient-to-r from-indigo-50 via-[#eef2ff] to-[#f0f9ff] rounded-2xl shadow-2xl border border-blue-100 p-6 sm:p-8 lg:p-12 max-h-[90vh] overflow-y-auto md:overflow-hidden"
         >
           <button
-            onClick={() => setIsVisible(false)}
+            onClick={handleClose}
             className="absolute top-4 right-4 p-2 bg-white/80 hover:bg-white rounded-full transition-colors text-slate-500 hover:text-slate-800 z-50 shadow-sm"
           >
             <X className="w-5 h-5" />
@@ -673,7 +727,7 @@ const SBSolarProtectionNotification = () => {
               <div className="pt-2">
                 <Button
                   onClick={() => {
-                    setIsVisible(false);
+                    handleClose();
                     navigate('/sb-solar-protection');
                   }}
                   className="bg-gradient-to-r from-[#0d1b4a] to-[#1a2f6c] text-white hover:from-[#081236] hover:to-[#122355] shadow-xl hover:shadow-2xl transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl w-full sm:w-auto"

@@ -17,10 +17,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { FaWhatsapp } from 'react-icons/fa';
 import { indiaStatesDistricts } from '../data/indiaStatesDistricts';
 import { getStoredVendors, type Vendor } from '../data/vendorStorage';
 
 // const POPULAR_DISTRICTS = ['All', 'Dungarpur', 'Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Sikar', 'Bikaner', 'Ajmer', 'Banswara', 'Bhilwara', 'Alwar'];
+
+const VENDOR_WHATSAPP_MESSAGE = encodeURIComponent('Hello SB Solar Energy, I want to know about solar installation.');
+const VENDOR_WHATSAPP_URL = `https://wa.me/917023204664?text=${VENDOR_WHATSAPP_MESSAGE}`;
 
 const Contact = () => {
   const location = useLocation();
@@ -336,7 +340,7 @@ const Contact = () => {
       ) : (
       <section className="py-8 md:py-10 bg-slate-50/70 border-t border-slate-200 relative overflow-hidden z-10">
         <AnimatedBackground />
-        <div className="max-w-7 xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Quick District Navigation Pills */}
           {/* <div className="mb-8">
@@ -690,12 +694,15 @@ const Contact = () => {
 
                       {/* Action Button */}
                       <div className="pt-3 border-t border-slate-100">
-                        <button
-                          onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                          className="w-full py-2.5 px-4 bg-primary hover:bg-primary-hover text-white rounded-xl text-xs md:text-base font-bold transition-all shadow-sm cursor-pointer flex items-center justify-center gap-1.5"
+                        <a
+                          href={VENDOR_WHATSAPP_URL}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="w-full py-2.5 px-4 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl text-xs md:text-base font-bold transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2 hover:shadow-md"
                         >
-                          Request Free Quote
-                        </button>
+                          <FaWhatsapp className="h-4 w-4" />
+                          <span>Connect on WhatsApp</span>
+                        </a>
                       </div>
                     </div>
                   ))}
@@ -747,12 +754,15 @@ const Contact = () => {
                               </div>
                             </td>
                             <td className="py-3.5 px-4 text-right">
-                              <button
-                                onClick={() => window.dispatchEvent(new CustomEvent('open-solar-quote'))}
-                                className="px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-xs md:text-base font-bold transition-all shadow-sm cursor-pointer whitespace-nowrap"
+                              <a
+                                href={VENDOR_WHATSAPP_URL}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-lg text-xs md:text-base font-bold transition-all shadow-sm cursor-pointer whitespace-nowrap hover:shadow-md"
                               >
-                                Get Quote
-                              </button>
+                                <FaWhatsapp className="h-3.5 w-3.5" />
+                                <span>WhatsApp</span>
+                              </a>
                             </td>
                           </tr>
                         ))}

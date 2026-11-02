@@ -33,7 +33,7 @@ const NAV_LINKS = [
     ]
   },
   { name: 'Solar Plan', path: '/emi-solar-plan', isEmi: true },
-  { name: 'Support', path: '/contact' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 const Navbar = () => {
