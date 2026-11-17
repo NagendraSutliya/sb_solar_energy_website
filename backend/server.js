@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import { testConnection } from './config/db.js';
@@ -46,6 +47,21 @@ app.use('/api/contacts', contactsRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/vendors', vendorsRouter);
 app.use('/api/quotes', quotesRouter);
+
+// Serve frontend static build in production (MilesWeb / Node hosting)
+const frontendDistPath = path.resolve(__dirname, '../frontend/dist');
+const rootDistPath = path.resolve(__dirname, '../dist');
+const distPath = fs.existsSync(frontendDistPath) ? frontendDistPath : (fs.existsSync(rootDistPath) ? rootDistPath : null);
+
+if (distPath) {
+  app.use(express.static(distPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 // 404 Route handler
 app.use((req, res) => {

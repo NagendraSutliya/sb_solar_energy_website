@@ -106,25 +106,19 @@ const Navbar = () => {
                     <span>{link.name}</span>
                   )}
                   {link.dropdown && <ChevronDown className="h-3.5 w-3.5 text-slate-400 transition-transform duration-200 group-hover:rotate-180 group-hover:text-primary" />}
-                  
-                  {/* Active Indicator Line */}
-                  {location.pathname === link.path && (
-                    <span className="absolute bottom-0 left-1.5 right-1.5 h-[2px] bg-primary rounded-full"></span>
-                  )}
                 </Link>
 
-                {/* Dropdown */}
+                {/* Submenu Dropdown */}
                 {link.dropdown && (
-                  <div className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left translate-y-2 group-hover:translate-y-0">
-                    <div className="py-1" role="menu" aria-orientation="vertical">
-                      {link.dropdown.map((dropLink) => (
+                  <div className="absolute top-full left-0 w-64 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50">
+                    <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-100 p-2 space-y-1">
+                      {link.dropdown.map((subLink) => (
                         <Link
-                          key={dropLink.name}
-                          to={dropLink.path}
-                          className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-primary"
-                          role="menuitem"
+                          key={subLink.name}
+                          to={subLink.path}
+                          className="block px-3 py-2 text-xs lg:text-sm text-slate-600 hover:text-primary hover:bg-slate-50/80 rounded-xl transition-colors font-medium"
                         >
-                          {dropLink.name}
+                          {subLink.name}
                         </Link>
                       ))}
                     </div>
@@ -148,7 +142,7 @@ const Navbar = () => {
             <div className="relative">
               <button 
                 onClick={() => setIsPortalDropdownOpen(!isPortalDropdownOpen)}
-                className="bg-slate-900 text-white px-3.5 lg:px-4 py-2.5 rounded-xl font-medium text-xs lg:text-sm hover:bg-slate-800 transition-colors shadow-sm flex items-center gap-1.5"
+                className="bg-slate-900 text-white px-3.5 lg:px-4 py-2.5 rounded-xl font-medium text-xs lg:text-sm hover:bg-slate-800 transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
                 Portal <ChevronDown className={cn("h-3.5 w-3.5 transition-transform duration-300", isPortalDropdownOpen && "rotate-180")} />
               </button>
@@ -156,13 +150,21 @@ const Navbar = () => {
               {/* Dropdown Menu */}
               <div className={cn(
                 "absolute right-0 top-full mt-2 w-48 rounded-xl shadow-xl bg-white ring-1 ring-black/5 transition-all duration-200 transform origin-top-right overflow-hidden z-50",
-                isPortalDropdownOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-2"
+                isPortalDropdownOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-2 pointer-events-none"
               )}>
                 <div className="py-1">
-                  <Link to="/portal/login?role=admin" onClick={() => setIsPortalDropdownOpen(false)} className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors">
+                  <Link 
+                    to="/portal/login?role=admin" 
+                    onClick={() => setIsPortalDropdownOpen(false)} 
+                    className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition-colors"
+                  >
                     Admin / Staff Login
                   </Link>
-                  <Link to="/portal/login?role=customer" onClick={() => setIsPortalDropdownOpen(false)} className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary border-t border-slate-100 transition-colors">
+                  <Link 
+                    to="/portal/login?role=customer" 
+                    onClick={() => setIsPortalDropdownOpen(false)} 
+                    className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary border-t border-slate-100 transition-colors"
+                  >
                     Customer Login
                   </Link>
                 </div>
@@ -269,8 +271,8 @@ const Navbar = () => {
               </div>
             ))}
 
-            {/* Mobile Quote CTA */}
-            <div className="pt-3 pb-2">
+            {/* Mobile Quote CTA & Portal Links */}
+            <div className="pt-3 pb-2 space-y-2">
               <button
                 onClick={() => {
                   setIsOpen(false);
@@ -280,6 +282,23 @@ const Navbar = () => {
               >
                 <span>Free Solar Quote</span>
               </button>
+
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Link
+                  to="/portal/login?role=customer"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full text-center py-2.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition-colors block"
+                >
+                  Customer Login
+                </Link>
+                <Link
+                  to="/portal/login?role=admin"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full text-center py-2.5 px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-colors block"
+                >
+                  Admin / Staff
+                </Link>
+              </div>
             </div>
           </div>
           </motion.div>
@@ -291,6 +310,5 @@ const Navbar = () => {
     </nav>
   );
 };
-
 
 export default Navbar;

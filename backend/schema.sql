@@ -1,8 +1,9 @@
 -- SB Solar Energy MySQL Database Schema
 -- Character Set: utf8mb4
 
-CREATE DATABASE IF NOT EXISTS `sb_solar_energy` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `sb_solar_energy`;
+-- Note: In cPanel / phpMyAdmin, select your target database (e.g. `rrindia_1_sbSolar`) before running or importing.
+-- CREATE DATABASE IF NOT EXISTS `sb_solar_energy` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE `sb_solar_energy`;
 
 -- 1. LEADS TABLE
 CREATE TABLE IF NOT EXISTS `leads` (
