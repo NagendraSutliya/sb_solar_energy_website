@@ -633,7 +633,7 @@ const Contact = () => {
                   </div>
                 </div>
               ) : viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[520px] overflow-y-auto pr-1 custom-scrollbar">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[720px] rounded-xl overflow-y-auto pr-1 custom-scrollbar">
                   {filteredVendors.map((vendor) => (
                     <div 
                       key={vendor.id} 
@@ -709,7 +709,7 @@ const Contact = () => {
                 </div>
               ) : (
                 <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-                  <div className="overflow-x-auto max-h-[520px] overflow-y-auto custom-scrollbar">
+                  <div className="overflow-x-auto max-h-[720px] overflow-y-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse min-w-[650px]">
                       <thead className="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 sticky top-0 z-10 shadow-sm">
                         <tr>

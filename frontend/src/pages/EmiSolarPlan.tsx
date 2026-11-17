@@ -16,6 +16,7 @@ import {
   Sparkles,
   TrendingUp,
   Percent,
+  Pencil,
   Copy,
   Check
 } from 'lucide-react';
@@ -257,7 +258,10 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   <Zap className="w-5 h-5 text-amber-500 fill-amber-500 shrink-0" />
                   Rooftop Solar Capacity:
                 </label>
-                <div className="flex items-center bg-primary/10 border border-primary/30 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-primary focus-within:bg-white transition-all shadow-sm">
+                <div 
+                  className="flex items-center bg-slate-50 hover:bg-white focus-within:bg-white border-2 border-slate-300 hover:border-slate-400 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/20 rounded-xl px-2.5 py-1 shadow-sm transition-all group cursor-text"
+                  title="Click to enter custom capacity"
+                >
                   <input
                     type="number"
                     min={0.5}
@@ -269,10 +273,13 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                       setSystemKW(isNaN(val) ? 0 : val);
                       setCustomLoanOverride(null);
                     }}
-                    className="w-16 sm:w-20 text-right font-black text-lg sm:text-xl text-primary bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-16 sm:w-20 text-right font-black text-lg sm:text-xl text-slate-900 bg-transparent outline-none cursor-text [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="3"
                   />
-                  <span className="text-sm sm:text-base font-bold text-primary ml-1.5">kW</span>
+                  <span className="text-xs sm:text-sm font-bold text-slate-500 ml-1.5 pl-1.5 border-l border-slate-300 select-none">
+                    kW
+                  </span>
+                  <Pencil className="w-3.5 h-3.5 text-slate-400 group-hover:text-primary group-focus-within:text-primary ml-1.5 transition-colors pointer-events-none" />
                 </div>
               </div>
               <input
@@ -316,8 +323,13 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   Solar Loan Amount:
                 </label>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center bg-indigo-50 border border-indigo-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:bg-white transition-all shadow-sm">
-                    <span className="text-base sm:text-lg font-bold text-indigo-600 mr-1">₹</span>
+                  <div 
+                    className="flex items-center bg-slate-50 hover:bg-white focus-within:bg-white border-2 border-slate-300 hover:border-slate-400 focus-within:border-indigo-600 focus-within:ring-4 focus-within:ring-indigo-600/20 rounded-xl px-2.5 py-1 shadow-sm transition-all group cursor-text"
+                    title="Click to enter custom loan amount"
+                  >
+                    <span className="text-sm sm:text-base font-bold text-slate-500 mr-1.5 pr-1.5 border-r border-slate-300 select-none">
+                      ₹
+                    </span>
                     <input
                       type="number"
                       min={10000}
@@ -328,15 +340,16 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                         const val = parseFloat(e.target.value);
                         setCustomLoanOverride(isNaN(val) ? 0 : val);
                       }}
-                      className="w-24 sm:w-32 text-right font-black text-base sm:text-lg text-indigo-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="w-24 sm:w-32 text-right font-black text-base sm:text-lg text-slate-900 bg-transparent outline-none cursor-text [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       placeholder="140000"
                     />
+                    <Pencil className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 group-focus-within:text-indigo-600 ml-1.5 transition-colors pointer-events-none" />
                   </div>
                   {customLoanOverride !== null && (
                     <button
                       type="button"
                       onClick={() => setCustomLoanOverride(null)}
-                      className="text-xs text-indigo-600 hover:text-indigo-800 underline font-semibold cursor-pointer"
+                      className="text-xs text-indigo-600 hover:text-indigo-800 underline font-semibold cursor-pointer px-1.5 py-1"
                       title="Reset to capacity calculated cost"
                     >
                       Auto
@@ -385,7 +398,10 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   <BadgePercent className="w-5 h-5 text-amber-600 shrink-0" />
                   Interest Rate (% per annum):
                 </label>
-                <div className="flex items-center bg-amber-50 border border-amber-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-amber-600 focus-within:bg-white transition-all shadow-sm">
+                <div 
+                  className="flex items-center bg-slate-50 hover:bg-white focus-within:bg-white border-2 border-slate-300 hover:border-slate-400 focus-within:border-amber-600 focus-within:ring-4 focus-within:ring-amber-600/20 rounded-xl px-2.5 py-1 shadow-sm transition-all group cursor-text"
+                  title="Click to enter custom interest rate"
+                >
                   <input
                     type="number"
                     min={1}
@@ -396,10 +412,13 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                       const val = parseFloat(e.target.value);
                       setInterestRate(isNaN(val) ? 0 : val);
                     }}
-                    className="w-16 sm:w-20 text-right font-black text-base sm:text-lg text-amber-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-16 sm:w-20 text-right font-black text-base sm:text-lg text-slate-900 bg-transparent outline-none cursor-text [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="7"
                   />
-                  <span className="text-sm sm:text-base font-bold text-amber-700 ml-1.5">% p.a.</span>
+                  <span className="text-xs sm:text-sm font-bold text-slate-500 ml-1.5 pl-1.5 border-l border-slate-300 select-none">
+                    % p.a.
+                  </span>
+                  <Pencil className="w-3.5 h-3.5 text-slate-400 group-hover:text-amber-600 group-focus-within:text-amber-600 ml-1.5 transition-colors pointer-events-none" />
                 </div>
               </div>
               <input
@@ -437,7 +456,10 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   Loan Repayment Tenure:
                 </label>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center bg-blue-50 border border-blue-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-blue-600 focus-within:bg-white transition-all shadow-sm">
+                  <div 
+                    className="flex items-center bg-slate-50 hover:bg-white focus-within:bg-white border-2 border-slate-300 hover:border-slate-400 focus-within:border-blue-600 focus-within:ring-4 focus-within:ring-blue-600/20 rounded-xl px-2.5 py-1 shadow-sm transition-all group cursor-text"
+                    title="Click to enter custom tenure in years"
+                  >
                     <input
                       type="number"
                       min={1}
@@ -448,10 +470,13 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                         const val = parseInt(e.target.value, 10);
                         setTenureYears(isNaN(val) ? 0 : Math.max(0, val));
                       }}
-                      className="w-14 sm:w-16 text-right font-black text-base sm:text-lg text-blue-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="w-14 sm:w-16 text-right font-black text-base sm:text-lg text-slate-900 bg-transparent outline-none cursor-text [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       placeholder="5"
                     />
-                    <span className="text-xs sm:text-sm font-bold text-blue-600 ml-1">Yrs</span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-500 ml-1.5 pl-1.5 border-l border-slate-300 select-none">
+                      Yrs
+                    </span>
+                    <Pencil className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 group-focus-within:text-blue-600 ml-1.5 transition-colors pointer-events-none" />
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-slate-500">
                     ({totalMonths} Mos)
@@ -498,7 +523,10 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                   Down Payment:
                 </label>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center bg-green-50 border border-green-200 rounded-xl px-3 py-1 focus-within:ring-2 focus-within:ring-green-600 focus-within:bg-white transition-all shadow-sm">
+                  <div 
+                    className="flex items-center bg-slate-50 hover:bg-white focus-within:bg-white border-2 border-slate-300 hover:border-slate-400 focus-within:border-green-600 focus-within:ring-4 focus-within:ring-green-600/20 rounded-xl px-2.5 py-1 shadow-sm transition-all group cursor-text"
+                    title="Click to enter custom down payment %"
+                  >
                     <input
                       type="number"
                       min={0}
@@ -510,10 +538,13 @@ const EmiSolarPlan: React.FC<EmiSolarPlanProps> = ({ onOpenQuoteModal }) => {
                         setDownPaymentPercent(isNaN(val) ? 0 : Math.min(90, Math.max(0, val)));
                         setCustomLoanOverride(null);
                       }}
-                      className="w-14 sm:w-16 text-right font-black text-base sm:text-lg text-green-700 bg-transparent outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      className="w-14 sm:w-16 text-right font-black text-base sm:text-lg text-slate-900 bg-transparent outline-none cursor-text [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       placeholder="10"
                     />
-                    <span className="text-sm sm:text-base font-bold text-green-600 ml-1">%</span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-500 ml-1.5 pl-1.5 border-l border-slate-300 select-none">
+                      %
+                    </span>
+                    <Pencil className="w-3.5 h-3.5 text-slate-400 group-hover:text-green-600 group-focus-within:text-green-600 ml-1.5 transition-colors pointer-events-none" />
                   </div>
                   <span className="text-xs sm:text-sm font-semibold text-slate-600">
                     (₹{downPayment.toLocaleString('en-IN')})
