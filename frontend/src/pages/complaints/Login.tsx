@@ -8,9 +8,11 @@ import {
   ShieldCheck, 
   KeyRound, 
   ArrowLeft, 
-  Sparkles
+  Sparkles,
+  Loader2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { authApi } from '../../services/api';
 
 const ComplaintLogin = () => {
   const [searchParams] = useSearchParams();
@@ -31,6 +33,7 @@ const ComplaintLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   // Hardcoded secure credentials for demo / internal development access
@@ -57,24 +60,55 @@ const ComplaintLogin = () => {
     setError('');
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
-    const targetCreds = CREDENTIALS[loginRole];
+    const cleanEmail = email.trim().toLowerCase();
 
-    if (email.trim().toLowerCase() === targetCreds.email.toLowerCase() && password === targetCreds.password) {
-      localStorage.setItem('sb_auth_token', 'active_authenticated_session');
-      localStorage.setItem('sb_user_role', loginRole);
-      localStorage.setItem('sb_user_email', email);
+    try {
+      // 1. Try real database authentication via API
+      const res = await authApi.login({
+        email: cleanEmail,
+        password,
+        role: loginRole,
+      });
 
-      if (loginRole === 'admin') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/portal/dashboard');
+      if (res.success) {
+        localStorage.setItem('sb_auth_token', res.token || 'active_authenticated_session');
+        localStorage.setItem('sb_user_role', res.user?.role || loginRole);
+        localStorage.setItem('sb_user_email', res.user?.email || cleanEmail);
+        if (res.user?.name) {
+          localStorage.setItem('sb_user_name', res.user.name);
+        }
+
+        if (loginRole === 'admin' || res.user?.role === 'admin') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/portal/dashboard');
+        }
+        return;
       }
-    } else {
-      setError(`Invalid credentials for ${loginRole === 'admin' ? 'Admin' : 'Customer'} portal. Please check email and password.`);
+    } catch (apiError: any) {
+      // 2. Fallback to demo credentials if offline / development fallback
+      const targetCreds = CREDENTIALS[loginRole];
+      if (cleanEmail === targetCreds.email.toLowerCase() && password === targetCreds.password) {
+        localStorage.setItem('sb_auth_token', 'active_authenticated_session');
+        localStorage.setItem('sb_user_role', loginRole);
+        localStorage.setItem('sb_user_email', email);
+
+        if (loginRole === 'admin') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/portal/dashboard');
+        }
+        return;
+      }
+
+      setError(apiError?.message || `Invalid credentials for ${loginRole === 'admin' ? 'Admin' : 'Customer'} portal.`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -300,12 +334,17 @@ const ComplaintLogin = () => {
               <div>
                 <button
                   type="submit"
-                  className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all shadow-md hover:shadow-lg cursor-pointer"
+                  disabled={isLoading}
+                  className="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all shadow-md hover:shadow-lg cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   <span className="absolute left-0 inset-y-0 flex items-center pl-3.5">
-                    <LogIn className="h-5 w-5 text-white/80 group-hover:text-white transition-colors" />
+                    {isLoading ? (
+                      <Loader2 className="h-5 w-5 text-white animate-spin" />
+                    ) : (
+                      <LogIn className="h-5 w-5 text-white/80 group-hover:text-white transition-colors" />
+                    )}
                   </span>
-                  Sign In to {loginRole === 'admin' ? 'Admin Panel' : 'Customer Portal'}
+                  {isLoading ? 'Verifying Credentials...' : `Sign In to ${loginRole === 'admin' ? 'Admin Panel' : 'Customer Portal'}`}
                 </button>
               </div>
             </form>

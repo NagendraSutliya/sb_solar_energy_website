@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /api/
+
+# Enable CORS Headers
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+
+# Handle Preflight OPTIONS requests
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ - [R=200,L]
+
+# Route Clean API endpoints to PHP scripts
+RewriteRule ^health/?$ health.php [QSA,L]
+RewriteRule ^auth/login/?$ auth.php?action=login [QSA,L]
+RewriteRule ^auth/register/?$ auth.php?action=register [QSA,L]
+RewriteRule ^complaints/?$ complaints.php [QSA,L]
+RewriteRule ^leads/?$ leads.php [QSA,L]
+</IfModule>

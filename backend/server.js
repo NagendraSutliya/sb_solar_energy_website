@@ -12,6 +12,8 @@ import contactsRouter from './routes/contacts.js';
 import tasksRouter from './routes/tasks.js';
 import vendorsRouter from './routes/vendors.js';
 import quotesRouter from './routes/quotes.js';
+import authRouter from './routes/auth.js';
+import complaintsRouter from './routes/complaints.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,6 +49,8 @@ app.use('/api/contacts', contactsRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/vendors', vendorsRouter);
 app.use('/api/quotes', quotesRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/complaints', complaintsRouter);
 
 // Serve frontend static build in production (MilesWeb / Node hosting)
 const frontendDistPath = path.resolve(__dirname, '../frontend/dist');

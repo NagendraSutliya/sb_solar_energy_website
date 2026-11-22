@@ -1,9 +1,13 @@
 /**
  * SB Solar Energy API Service Client
- * Connects frontend to the Node.js + Express backend (http://localhost:5000/api)
+ * Connects frontend to the Node.js / PHP backend
  */
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || (
+  typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')
+    ? '/api'
+    : 'http://localhost:5000/api'
+);
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
@@ -24,6 +28,49 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
 
   return response.json();
 }
+
+// ==================== AUTH API ====================
+export const authApi = {
+  login: (data: { email: string; password: string; role?: 'admin' | 'customer' }) =>
+    request<{ success: boolean; token: string; user: any; message?: string }>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  register: (data: { name: string; email: string; password: string; phone?: string; role?: 'admin' | 'customer' }) =>
+    request<{ success: boolean; data: any; message?: string }>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+};
+
+// ==================== COMPLAINTS API ====================
+export const complaintsApi = {
+  getAll: (params?: { status?: string; email?: string }) => {
+    const searchParams = new URLSearchParams();
+    if (params?.status) searchParams.set('status', params.status);
+    if (params?.email) searchParams.set('email', params.email);
+    const qs = searchParams.toString();
+    return request<{ success: boolean; data: any[] }>(`/complaints${qs ? `?${qs}` : ''}`);
+  },
+  create: (data: {
+    category: string;
+    sub_category?: string;
+    nature: string;
+    description?: string;
+    customer_name?: string;
+    customer_email?: string;
+    customer_phone?: string;
+  }) =>
+    request<{ success: boolean; data: any; message?: string }>('/complaints', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+  updateStatus: (id: string | number, status: string) =>
+    request<{ success: boolean; message: string }>(`/complaints/${id}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status }),
+    }),
+};
 
 // ==================== LEADS API ====================
 export const leadsApi = {
@@ -111,4 +158,3 @@ export const checkBackendHealth = async () => {
     return false;
   }
 };
-

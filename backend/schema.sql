@@ -100,6 +100,36 @@ CREATE TABLE IF NOT EXISTS `quotes` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 7. USERS TABLE (Portal Admin & Customer Authentication)
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(150) NOT NULL,
+  `email` VARCHAR(150) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `role` ENUM('admin', 'customer', 'staff') DEFAULT 'customer',
+  `phone` VARCHAR(25) DEFAULT '',
+  `status` ENUM('active', 'inactive') DEFAULT 'active',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 8. COMPLAINTS TABLE (Customer Portal Complaints & Service Requests)
+CREATE TABLE IF NOT EXISTS `complaints` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `complaint_no` VARCHAR(50) DEFAULT NULL,
+  `user_id` INT DEFAULT NULL,
+  `customer_name` VARCHAR(150) DEFAULT '',
+  `customer_email` VARCHAR(150) DEFAULT '',
+  `customer_phone` VARCHAR(25) DEFAULT '',
+  `category` VARCHAR(100) NOT NULL,
+  `sub_category` VARCHAR(100) DEFAULT '',
+  `nature` VARCHAR(255) NOT NULL,
+  `description` TEXT DEFAULT NULL,
+  `status` ENUM('Not Process Yet', 'In Process', 'Closed') DEFAULT 'Not Process Yet',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- SEED DATA FOR LEADS
 INSERT INTO `leads` (`id`, `name`, `initials`, `source`, `city`, `interest`, `status`, `assigned`, `phone`) VALUES
 (1, 'Anil Purohit', 'AP', 'Website form', 'Udaipur', 'Hotel solar 50 kW', 'New', 'Neha', '+91 98290 11223'),
@@ -145,3 +175,17 @@ INSERT INTO `vendors` (`id`, `vendor_code`, `name`, `contact_person`, `email`, `
 (2, 'v-jaipur-2', 'SunPower Solutions Jaipur', 'Sunil Verma', 'sunil@sunpowersolutions.in', '+91 9876543210', '123 Solar Park, Sitapura Industrial Area, Jaipur', 'Rajasthan', 'Jaipur', 'dealer', 4.8, 42, 'Approved', '["Residential Rooftop", "PM Surya Ghar Approved"]', 0),
 (3, 'v-udaipur-1', 'Lakecity Green Energy', 'Manoj Agarwal', 'manoj@lakecitygreen.in', '+91 9829088776', '45 Chetak Circle, Udaipur', 'Rajasthan', 'Udaipur', 'installer', 4.9, 67, 'Approved', '["EPC Contractor", "Agriculture Solar Pump", "Commercial Rooftop"]', 0)
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
+
+-- SEED DATA FOR USERS (Admin and Customer Portal Login)
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `phone`, `status`) VALUES
+(1, 'SB Solar Admin', 'admin@sbsolar.com', 'admin#123', 'admin', '+91 7023204664', 'active'),
+(2, 'SB Solar Customer', 'customer@sbsolar.com', 'customer#123', 'customer', '+91 9876543210', 'active')
+ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
+
+-- SEED DATA FOR COMPLAINTS
+INSERT INTO `complaints` (`id`, `complaint_no`, `customer_name`, `customer_email`, `customer_phone`, `category`, `sub_category`, `nature`, `description`, `status`) VALUES
+(1, 'CMP-12345', 'Aarav Sharma', 'customer@sbsolar.com', '+91 9876543210', 'Inverter', 'Noise', 'Inverter Beeping Issue', 'Inverter continuous beep sound after 4 PM', 'Not Process Yet'),
+(2, 'CMP-12344', 'Priya Mehta', 'priya@sbsolar.com', '+91 9829154321', 'Solar Panel', 'Efficiency', 'Low Power Generation', 'Generation is down by 30% this week', 'In Process'),
+(3, 'CMP-12340', 'Vikram Khanna', 'vikram@sbsolar.com', '+91 9414566778', 'Battery', 'Backup', 'Battery Replacement', 'Battery backup discharging too quickly', 'Closed'),
+(4, 'CMP-12338', 'Sneha Rao', 'sneha@sbsolar.com', '+91 9828044556', 'Accessories', 'Wiring', 'Wire loose connection', 'Terminal block loose wire tightened', 'Closed')
+ON DUPLICATE KEY UPDATE `complaint_no`=VALUES(`complaint_no`);
