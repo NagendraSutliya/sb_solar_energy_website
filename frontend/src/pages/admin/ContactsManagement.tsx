@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
+import { contactsApi } from '../../services/api';
 
 interface ContactItem {
   id: string;
@@ -62,7 +63,25 @@ const INITIAL_CONTACTS: ContactItem[] = [
 ];
 
 const ContactsManagement: React.FC = () => {
+  const [contacts, setContacts] = useState<ContactItem[]>(INITIAL_CONTACTS);
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    contactsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setContacts(res.data.map((c: any) => ({
+            id: String(c.id),
+            name: c.name,
+            initials: c.initials || c.name.slice(0, 2).toUpperCase(),
+            city: c.city || '',
+            phone: c.phone || '',
+            tag: c.tag || 'Customer',
+          })));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch contacts from DB:', err.message));
+  }, []);
 
   const getTagStyle = (tag: ContactItem['tag']) => {
     switch (tag) {
@@ -76,7 +95,7 @@ const ContactsManagement: React.FC = () => {
     }
   };
 
-  const filtered = INITIAL_CONTACTS.filter(
+  const filtered = contacts.filter(
     (c) =>
       c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -93,7 +112,7 @@ const ContactsManagement: React.FC = () => {
             Contacts
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            312 people
+            {contacts.length} people in database
           </p>
         </div>
 

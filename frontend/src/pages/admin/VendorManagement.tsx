@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
+import { vendorsApi } from '../../services/api';
 
 interface VendorItem {
   id: string;
@@ -49,12 +50,33 @@ const VendorManagement: React.FC = () => {
   const [vendors, setVendors] = useState<VendorItem[]>(INITIAL_VENDORS);
   const [searchQuery, setSearchQuery] = useState('');
 
+  useEffect(() => {
+    vendorsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setVendors(res.data.map((v: any) => ({
+            id: String(v.id || v.dbId),
+            name: v.name,
+            initials: v.initials || v.name.slice(0, 2).toUpperCase(),
+            district: v.district || 'Jaipur',
+            rating: Number(v.rating) || 4.8,
+            status: (v.status === 'Approved' || v.status === 'Verified' ? 'Verified' : 'Pending') as 'Verified' | 'Pending',
+          })));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch vendors from DB:', err.message));
+  }, []);
+
   const handleApprove = (id: string) => {
     setVendors(vendors.map((v) => (v.id === id ? { ...v, status: 'Verified' } : v)));
+    vendorsApi.update(id, { status: 'Approved' })
+      .catch((err) => console.warn('Failed to sync vendor approval to DB:', err.message));
   };
 
   const handleReject = (id: string) => {
     setVendors(vendors.filter((v) => v.id !== id));
+    vendorsApi.update(id, { status: 'Rejected' })
+      .catch((err) => console.warn('Failed to sync vendor rejection to DB:', err.message));
   };
 
   const filtered = vendors.filter(
@@ -72,7 +94,7 @@ const VendorManagement: React.FC = () => {
             Vendors
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            36 verified · 4 pending approval
+            {vendors.filter(v => v.status === 'Verified').length} verified · {vendors.filter(v => v.status === 'Pending').length} pending in database
           </p>
         </div>
 

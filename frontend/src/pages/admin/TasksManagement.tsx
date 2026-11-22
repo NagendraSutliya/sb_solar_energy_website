@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Check } from 'lucide-react';
+import { tasksApi } from '../../services/api';
 
 interface TaskItem {
   id: string;
@@ -51,8 +52,31 @@ const TasksManagement: React.FC = () => {
   const [tasks, setTasks] = useState<TaskItem[]>(INITIAL_TASKS);
   const [searchQuery, setSearchQuery] = useState('');
 
+  useEffect(() => {
+    tasksApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setTasks(res.data.map((t: any) => ({
+            id: String(t.id || t.dbId),
+            title: t.title,
+            subtitle: t.subtitle || t.time || 'Today',
+            section: (t.section === 'overdue' ? 'overdue' : 'today') as 'today' | 'overdue',
+            completed: Boolean(t.completed),
+          })));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch tasks from DB:', err.message));
+  }, []);
+
   const toggleTask = (id: string) => {
-    setTasks(tasks.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
+    const current = tasks.find(t => t.id === id);
+    const nextCompleted = current ? !current.completed : true;
+
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, completed: nextCompleted } : t)));
+
+    // Sync to DB
+    tasksApi.update(id, { completed: nextCompleted })
+      .catch((err) => console.warn('Failed to sync task toggle to DB:', err.message));
   };
 
   const filteredTasks = tasks.filter((t) =>
@@ -72,7 +96,7 @@ const TasksManagement: React.FC = () => {
             Tasks
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            3 due today · 2 overdue
+            {todayTasks.filter(t => !t.completed).length} due today · {overdueTasks.filter(t => !t.completed).length} overdue in database
           </p>
         </div>
 

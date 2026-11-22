@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search, Filter } from 'lucide-react';
+import { complaintsApi } from '../../services/api';
 
 const MOCK_COMPLAINTS = [
   { id: '12345', date: '2026-10-24', status: 'Not Process Yet', title: 'Inverter Beeping Issue', category: 'Inverter' },
@@ -9,12 +11,29 @@ const MOCK_COMPLAINTS = [
 ];
 
 const ComplaintHistory = () => {
+  const [complaints, setComplaints] = useState(MOCK_COMPLAINTS);
   const [searchParams] = useSearchParams();
   const statusFilter = searchParams.get('status');
 
+  useEffect(() => {
+    complaintsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setComplaints(res.data.map((c: any) => ({
+            id: c.complaint_no ? c.complaint_no.replace('CMP-', '') : String(c.id),
+            date: c.created_at ? c.created_at.split('T')[0] : '2026-11-22',
+            status: c.status || 'Not Process Yet',
+            title: c.nature || c.title || 'Complaint',
+            category: c.category || 'General',
+          })));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch complaints from DB:', err.message));
+  }, []);
+
   const filteredComplaints = statusFilter 
-    ? MOCK_COMPLAINTS.filter(c => c.status.toLowerCase().replace(/ /g, '-') === statusFilter || (statusFilter === 'pending' && c.status === 'Not Process Yet'))
-    : MOCK_COMPLAINTS;
+    ? complaints.filter(c => c.status.toLowerCase().replace(/ /g, '-') === statusFilter || (statusFilter === 'pending' && c.status === 'Not Process Yet'))
+    : complaints;
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">

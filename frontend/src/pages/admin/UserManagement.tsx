@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
+import { usersApi } from '../../services/api';
 
 interface MemberItem {
   id: string;
@@ -46,8 +47,25 @@ const INITIAL_MEMBERS: MemberItem[] = [
 ];
 
 const UserManagement: React.FC = () => {
-  const [members] = useState<MemberItem[]>(INITIAL_MEMBERS);
+  const [members, setMembers] = useState<MemberItem[]>(INITIAL_MEMBERS);
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    usersApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setMembers(res.data.map((u: any) => ({
+            id: String(u.id),
+            name: u.name,
+            initials: u.name.split(' ').map((p: string) => p[0]?.toUpperCase() || '').slice(0, 2).join(''),
+            email: u.email,
+            role: u.role ? (u.role.charAt(0).toUpperCase() + u.role.slice(1)) : 'Staff',
+            status: (u.status === 'active' ? 'Active' : 'Invited') as 'Active' | 'Invited',
+          })));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch users from DB:', err.message));
+  }, []);
 
   const permissions = [
     { area: 'Leads', admin: '✓', manager: '✓', sales: '✓', viewer: 'View' },
@@ -72,7 +90,7 @@ const UserManagement: React.FC = () => {
             Users & roles
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            8 team members
+            {members.length} team members registered in database
           </p>
         </div>
 

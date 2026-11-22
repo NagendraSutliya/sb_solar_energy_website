@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Plus, Sparkles } from 'lucide-react';
 import { getStoredDeals, saveStoredDeals, type Deal } from '../../data/crmData';
+import { dealsApi } from '../../services/api';
 
 interface NewDealModalProps {
   isOpen: boolean;
@@ -25,7 +26,7 @@ export const NewDealModal: React.FC<NewDealModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customer.trim() || !value) return;
 
@@ -44,13 +45,31 @@ export const NewDealModal: React.FC<NewDealModalProps> = ({
       createdAt: new Date().toISOString().split('T')[0],
     };
 
+    // Save to local storage for instant sync
     const currentDeals = getStoredDeals();
     const updated = [newDeal, ...currentDeals];
     saveStoredDeals(updated);
 
+    // Save to real database via API
+    try {
+      await dealsApi.create({
+        customer: newDeal.customer,
+        projectType: newDeal.projectType,
+        value: newDeal.value,
+        stage: newDeal.stage,
+        tag: newDeal.tag,
+        tagColor: newDeal.tagColor,
+        owner: newDeal.owner,
+      });
+    } catch (err: any) {
+      console.warn('Deals DB sync note:', err.message);
+    }
+
     if (onDealAdded) {
       onDealAdded(newDeal);
     }
+
+    window.dispatchEvent(new CustomEvent('sb-crm-deals-updated'));
 
     onClose();
     // Reset form

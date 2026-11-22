@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { NewDealModal } from '../../components/admin/NewDealModal';
+import { dealsApi, leadsApi, quotesApi, vendorsApi } from '../../services/api';
 
 const AdminDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -8,8 +9,14 @@ const AdminDashboard: React.FC = () => {
   const [revenuePeriod, setRevenuePeriod] = useState<'Week' | 'Month' | 'Year'>('Year');
   const [activePoint, setActivePoint] = useState<{ month: string; value: string } | null>(null);
 
-  // Top Deals matching Dashboard v2 mockup
-  const topDeals = [
+  // Real Database state initialized with mock fallback
+  const [totalPipelineValue, setTotalPipelineValue] = useState<string>('₹20.1L');
+  const [newLeadsCount, setNewLeadsCount] = useState<number>(14);
+  const [openDealsCount, setOpenDealsCount] = useState<number>(7);
+  const [approvedVendorsCount, setApprovedVendorsCount] = useState<number>(3);
+
+  // Top Deals state
+  const [topDealsList, setTopDealsList] = useState([
     {
       initials: 'AS',
       name: 'Aarav Sharma',
@@ -38,10 +45,10 @@ const AdminDashboard: React.FC = () => {
       stageStyle: 'bg-[#e2e8f0] text-slate-700',
       value: '₹1,90,000',
     },
-  ];
+  ]);
 
-  // Recent Activity matching Dashboard v2 mockup
-  const recentActivities = [
+  // Recent Activity state
+  const [recentActivitiesList, setRecentActivitiesList] = useState([
     {
       title: 'New quote request from Sikar',
       time: '2 min ago',
@@ -54,7 +61,73 @@ const AdminDashboard: React.FC = () => {
       title: 'Vendor approved: Aravalli Solar',
       time: 'Yesterday',
     },
-  ];
+  ]);
+
+  // Fetch real data from live MySQL database
+  useEffect(() => {
+    // 1. Fetch real deals
+    dealsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setOpenDealsCount(res.data.length);
+          
+          const totalVal = res.data.reduce((acc: number, d: any) => acc + (Number(d.value) || 0), 0);
+          setTotalPipelineValue(`₹${(totalVal / 100000).toFixed(1)}L`);
+
+          const sorted = [...res.data]
+            .sort((a, b) => (Number(b.value) || 0) - (Number(a.value) || 0))
+            .slice(0, 5);
+
+          setTopDealsList(
+            sorted.map((d: any) => ({
+              initials: (d.customer || d.name || 'D').slice(0, 2).toUpperCase(),
+              name: d.customer || d.name,
+              stage: d.stage ? (d.stage.charAt(0).toUpperCase() + d.stage.slice(1).replace('_', ' ')) : 'Qualified',
+              stageStyle:
+                d.stage === 'closing'
+                  ? 'bg-[#d4f8db] text-[#14532d]'
+                  : d.stage === 'negotiation'
+                  ? 'bg-[#fef3c7] text-[#92400e]'
+                  : 'bg-[#e2e8f0] text-slate-700',
+              value: `₹${Number(d.value).toLocaleString('en-IN')}`,
+            }))
+          );
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch dashboard deals from DB:', err.message));
+
+    // 2. Fetch real leads count
+    leadsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data) {
+          const newOnes = res.data.filter((l: any) => l.status === 'New').length;
+          setNewLeadsCount(newOnes || res.data.length);
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch dashboard leads from DB:', err.message));
+
+    // 3. Fetch recent quotes for activity feed
+    quotesApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          const acts = res.data.slice(0, 3).map((q: any) => ({
+            title: `New quote: ${q.full_name} (${q.capacity_kw || 3} kW in ${q.city || 'Rajasthan'})`,
+            time: 'Recently',
+          }));
+          setRecentActivitiesList(acts);
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch dashboard quotes from DB:', err.message));
+
+    // 4. Fetch vendors count
+    vendorsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data) {
+          setApprovedVendorsCount(res.data.filter((v: any) => v.status === 'Approved' || v.status === 'Verified').length || res.data.length);
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch dashboard vendors from DB:', err.message));
+  }, []);
 
   // Lead Sources breakdown matching Dashboard v2 mockup
   const leadSources = [
@@ -65,7 +138,7 @@ const AdminDashboard: React.FC = () => {
   ];
 
   // Filter deals based on search
-  const filteredDeals = topDeals.filter(
+  const filteredDeals = topDealsList.filter(
     (d) =>
       d.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.stage.toLowerCase().includes(searchQuery.toLowerCase())
@@ -119,17 +192,17 @@ const AdminDashboard: React.FC = () => {
 
       {/* 4 Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-        {/* Card 1: Revenue this month (Dark Navy Hero Card) */}
+        {/* Card 1: Pipeline Value (Dark Navy Hero Card) */}
         <div className="bg-[#0d1527] text-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-400 block">
-            Revenue this month
+            Pipeline Value (DB)
           </span>
           <div className="text-2xl sm:text-3xl font-extrabold text-white mt-2 tracking-tight">
-            ₹18.4L
+            {totalPipelineValue}
           </div>
           <div className="mt-3">
             <span className="inline-flex items-center gap-1 bg-[#f59e0b] text-slate-950 text-xs font-extrabold px-2.5 py-0.5 rounded-full shadow-2xs">
-              ▲ 12.5%
+              Live Deals
             </span>
           </div>
         </div>
@@ -137,29 +210,29 @@ const AdminDashboard: React.FC = () => {
         {/* Card 2: Open deals */}
         <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
-            Open deals
+            Active Deals
           </span>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">
-            64
+            {openDealsCount}
           </div>
           <div className="mt-3">
             <span className="inline-flex items-center gap-1 bg-[#e6f4ea] text-[#137333] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              ▲ 8 this week
+              In Database
             </span>
           </div>
         </div>
 
-        {/* Card 3: Win rate */}
+        {/* Card 3: Approved Vendors */}
         <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
-            Win rate
+            Approved Vendors
           </span>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">
-            32%
+            {approvedVendorsCount}
           </div>
           <div className="mt-3">
-            <span className="inline-flex items-center gap-1 bg-[#fce8e6] text-[#c5221f] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              ▼ 2.1%
+            <span className="inline-flex items-center gap-1 bg-[#e6f4ea] text-[#137333] text-xs font-bold px-2.5 py-0.5 rounded-full">
+              Verified Partners
             </span>
           </div>
         </div>
@@ -167,14 +240,14 @@ const AdminDashboard: React.FC = () => {
         {/* Card 4: New leads */}
         <div className="bg-white rounded-2xl p-6 shadow-xs flex flex-col justify-between">
           <span className="text-xs font-medium text-slate-500 block">
-            New leads
+            New Leads
           </span>
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">
-            128
+            {newLeadsCount}
           </div>
           <div className="mt-3">
             <span className="inline-flex items-center gap-1 bg-[#e6f4ea] text-[#137333] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              ▲ 18%
+              Live Inquiries
             </span>
           </div>
         </div>
@@ -433,7 +506,7 @@ const AdminDashboard: React.FC = () => {
           </h2>
 
           <div className="space-y-4 pt-1">
-            {recentActivities.map((activity, idx) => (
+            {recentActivitiesList.map((activity, idx) => (
               <div key={idx} className="flex items-start gap-3">
                 {/* Amber Dot */}
                 <div className="w-2.5 h-2.5 rounded-full bg-[#f59e0b] mt-1.5 shrink-0 shadow-2xs" />

@@ -33,8 +33,9 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
       fallbackEndpoint = '/auth.php?action=login';
     } else if (endpoint.startsWith('/auth/register')) {
       fallbackEndpoint = '/auth.php?action=register';
-    } else if (endpoint.startsWith('/complaints')) {
-      fallbackEndpoint = '/complaints.php' + endpoint.replace('/complaints', '');
+    } else {
+      const [path, query] = endpoint.split('?');
+      fallbackEndpoint = `${path}.php${query ? `?${query}` : ''}`;
     }
 
     if (fallbackEndpoint) {
@@ -175,6 +176,11 @@ export const vendorsApi = {
 export const quotesApi = {
   getAll: () => request<{ success: boolean; data: any[] }>('/quotes'),
   create: (data: any) => request<{ success: boolean; data: any }>('/quotes', { method: 'POST', body: JSON.stringify(data) }),
+};
+
+// ==================== USERS API ====================
+export const usersApi = {
+  getAll: () => request<{ success: boolean; data: any[] }>('/users'),
 };
 
 // Health Check

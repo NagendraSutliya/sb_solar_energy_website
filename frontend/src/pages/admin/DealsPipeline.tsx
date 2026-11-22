@@ -6,6 +6,7 @@ import {
   type Deal 
 } from '../../data/crmData';
 import { NewDealModal } from '../../components/admin/NewDealModal';
+import { dealsApi } from '../../services/api';
 
 interface KanbanColumn {
   id: Deal['stage'];
@@ -21,15 +22,26 @@ const DealsPipeline: React.FC = () => {
   const [draggedDealId, setDraggedDealId] = useState<string | null>(null);
 
   const columns: KanbanColumn[] = [
-    { id: 'qualified', label: 'Qualified', count: 24 },
-    { id: 'proposal_sent', label: 'Proposal', count: 18 },
-    { id: 'negotiation', label: 'Negotiation', count: 14 },
-    { id: 'closing', label: 'Closing', count: 8 },
+    { id: 'qualified', label: 'Qualified', count: deals.filter(d => d.stage === 'qualified').length },
+    { id: 'proposal_sent', label: 'Proposal', count: deals.filter(d => d.stage === 'proposal_sent').length },
+    { id: 'negotiation', label: 'Negotiation', count: deals.filter(d => d.stage === 'negotiation').length },
+    { id: 'closing', label: 'Closing', count: deals.filter(d => d.stage === 'closing').length },
   ];
 
   useEffect(() => {
     const loadDeals = () => {
+      // 1. Initial load from local store for instant rendering
       setDeals(getStoredDeals());
+
+      // 2. Fetch fresh deals directly from MySQL DB
+      dealsApi.getAll()
+        .then((res) => {
+          if (res.success && res.data && res.data.length > 0) {
+            setDeals(res.data);
+            saveStoredDeals(res.data);
+          }
+        })
+        .catch((err) => console.warn('Failed to fetch deals from DB:', err.message));
     };
 
     loadDeals();
@@ -51,6 +63,10 @@ const DealsPipeline: React.FC = () => {
     );
     setDeals(updated);
     saveStoredDeals(updated);
+
+    // Sync stage change to DB
+    dealsApi.update(dealId, { stage: nextStage })
+      .catch((err) => console.warn('Failed to sync deal stage to DB:', err.message));
   };
 
   const handleDragStart = (dealId: string) => {

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { NewDealModal } from '../../components/admin/NewDealModal';
+import { leadsApi } from '../../services/api';
 
 interface LeadItem {
   id: string;
@@ -67,9 +68,29 @@ const INITIAL_LEADS: LeadItem[] = [
 ];
 
 const LeadsManagement: React.FC = () => {
+  const [leads, setLeads] = useState<LeadItem[]>(INITIAL_LEADS);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<'All' | 'New' | 'Contacted' | 'Quoted' | 'Lost'>('All');
   const [isNewLeadOpen, setIsNewLeadOpen] = useState(false);
+
+  useEffect(() => {
+    leadsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setLeads(res.data.map((l: any) => ({
+            id: String(l.id),
+            name: l.name,
+            initials: l.initials || l.name.slice(0, 2).toUpperCase(),
+            source: l.source || 'Website',
+            city: l.city || '',
+            interest: l.interest || '',
+            status: l.status || 'New',
+            assigned: l.assigned || 'Unassigned',
+          })));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch leads from DB:', err.message));
+  }, []);
 
   const filterTabs: ('All' | 'New' | 'Contacted' | 'Quoted' | 'Lost')[] = [
     'All',
@@ -93,7 +114,7 @@ const LeadsManagement: React.FC = () => {
     }
   };
 
-  const filteredLeads = INITIAL_LEADS.filter((lead) => {
+  const filteredLeads = leads.filter((lead) => {
     const matchesFilter = activeFilter === 'All' || lead.status === activeFilter;
     const matchesSearch =
       lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -112,7 +133,7 @@ const LeadsManagement: React.FC = () => {
             Leads
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            128 leads · 14 new today
+            {leads.length} leads · {leads.filter(l => l.status === 'New').length} new in database
           </p>
         </div>
 
