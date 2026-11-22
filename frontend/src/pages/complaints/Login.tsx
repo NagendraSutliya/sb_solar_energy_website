@@ -8,6 +8,7 @@ import {
   ShieldCheck, 
   KeyRound, 
   ArrowLeft, 
+  ArrowRight,
   Sparkles,
   Loader2
 } from 'lucide-react';
@@ -19,8 +20,12 @@ const ComplaintLogin = () => {
   const initialRole = searchParams.get('role') === 'admin' ? 'admin' : 'customer';
   const [loginRole, setLoginRole] = useState<'customer' | 'admin'>(initialRole);
   
-  // Show dev login if ?dev=true is in URL or when developer link is clicked
-  const [showDevLogin, setShowDevLogin] = useState(searchParams.get('dev') === 'true');
+  // Check if running on local environment (localhost / 127.0.0.1)
+  const isLocalHost = typeof window !== 'undefined' && 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.startsWith('192.168.'));
+
+  // On local environment, open login directly by default. On live, open if ?dev=true or toggled.
+  const [showDevLogin, setShowDevLogin] = useState(isLocalHost || searchParams.get('dev') === 'true');
 
   useEffect(() => {
     if (searchParams.get('role') === 'admin') {
@@ -202,8 +207,8 @@ const ComplaintLogin = () => {
               </Link>
             </div>
 
-            {/* Discreet Developer / Staff Access Toggle */}
-            {/* <div className="pt-4 border-t border-slate-100">
+            {/* Developer / Staff Access Toggle */}
+            <div className="pt-4 border-t border-slate-100">
               <button
                 type="button"
                 onClick={() => setShowDevLogin(true)}
@@ -212,7 +217,7 @@ const ComplaintLogin = () => {
                 <span>Internal Staff &amp; Developer Access</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
-            </div> */}
+            </div>
           </motion.div>
         ) : (
           /* ========================================================== */
