@@ -73,14 +73,14 @@ const ComplaintLogin = () => {
     const cleanEmail = email.trim().toLowerCase();
 
     try {
-      // 1. Try real database authentication via API
+      // Direct Real Database Authentication via API
       const res = await authApi.login({
         email: cleanEmail,
         password,
         role: loginRole,
       });
 
-      if (res.success) {
+      if (res.success && res.user) {
         localStorage.setItem('sb_auth_token', res.token || 'active_authenticated_session');
         localStorage.setItem('sb_user_role', res.user?.role || loginRole);
         localStorage.setItem('sb_user_email', res.user?.email || cleanEmail);
@@ -94,24 +94,12 @@ const ComplaintLogin = () => {
           navigate('/portal/dashboard');
         }
         return;
+      } else {
+        setError(res.message || 'Login failed. Please verify your credentials.');
       }
     } catch (apiError: any) {
-      // 2. Fallback to demo credentials if offline / development fallback
-      const targetCreds = CREDENTIALS[loginRole];
-      if (cleanEmail === targetCreds.email.toLowerCase() && password === targetCreds.password) {
-        localStorage.setItem('sb_auth_token', 'active_authenticated_session');
-        localStorage.setItem('sb_user_role', loginRole);
-        localStorage.setItem('sb_user_email', email);
-
-        if (loginRole === 'admin') {
-          navigate('/admin/dashboard');
-        } else {
-          navigate('/portal/dashboard');
-        }
-        return;
-      }
-
-      setError(apiError?.message || `Invalid credentials for ${loginRole === 'admin' ? 'Admin' : 'Customer'} portal.`);
+      console.error('[DB LOGIN ERROR]', apiError);
+      setError(apiError?.message || `Database login failed for ${loginRole === 'admin' ? 'Admin' : 'Customer'} portal.`);
     } finally {
       setIsLoading(false);
     }
@@ -358,10 +346,10 @@ const ComplaintLogin = () => {
             <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 text-xs space-y-2.5">
               <div className="flex items-center justify-between text-slate-700 font-bold">
                 <span className="flex items-center gap-1.5">
-                  <KeyRound className="w-3.5 h-3.5 text-amber-500" /> Authorized Demo Credentials
+                  <KeyRound className="w-3.5 h-3.5 text-amber-500" /> Live Database Credentials (MySQL `users`)
                 </span>
-                <span className="text-[10px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full font-semibold">
-                  Dev Only
+                <span className="text-[10px] bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-semibold">
+                  Direct DB Check
                 </span>
               </div>
 

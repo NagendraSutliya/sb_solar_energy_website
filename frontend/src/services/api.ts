@@ -1,12 +1,12 @@
 /**
  * SB Solar Energy API Service Client
- * Connects frontend to the Node.js / PHP backend
+ * Connects frontend to the Node.js / PHP backend & MySQL database
  */
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || (
-  typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')
+  typeof window !== 'undefined' && window.location.hostname.includes('sbsolarenergy.in')
     ? '/api'
-    : 'http://localhost:5000/api'
+    : 'https://sbsolarenergy.in/api'
 );
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -16,14 +16,42 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     ...(options.headers || {}),
   };
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch (netErr: any) {
+    throw new Error(`Database server is unreachable at ${API_BASE_URL}. (${netErr?.message || 'Network error'})`);
+  }
+
+  // Graceful fallback for Apache setups where mod_rewrite might be restricted
+  if (response.status === 404) {
+    let fallbackEndpoint = '';
+    if (endpoint.startsWith('/auth/login')) {
+      fallbackEndpoint = '/auth.php?action=login';
+    } else if (endpoint.startsWith('/auth/register')) {
+      fallbackEndpoint = '/auth.php?action=register';
+    } else if (endpoint.startsWith('/complaints')) {
+      fallbackEndpoint = '/complaints.php' + endpoint.replace('/complaints', '');
+    }
+
+    if (fallbackEndpoint) {
+      try {
+        const fallbackRes = await fetch(`${API_BASE_URL}${fallbackEndpoint}`, { ...options, headers });
+        if (fallbackRes.status !== 404) {
+          response = fallbackRes;
+        }
+      } catch {
+        // keep original response
+      }
+    }
+  }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `API error ${response.status}: ${response.statusText}`);
+    throw new Error(errorData.message || `Database error (${response.status}): ${response.statusText}`);
   }
 
   return response.json();
@@ -152,7 +180,7 @@ export const quotesApi = {
 // Health Check
 export const checkBackendHealth = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/health`);
+    const res = await fetch(`${API_BASE_URL}/health.php`);
     return res.ok;
   } catch {
     return false;
