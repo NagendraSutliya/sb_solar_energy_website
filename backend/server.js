@@ -1,3 +1,4 @@
+
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -14,6 +15,7 @@ import vendorsRouter from './routes/vendors.js';
 import quotesRouter from './routes/quotes.js';
 import authRouter from './routes/auth.js';
 import complaintsRouter from './routes/complaints.js';
+import usersRouter from './routes/users.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +28,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL, 'http://localhost:5173', 'http://localhost:3000'] : '*',
+  origin: true,
   credentials: true,
 }));
 app.use(express.json());
@@ -51,6 +53,7 @@ app.use('/api/vendors', vendorsRouter);
 app.use('/api/quotes', quotesRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/complaints', complaintsRouter);
+app.use('/api/users', usersRouter);
 
 // Serve frontend static build in production (MilesWeb / Node hosting)
 const frontendDistPath = path.resolve(__dirname, '../frontend/dist');

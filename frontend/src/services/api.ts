@@ -1,12 +1,12 @@
 /**
  * SB Solar Energy API Service Client
- * Connects frontend to the Node.js / PHP backend & MySQL database
+ * Connects frontend to the Node.js Express REST API & MySQL database
  */
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || (
-  typeof window !== 'undefined' && window.location.hostname.includes('sbsolarenergy.in')
-    ? '/api'
-    : 'https://sbsolarenergy.in/api'
+  typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000/api'
+    : '/api'
 );
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -23,36 +23,12 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
       headers,
     });
   } catch (netErr: any) {
-    throw new Error(`Database server is unreachable at ${API_BASE_URL}. (${netErr?.message || 'Network error'})`);
-  }
-
-  // Graceful fallback for Apache setups where mod_rewrite might be restricted
-  if (response.status === 404) {
-    let fallbackEndpoint = '';
-    if (endpoint.startsWith('/auth/login')) {
-      fallbackEndpoint = '/auth.php?action=login';
-    } else if (endpoint.startsWith('/auth/register')) {
-      fallbackEndpoint = '/auth.php?action=register';
-    } else {
-      const [path, query] = endpoint.split('?');
-      fallbackEndpoint = `${path}.php${query ? `?${query}` : ''}`;
-    }
-
-    if (fallbackEndpoint) {
-      try {
-        const fallbackRes = await fetch(`${API_BASE_URL}${fallbackEndpoint}`, { ...options, headers });
-        if (fallbackRes.status !== 404) {
-          response = fallbackRes;
-        }
-      } catch {
-        // keep original response
-      }
-    }
+    throw new Error(`Node.js backend is unreachable at ${API_BASE_URL}. (${netErr?.message || 'Network error'})`);
   }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `Database error (${response.status}): ${response.statusText}`);
+    throw new Error(errorData.message || `API error (${response.status}): ${response.statusText}`);
   }
 
   return response.json();
@@ -181,12 +157,18 @@ export const quotesApi = {
 // ==================== USERS API ====================
 export const usersApi = {
   getAll: () => request<{ success: boolean; data: any[] }>('/users'),
+  create: (data: { name: string; email: string; role?: string; phone?: string; password?: string }) =>
+    request<{ success: boolean; data: any }>('/users', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id: string | number, data: any) =>
+    request<{ success: boolean; data: any }>(`/users/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (id: string | number) =>
+    request<{ success: boolean; message: string }>(`/users/${id}`, { method: 'DELETE' }),
 };
 
 // Health Check
 export const checkBackendHealth = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/health.php`);
+    const res = await fetch(`${API_BASE_URL}/health`);
     return res.ok;
   } catch {
     return false;
