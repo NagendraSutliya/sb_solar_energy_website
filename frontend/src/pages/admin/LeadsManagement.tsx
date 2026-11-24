@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
-import { NewDealModal } from '../../components/admin/NewDealModal';
+import { NewLeadModal } from '../../components/admin/NewLeadModal';
 import { leadsApi } from '../../services/api';
 
 interface LeadItem {
@@ -244,10 +244,24 @@ const LeadsManagement: React.FC = () => {
       </div>
 
       {/* New Lead Modal */}
-      <NewDealModal
+      <NewLeadModal
         isOpen={isNewLeadOpen}
         onClose={() => setIsNewLeadOpen(false)}
-        onDealAdded={() => {}}
+        onLeadAdded={(created) => {
+          setLeads((prev) => [
+            {
+              id: String(created.id),
+              name: created.name,
+              initials: created.initials || created.name.slice(0, 2).toUpperCase(),
+              source: created.source || 'Website',
+              city: created.city || '',
+              interest: created.interest || '',
+              status: created.status || 'New',
+              assigned: created.assigned || 'Unassigned',
+            },
+            ...prev,
+          ]);
+        }}
       />
     </div>
   );

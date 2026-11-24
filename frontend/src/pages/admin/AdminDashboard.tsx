@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Search } from 'lucide-react';
-import { NewDealModal } from '../../components/admin/NewDealModal';
+import { NewLeadModal } from '../../components/admin/NewLeadModal';
 import { dealsApi, leadsApi, quotesApi, vendorsApi } from '../../services/api';
 
 const AdminDashboard: React.FC = () => {
@@ -12,6 +12,7 @@ const AdminDashboard: React.FC = () => {
   // Real Database state initialized with mock fallback
   const [totalPipelineValue, setTotalPipelineValue] = useState<string>('₹20.1L');
   const [newLeadsCount, setNewLeadsCount] = useState<number>(14);
+  const [totalLeadsCount, setTotalLeadsCount] = useState<number>(5);
   const [openDealsCount, setOpenDealsCount] = useState<number>(7);
   const [approvedVendorsCount, setApprovedVendorsCount] = useState<number>(3);
 
@@ -100,6 +101,7 @@ const AdminDashboard: React.FC = () => {
     leadsApi.getAll()
       .then((res) => {
         if (res.success && res.data) {
+          setTotalLeadsCount(res.data.length);
           const newOnes = res.data.filter((l: any) => l.status === 'New').length;
           setNewLeadsCount(newOnes || res.data.length);
         }
@@ -420,7 +422,7 @@ const AdminDashboard: React.FC = () => {
               {/* Center Metrics in hole */}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                 <span className="text-2xl font-extrabold text-slate-900 leading-tight">
-                  128
+                  {totalLeadsCount}
                 </span>
                 <span className="text-[11px] text-slate-400 font-medium">
                   leads
@@ -524,11 +526,14 @@ const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* New Lead / Deal Modal */}
-      <NewDealModal
+      {/* New Lead Modal */}
+      <NewLeadModal
         isOpen={isNewLeadOpen}
         onClose={() => setIsNewLeadOpen(false)}
-        onDealAdded={() => {}}
+        onLeadAdded={() => {
+          setTotalLeadsCount((prev) => prev + 1);
+          setNewLeadsCount((prev) => prev + 1);
+        }}
       />
     </div>
   );

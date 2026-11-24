@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import { leadsApi, dealsApi, tasksApi } from '../services/api';
 import { 
   LayoutDashboard, 
   Users, 
@@ -19,14 +20,47 @@ import {
 const AdminLayout: React.FC = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [badgeCounts, setBadgeCounts] = useState({
+    leads: 5,
+    deals: 7,
+    tasks: 5,
+  });
 
-  // Main CRM Navigation items matching Dashboard v2
+  // Fetch real counts from MySQL database on load and on route change
+  useEffect(() => {
+    leadsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data) {
+          setBadgeCounts((prev) => ({ ...prev, leads: res.data.length }));
+        }
+      })
+      .catch((err) => console.warn('Sidebar leads count error:', err.message));
+
+    dealsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data) {
+          setBadgeCounts((prev) => ({ ...prev, deals: res.data.length }));
+        }
+      })
+      .catch((err) => console.warn('Sidebar deals count error:', err.message));
+
+    tasksApi.getAll()
+      .then((res) => {
+        if (res.success && res.data) {
+          const openTasks = res.data.filter((t: any) => !t.completed).length;
+          setBadgeCounts((prev) => ({ ...prev, tasks: openTasks || res.data.length }));
+        }
+      })
+      .catch((err) => console.warn('Sidebar tasks count error:', err.message));
+  }, [location.pathname]);
+
+  // Main CRM Navigation items with live database counts
   const mainNavItems = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Leads', path: '/admin/leads', icon: Filter, badge: '128' },
-    { name: 'Deals', path: '/admin/deals', icon: Briefcase, badge: '64' },
+    { name: 'Leads', path: '/admin/leads', icon: Filter, badge: String(badgeCounts.leads) },
+    { name: 'Deals', path: '/admin/deals', icon: Briefcase, badge: String(badgeCounts.deals) },
     { name: 'Contacts', path: '/admin/contacts', icon: Users },
-    { name: 'Tasks', path: '/admin/tasks', icon: CheckSquare, badge: '3' },
+    { name: 'Tasks', path: '/admin/tasks', icon: CheckSquare, badge: String(badgeCounts.tasks) },
   ];
 
   // Manage Navigation items matching requirements screenshots
@@ -188,16 +222,20 @@ const AdminLayout: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer / User Profile matching Dashboard.png bottom left card */}
+        {/* Footer / User Profile */}
         <div className="p-4 bg-[#0c1222]">
           <div className="bg-[#141d33] rounded-2xl p-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#f59e0b] text-slate-950 flex items-center justify-center font-extrabold text-md shadow-xs shrink-0">
-                R
+                {(localStorage.getItem('sb_user_name') || 'Admin').charAt(0).toUpperCase()}
               </div>
               <div className="text-left">
-                <p className="text-sm font-bold text-white leading-tight">Rahul</p>
-                <p className="text-xs text-slate-400">Admin</p>
+                <p className="text-sm font-bold text-white leading-tight">
+                  {localStorage.getItem('sb_user_name') || 'SB Solar Admin'}
+                </p>
+                <p className="text-xs text-slate-400 capitalize">
+                  {localStorage.getItem('sb_user_role') || 'Admin'}
+                </p>
               </div>
             </div>
 

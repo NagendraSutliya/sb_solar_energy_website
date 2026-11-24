@@ -83,6 +83,11 @@ const DealsPipeline: React.FC = () => {
     setDraggedDealId(null);
   };
 
+  const totalValue = deals.reduce((sum, d) => sum + (Number(d.value) || 0), 0);
+  const totalValueFormatted = totalValue >= 100000 
+    ? `₹${(totalValue / 100000).toFixed(1)}L` 
+    : `₹${totalValue.toLocaleString('en-IN')}`;
+
   return (
     <div className="space-y-6 pb-12 font-sans">
       {/* Top Header */}
@@ -92,7 +97,7 @@ const DealsPipeline: React.FC = () => {
             Deals
           </h1>
           <p className="text-sm text-slate-500 mt-1">
-            64 open · ₹52.8L value
+            {deals.length} open · {totalValueFormatted} value
           </p>
         </div>
 

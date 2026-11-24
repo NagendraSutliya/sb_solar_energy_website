@@ -4,9 +4,9 @@
  */
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || (
-  typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ? 'http://localhost:5000/api'
-    : '/api'
+  typeof window !== 'undefined' && window.location.hostname.includes('sbsolarenergy.in')
+    ? '/api'
+    : 'https://sbsolarenergy.in/api'
 );
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
@@ -23,12 +23,36 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
       headers,
     });
   } catch (netErr: any) {
-    throw new Error(`Node.js backend is unreachable at ${API_BASE_URL}. (${netErr?.message || 'Network error'})`);
+    throw new Error(`Database server is unreachable at ${API_BASE_URL}. (${netErr?.message || 'Network error'})`);
+  }
+
+  // Graceful fallback for Apache / LiteSpeed setups where mod_rewrite might be restricted
+  if (response.status === 404) {
+    let fallbackEndpoint = '';
+    if (endpoint.startsWith('/auth/login')) {
+      fallbackEndpoint = '/auth.php?action=login';
+    } else if (endpoint.startsWith('/auth/register')) {
+      fallbackEndpoint = '/auth.php?action=register';
+    } else {
+      const [path, query] = endpoint.split('?');
+      fallbackEndpoint = `${path}.php${query ? `?${query}` : ''}`;
+    }
+
+    if (fallbackEndpoint) {
+      try {
+        const fallbackRes = await fetch(`${API_BASE_URL}${fallbackEndpoint}`, { ...options, headers });
+        if (fallbackRes.status !== 404) {
+          response = fallbackRes;
+        }
+      } catch {
+        // keep original response
+      }
+    }
   }
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || `API error (${response.status}): ${response.statusText}`);
+    throw new Error(errorData.message || `Database error (${response.status}): ${response.statusText}`);
   }
 
   return response.json();
@@ -168,7 +192,7 @@ export const usersApi = {
 // Health Check
 export const checkBackendHealth = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/health`);
+    const res = await fetch(`${API_BASE_URL}/health.php`);
     return res.ok;
   } catch {
     return false;
