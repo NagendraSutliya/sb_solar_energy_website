@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Zap, Shield, Sun, Building2, Home as HomeIcon, Factory, ChevronLeft, ChevronRight, Award, TrendingUp, Phone, Settings, FileText, Star, Quote, Pointer, PiggyBank, CreditCard, Smartphone, X, HelpCircle, ChevronDown } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Sun, Building2, Home as HomeIcon, Factory, ChevronLeft, ChevronRight, Award, TrendingUp, Phone, Settings, FileText, Star, Quote, Pointer, PiggyBank, CreditCard, Smartphone, X, HelpCircle, ChevronDown, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedBackground from '../components/AnimatedBackground';
+import { newsApi, type NewsItem } from '../services/api';
 
 const HERO_SLIDES = [
   {
@@ -186,30 +187,48 @@ const FeaturesSection = () => {
             {
               title: 'Get Upto ₹78,000 Subsidy',
               desc: 'Install solar at your home to reduce electricity bill by up to 90% and also get subsidy from the central government.',
-              icon: Zap
+              icon: Zap,
+              img: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=600&auto=format&fit=crop&q=80',
+              tag: 'Govt Approved'
             },
             {
               title: 'Customized Solutions',
               desc: 'Offering Innovative and Superior Solar Solutions for Residential, Commercial, and Industrial needs.',
-              icon: Shield
+              icon: Shield,
+              img: 'https://images.unsplash.com/photo-1508873696983-2df570464756?w=600&auto=format&fit=crop&q=80',
+              tag: 'Tailored EPC'
             },
             {
               title: 'Sustainable Future',
               desc: 'Illuminate your Sustainable Future System with or without a battery backup.',
-              icon: Sun
+              icon: Sun,
+              img: 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=600&auto=format&fit=crop&q=80',
+              tag: 'Clean Energy'
             }
           ].map((feature, i) => (
-            <div key={i} className="min-w-[85vw] sm:min-w-[60vw] md:min-w-0 snap-center bg-white p-5 md:p-6 2xl:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-              <div className="flex items-center space-x-3 md:space-x-4 mb-3 md:mb-5 2xl:mb-6">
-                <div className="h-10 w-10 md:h-12 md:w-12 2xl:h-14 2xl:w-14 shrink-0 bg-primary/10 rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
-                  <feature.icon className="h-5 w-5 md:h-6 md:w-6 2xl:h-7 2xl:w-7 text-primary group-hover:text-white transition-colors duration-300" />
+            <div key={i} className="min-w-[85vw] sm:min-w-[60vw] md:min-w-0 snap-center bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group flex flex-col overflow-hidden">
+              <div className="relative h-44 sm:h-48 w-full bg-slate-100 overflow-hidden shrink-0">
+                <img 
+                  src={feature.img} 
+                  alt={feature.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  {feature.tag}
                 </div>
-                <h3 className="text-base md:text-lg 2xl:text-xl font-bold text-slate-900">{feature.title}</h3>
+                <div className="absolute -bottom-4 right-4 h-11 w-11 bg-white rounded-2xl shadow-md border border-slate-100 flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
+                  <feature.icon className="h-5 w-5 text-primary group-hover:text-white transition-colors duration-300" />
+                </div>
               </div>
-              <p className="text-slate-600 text-xs md:text-base leading-relaxed mb-3 md:mb-5 2xl:mb-6">{feature.desc}</p>
-              <a href="tel:07023204664" className="text-primary font-semibold text-xs md:text-base inline-flex items-center group-hover:text-primary-hover transition-colors">
-                Learn more <ArrowRight className="ml-1 h-3.5 w-3.5 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              <div className="p-5 md:p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-base md:text-lg 2xl:text-xl font-bold text-slate-900 mb-2">{feature.title}</h3>
+                  <p className="text-slate-600 text-xs md:text-sm leading-relaxed mb-4">{feature.desc}</p>
+                </div>
+                <a href="tel:07023204664" className="text-primary font-bold text-xs md:text-sm inline-flex items-center group-hover:text-primary-hover transition-colors pt-2 border-t border-slate-100">
+                  Learn more <ArrowRight className="ml-1 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -358,12 +377,42 @@ const IndustrySection = () => {
 };
 
 const WHY_CHOOSE_US = [
-  { title: "25-Year Performance Warranty", desc: "Long-term peace of mind with our comprehensive performance guarantees.", icon: Shield },
-  { title: "Expert Installation", desc: "Our certified engineers ensure flawless, safe, and efficient setups.", icon: Settings },
-  { title: "Govt. Subsidy Support", desc: "We handle the paperwork to get you the maximum central subsidies.", icon: FileText },
-  { title: "Tier-1 Quality", desc: "We use only premium, globally-rated solar panels and inverters.", icon: Award },
-  { title: "Highest ROI", desc: "Maximize your energy savings and get the fastest return on investment.", icon: TrendingUp },
-  { title: "24/7 Support", desc: "Round-the-clock technical assistance and maintenance services.", icon: Phone }
+  { 
+    title: "25-Year Performance Warranty", 
+    desc: "Long-term peace of mind with our comprehensive linear performance guarantees on Tier-1 panels.", 
+    icon: Shield,
+    img: "https://images.unsplash.com/photo-1545209179-a5dc550496ac?w=500&auto=format&fit=crop&q=80"
+  },
+  { 
+    title: "Expert Installation", 
+    desc: "Our certified MNRE engineers ensure flawless, safe, and efficient setups with precision alignment.", 
+    icon: Settings,
+    img: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=500&auto=format&fit=crop&q=80"
+  },
+  { 
+    title: "Govt. Subsidy Support", 
+    desc: "We handle the complete DISCOM paperwork to get you the maximum PM Surya Ghar central subsidies.", 
+    icon: FileText,
+    img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?w=500&auto=format&fit=crop&q=80"
+  },
+  { 
+    title: "Tier-1 Quality", 
+    desc: "We use only premium, globally-rated solar panels, micro-inverters, and high-gauge DC wiring.", 
+    icon: Award,
+    img: "https://images.unsplash.com/photo-1508873696983-2df570464756?w=500&auto=format&fit=crop&q=80"
+  },
+  { 
+    title: "Highest ROI", 
+    desc: "Maximize your energy savings with rapid payback periods as short as 3 years and zero bills.", 
+    icon: TrendingUp,
+    img: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=500&auto=format&fit=crop&q=80"
+  },
+  { 
+    title: "24/7 Support", 
+    desc: "Round-the-clock technical assistance, IoT smart monitoring, and regular maintenance services.", 
+    icon: Phone,
+    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&auto=format&fit=crop&q=80"
+  }
 ];
 
 const WhyChooseUsSection = () => {
@@ -381,16 +430,28 @@ const WhyChooseUsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 2xl:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 2xl:gap-8">
           {WHY_CHOOSE_US.map((feature, i) => (
-            <div key={i} className="flex flex-col items-center text-center p-3 sm:p-5 md:p-6 2xl:p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
-              <div className="h-10 w-10 md:h-12 md:w-12 2xl:h-16 2xl:w-16 bg-white shadow-sm border border-slate-100 rounded-2xl flex items-center justify-center mb-4 md:mb-6 group-hover:bg-primary transition-colors duration-300">
-                <feature.icon className="h-5 w-5 md:h-6 md:w-6 2xl:h-8 2xl:w-8 text-primary group-hover:text-white transition-colors duration-300" />
+            <div key={i} className="flex flex-col rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group overflow-hidden">
+              <div className="relative h-40 w-full overflow-hidden bg-slate-200">
+                <img 
+                  src={feature.img} 
+                  alt={feature.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                <div className="absolute bottom-3 left-3 h-10 w-10 bg-white/95 backdrop-blur-xs rounded-xl flex items-center justify-center shadow-md text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                  <feature.icon className="h-5 w-5" />
+                </div>
               </div>
-              <h3 className="text-sm sm:text-base md:text-lg 2xl:text-xl font-bold text-slate-900 mb-2 md:mb-3">{feature.title}</h3>
-              <p className="text-slate-600 text-xs md:text-base leading-relaxed">
-                {feature.desc}
-              </p>
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 mb-1.5 group-hover:text-primary transition-colors">{feature.title}</h3>
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                    {feature.desc}
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -404,25 +465,33 @@ const TESTIMONIALS = [
     name: "Rajesh Sharma",
     role: "Industrial Factory Owner",
     content: "Switching to SB Solar was the best decision for our operations. Our monthly energy costs dropped by 70% in the first quarter alone, and the heavy-duty inverters handle our loads flawlessly.",
-    rating: 5
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+    city: "Jaipur"
   },
   {
     name: "Priya Desai",
     role: "Residential Homeowner",
     content: "The team handled absolutely everything—from the initial roof inspection to the final government subsidy paperwork. Highly professional, clean installation, and incredibly efficient!",
-    rating: 5
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
+    city: "Udaipur"
   },
   {
     name: "Amit Patel",
     role: "Corporate Director",
     content: "We were highly impressed by the premium quality of the Tier-1 panels and their 24/7 support team. Our corporate headquarters is now proudly running on 100% green energy.",
-    rating: 5
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+    city: "Dungarpur"
   },
   {
-    name: "Rajeev",
-    role: "Corporate Director",
-    content: "SB SOLAR ENERGY India was our EPS & installation Service for more than 10 years and we find them very competent and committed to our satisfaction.",
-    rating: 5
+    name: "Rajeev Verma",
+    role: "Hotel & Resort Owner",
+    content: "SB SOLAR ENERGY India was our EPC & installation partner for our resort solar plant. Power generation is consistent even during peak tourist seasons and maintenance is top-notch.",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=80",
+    city: "Banswara"
   }
 ];
 
@@ -493,13 +562,20 @@ const TestimonialsSection = () => {
                   "{testimonial.content}"
                 </p>
 
-                <div className="flex items-center space-x-4 relative z-10 mt-auto">
-                  <div className="h-8 w-8 md:h-12 md:w-12 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold md:text-lg shrink-0">
-                    {testimonial.name.charAt(0)}
+                <div className="flex items-center space-x-3.5 relative z-10 mt-auto pt-4 border-t border-slate-100">
+                  <div className="h-11 w-11 md:h-12 md:w-12 rounded-full overflow-hidden border-2 border-primary/20 shrink-0 shadow-xs bg-slate-100">
+                    <img 
+                      src={testimonial.avatar} 
+                      alt={testimonial.name} 
+                      className="w-full h-full object-cover" 
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = 'none';
+                      }}
+                    />
                   </div>
                   <div>
-                    <h4 className="text-sm md:text-base font-bold text-slate-900">{testimonial.name}</h4>
-                    <p className="text-xs md:text-base text-slate-500">{testimonial.role}</p>
+                    <h4 className="text-sm md:text-base font-bold text-slate-900 leading-tight">{testimonial.name}</h4>
+                    <p className="text-xs text-slate-500 mt-0.5">{testimonial.role} · <span className="text-primary font-medium">{testimonial.city}</span></p>
                   </div>
                 </div>
               </div>
@@ -515,6 +591,243 @@ const TestimonialsSection = () => {
           </button>
         </div>
       </div>
+    </section>
+  );
+};
+
+const DEFAULT_NEWS_POSTS: NewsItem[] = [
+  {
+    id: 1,
+    title: 'PM Surya Ghar Yojana 2026: Get ₹78,000 Direct Subsidy in Rajasthan',
+    brief: 'Under PM Surya Ghar Muft Bijli Yojana, homeowners can get up to ₹78,000 central financial assistance directly into their bank accounts. SB Solar handles the end-to-end DISCOM approval & net-metering process.',
+    image_url: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&auto=format&fit=crop&q=80',
+    category: 'Govt Subsidy',
+    link: '/emi-solar-plan',
+    is_active: 1,
+    created_at: '2026-11-20 10:00:00'
+  },
+  {
+    id: 2,
+    title: 'Next-Gen Bi-facial & TOPCon Solar Panels: Up to 30% Extra Power',
+    brief: 'SB Solar now installs Tier-1 dual-glass bifacial panels in Rajasthan that capture reflected sunlight from the roof surface, providing superior power generation even during hot peak summers.',
+    image_url: 'https://images.unsplash.com/photo-1508873696983-2df570464756?w=800&auto=format&fit=crop&q=80',
+    category: 'Technology',
+    link: '/products',
+    is_active: 1,
+    created_at: '2026-11-18 14:30:00'
+  },
+  {
+    id: 3,
+    title: 'Milestone: SB Solar Crosses 500+ Rooftop Installations in South Rajasthan',
+    brief: 'We are proud to announce the milestone of over 500 residential, commercial, and agricultural installations across Dungarpur, Banswara, Udaipur, and surrounding districts with 99.8% customer satisfaction.',
+    image_url: 'https://images.unsplash.com/photo-1545209179-a5dc550496ac?w=800&auto=format&fit=crop&q=80',
+    category: 'Milestone',
+    link: '/about',
+    is_active: 1,
+    created_at: '2026-11-15 09:15:00'
+  },
+  {
+    id: 4,
+    title: 'Zero Down Payment Solar Loans at 6.5% - Offset 100% of Your Electricity Bill',
+    brief: 'With partnerships across nationalized banks, residential rooftop solar is now 100% collateral-free. The money saved on your electricity bill covers your EMI from the very first month.',
+    image_url: 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=800&auto=format&fit=crop&q=80',
+    category: 'Finance & EMI',
+    link: '/emi-solar-plan',
+    is_active: 1,
+    created_at: '2026-11-10 11:20:00'
+  }
+];
+
+const NewsAndUpdatesSection = () => {
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState<NewsItem[]>(DEFAULT_NEWS_POSTS);
+  const [isPaused, setIsPaused] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<NewsItem | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    newsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          setPosts(res.data);
+        }
+      })
+      .catch((err) => console.warn('Homepage news fetch note:', err.message));
+  }, []);
+
+  const handleCardClick = (post: NewsItem) => {
+    if (post.link && post.link.startsWith('/')) {
+      navigate(post.link);
+    } else if (post.link && post.link.startsWith('http')) {
+      window.open(post.link, '_blank');
+    } else {
+      setSelectedPost(post);
+    }
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 360;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Duplicate items for continuous seamless loop like brands section
+  const displayItems = posts.length >= 3 ? [...posts, ...posts, ...posts] : [...posts, ...posts, ...posts, ...posts];
+
+  return (
+    <section className="py-12 md:py-16 2xl:py-20 bg-slate-50 border-t border-slate-200/80 relative overflow-hidden">
+      <AnimatedBackground />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 md:mb-10 text-center relative z-10">
+        <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-primary bg-primary/10 px-4 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-2.5">
+          <Sparkles className="w-3.5 h-3.5" /> Latest News, Blogs & Solar Insights
+        </span>
+        <h2 className="text-xl sm:text-2xl md:text-3xl 2xl:text-4xl font-extrabold text-slate-900 tracking-tight">
+          News & <span className="text-primary">Recent Updates</span>
+        </h2>
+        <div className="w-16 h-1 bg-primary mx-auto mt-3 rounded-full"></div>
+        <p className="text-xs sm:text-sm md:text-base text-slate-600 font-medium max-w-2xl mx-auto mt-2.5">
+          Stay informed with recent government solar subsidies, technology innovations, and project milestones directly from SB Solar Energy.
+        </p>
+      </div>
+
+      {/* Marquee Ticker with Pause on Hover */}
+      <div 
+        className="relative w-full overflow-hidden py-2"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Navigation arrows for desktop */}
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm text-slate-700 p-2.5 rounded-full shadow-lg border border-slate-200 hover:bg-primary hover:text-white transition-all cursor-pointer hidden md:flex items-center justify-center hover:scale-105"
+          aria-label="Scroll left"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm text-slate-700 p-2.5 rounded-full shadow-lg border border-slate-200 hover:bg-primary hover:text-white transition-all cursor-pointer hidden md:flex items-center justify-center hover:scale-105"
+          aria-label="Scroll right"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* Soft edge blur gradient masks */}
+        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
+
+        {/* Continuous animation or horizontal scroll container */}
+        <motion.div
+          ref={scrollRef}
+          animate={isPaused ? {} : { x: [0, -1800] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 35,
+              ease: "linear",
+            },
+          }}
+          className="flex flex-nowrap gap-5 sm:gap-6 items-stretch px-4 w-max cursor-grab active:cursor-grabbing"
+        >
+          {displayItems.map((item, index) => (
+            <div
+              key={`${item.id}-${index}`}
+              onClick={() => handleCardClick(item)}
+              className="w-[280px] sm:w-[320px] md:w-[350px] shrink-0 bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col overflow-hidden cursor-pointer group"
+            >
+              {/* Image banner */}
+              <div className="relative h-44 sm:h-48 w-full bg-slate-100 overflow-hidden shrink-0">
+                <img
+                  src={item.image_url || 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&auto=format&fit=crop&q=80'}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&auto=format&fit=crop&q=80';
+                  }}
+                />
+                <div className="absolute top-3 left-3">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-900/85 backdrop-blur-xs text-amber-300 shadow-sm">
+                    {item.category || 'Solar News'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card body */}
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-primary transition-colors line-clamp-2 leading-snug mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed font-normal">
+                    {item.brief}
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-[11px] font-semibold text-primary group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    Read Update <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-medium">
+                    {item.created_at ? new Date(item.created_at).toLocaleDateString() : 'Recent'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Modal for full detail reading if not linking to specific page */}
+      {selectedPost && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
+          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden">
+            <div className="relative h-52 w-full bg-slate-900">
+              <img
+                src={selectedPost.image_url || 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&auto=format&fit=crop&q=80'}
+                alt={selectedPost.title}
+                className="w-full h-full object-cover"
+              />
+              <button
+                onClick={() => setSelectedPost(null)}
+                className="absolute top-3 right-3 bg-slate-950/70 hover:bg-slate-950 text-white p-2 rounded-full cursor-pointer transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <div className="absolute bottom-3 left-4">
+                <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary text-white">
+                  {selectedPost.category || 'Solar News'}
+                </span>
+              </div>
+            </div>
+            <div className="p-6 space-y-3">
+              <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                {selectedPost.title}
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                {selectedPost.brief}
+              </p>
+              <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
+                <span className="text-xs text-slate-400">
+                  Published: {selectedPost.created_at ? new Date(selectedPost.created_at).toLocaleDateString() : 'Recent'}
+                </span>
+                <button
+                  onClick={() => setSelectedPost(null)}
+                  className="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
@@ -577,11 +890,15 @@ const CTASection = () => {
   const navigate = useNavigate();
   return (
     <section className="max-w-8xl mx-4 md:mx-10 px-4 sm:px-6 lg:px-8 mb-10 relative z-10">
-      <div className="w-full rounded-2xl md:rounded-[30px] py-8 md:py-10 bg-[#0f172a] relative overflow-hidden shadow-2xl flex flex-col justify-center border border-slate-800">
+      <div 
+        className="w-full rounded-2xl md:rounded-[30px] py-10 md:py-14 relative overflow-hidden shadow-2xl flex flex-col justify-center border border-slate-800 bg-cover bg-center"
+        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1600&auto=format&fit=crop&q=80')` }}
+      >
+        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[2px] z-0"></div>
         <motion.div
           animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 opacity-30 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:20px_20px] z-0"
+          className="absolute inset-0 opacity-20 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:20px_20px] z-0"
         />
 
         <div className="relative z-10 flex flex-col items-center justify-between gap-x-6 gap-y-3 sm:gap-x-6 md:gap-8 text-center px-2 sm:px-4">
@@ -882,21 +1199,30 @@ const FAQSection = () => {
         </div>
 
         {/* Bottom Helper Bar */}
-        <div className="mt-8 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg border border-slate-700">
-          <div>
-            <div className="text-sm font-bold text-white">Have more questions about your rooftop?</div>
-            <div className="text-xs md:text-base text-slate-300 mt-0.5">Our solar technical consultants are ready to assist with free rooftop feasibility assessment.</div>
+        <div className="mt-8 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-5 shadow-xl border border-slate-700/80">
+          <div className="flex items-center gap-4">
+            <div className="h-14 w-14 rounded-2xl overflow-hidden border-2 border-primary/40 shrink-0 shadow-md">
+              <img 
+                src="https://images.unsplash.com/photo-1545209179-a5dc550496ac?w=200&auto=format&fit=crop&q=80" 
+                alt="Solar Consultant" 
+                className="w-full h-full object-cover" 
+              />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-white">Have more questions about your rooftop solar?</div>
+              <div className="text-xs md:text-sm text-slate-300 mt-0.5">Our certified solar technical consultants in Rajasthan are ready to assist with a free rooftop feasibility assessment.</div>
+            </div>
           </div>
-          <div className="flex items-center gap-2.5 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto justify-end">
             <button
               onClick={() => navigate('/emi-solar-plan')}
-              className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl text-xs md:text-base font-bold transition-all cursor-pointer shadow-sm"
+              className="bg-primary hover:bg-primary-hover text-white px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all cursor-pointer shadow-sm"
             >
               Calculate EMI
             </button>
             <button
               onClick={() => navigate('/contact')}
-              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2 rounded-xl text-xs md:text-base font-semibold transition-all cursor-pointer"
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all cursor-pointer"
             >
               Contact Support
             </button>
@@ -918,6 +1244,7 @@ const Home = () => {
       <IndustrySection />
       <WhyChooseUsSection />
       <TestimonialsSection />
+      <NewsAndUpdatesSection />
       <BrandsSection />
       <FAQSection />
       <CTASection />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { quotesApi } from '../services/api';
 import { X, Sun, Zap, CheckCircle2, ShieldCheck, ArrowRight, PhoneCall, Sparkles } from 'lucide-react';
 
 interface FreeSolarQuoteModalProps {
@@ -59,6 +60,18 @@ export const FreeSolarQuoteModal: React.FC<FreeSolarQuoteModalProps> = ({ isOpen
     const whatsappUrl = `https://wa.me/917023204664?text=${message}`;
     window.open(whatsappUrl, '_blank');
     setSubmitted(true);
+
+    // Save directly to real MySQL database as a Quote & Lead
+    quotesApi.create({
+      fullName: formData.fullName.trim(),
+      phone: formData.phone.trim(),
+      city: formData.city || 'Rajasthan',
+      monthlyBill: formData.monthlyBill,
+      category: formData.category,
+      roofType: formData.roofType,
+      capacityKW: estimatedCapacityKW,
+      subsidy: estimatedSubsidy,
+    }).catch((err) => console.warn('Free quote DB sync note:', err.message));
   };
 
   const handleReset = () => {

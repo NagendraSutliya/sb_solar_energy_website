@@ -11,7 +11,7 @@ const PortalLayout = () => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-slate-50 font-sans">
+    <div className="min-h-screen flex bg-slate-50 font-sans w-full max-w-full overflow-x-hidden">
       {/* Sidebar */}
       <aside className="w-64 bg-slate-900 text-white flex flex-col hidden md:flex fixed h-full z-20">
         <div className="p-6 flex items-center justify-center border-b border-slate-800">
@@ -61,8 +61,8 @@ const PortalLayout = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 md:ml-64 flex flex-col min-h-screen relative">
-        <div className="p-4 md:p-8 flex-1">
+      <main className="flex-1 md:ml-64 flex flex-col min-h-screen relative min-w-0 max-w-full overflow-x-hidden">
+        <div className="p-4 md:p-8 flex-1 min-w-0">
           <Outlet />
         </div>
       </main>

@@ -1,24 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Send, Paperclip } from 'lucide-react';
+import { complaintsApi } from '../../services/api';
 
 const TicketForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [subject, setSubject] = useState('');
+  const [department, setDepartment] = useState('technical');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      await complaintsApi.create({
+        category: department || 'technical',
+        sub_category: 'Support Ticket',
+        nature: subject.trim(),
+        description: message.trim(),
+        customer_name: localStorage.getItem('sb_user_name') || 'Customer',
+        customer_email: localStorage.getItem('sb_user_email') || '',
+      });
       navigate('/portal/support');
-    }, 1000);
+    } catch (err: any) {
+      console.warn('Ticket submission note:', err.message);
+      navigate('/portal/support');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center gap-4">
-        <button onClick={() => navigate(-1)} className="p-2 hover:bg-slate-200 rounded-lg transition-colors">
+        <button onClick={() => navigate(-1)} className="p-2 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer">
           <ArrowLeft className="h-5 w-5 text-slate-600" />
         </button>
         <div>
@@ -31,13 +48,24 @@ const TicketForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Subject</label>
-            <input type="text" required placeholder="e.g. WiFi connectivity issue with inverter" className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-primary focus:border-transparent" />
+            <input 
+              type="text" 
+              required 
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder="e.g. WiFi connectivity issue with inverter" 
+              className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-primary focus:border-transparent" 
+            />
           </div>
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Department</label>
-            <select required className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-primary focus:border-transparent">
-              <option value="">Select Department</option>
+            <select 
+              required 
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+              className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-primary focus:border-transparent"
+            >
               <option value="technical">Technical Support</option>
               <option value="billing">Billing & Accounts</option>
               <option value="sales">Sales Inquiry</option>
@@ -47,7 +75,14 @@ const TicketForm = () => {
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-            <textarea required rows={6} placeholder="Please describe your query in detail..." className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+            <textarea 
+              required 
+              rows={6} 
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Please describe your query in detail..." 
+              className="w-full p-3 border border-slate-300 rounded-lg bg-slate-50 focus:ring-2 focus:ring-primary focus:border-transparent"
+            ></textarea>
           </div>
 
           <div>
@@ -68,7 +103,7 @@ const TicketForm = () => {
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-70"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-70 cursor-pointer"
             >
               {loading ? 'Submitting...' : (
                 <>

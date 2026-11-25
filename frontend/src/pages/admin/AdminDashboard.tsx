@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { NewLeadModal } from '../../components/admin/NewLeadModal';
-import { dealsApi, leadsApi, quotesApi, vendorsApi } from '../../services/api';
+import { dealsApi, leadsApi, quotesApi, vendorsApi, complaintsApi } from '../../services/api';
 
 const AdminDashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -129,6 +129,19 @@ const AdminDashboard: React.FC = () => {
         }
       })
       .catch((err) => console.warn('Failed to fetch dashboard vendors from DB:', err.message));
+
+    // 5. Fetch customer complaints for live activity feed
+    complaintsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data && res.data.length > 0) {
+          const complaintActs = res.data.slice(0, 3).map((c: any) => ({
+            title: `Complaint #${c.complaint_no}: ${c.nature} (${c.customer_name})`,
+            time: c.status || 'Pending',
+          }));
+          setRecentActivitiesList((prev) => [...complaintActs, ...prev].slice(0, 5));
+        }
+      })
+      .catch((err) => console.warn('Failed to fetch dashboard complaints from DB:', err.message));
   }, []);
 
   // Lead Sources breakdown matching Dashboard v2 mockup

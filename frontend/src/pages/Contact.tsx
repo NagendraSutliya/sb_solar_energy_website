@@ -20,6 +20,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { FaWhatsapp } from 'react-icons/fa';
 import { indiaStatesDistricts } from '../data/indiaStatesDistricts';
 import { getStoredVendors, type Vendor } from '../data/vendorStorage';
+import { leadsApi } from '../services/api';
 
 // const POPULAR_DISTRICTS = ['All', 'Dungarpur', 'Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Sikar', 'Bikaner', 'Ajmer', 'Banswara', 'Bhilwara', 'Alwar'];
 
@@ -67,6 +68,18 @@ const Contact = () => {
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // 1. Save directly into MySQL database as a new Lead
+    leadsApi.create({
+      name: contactData.name.trim(),
+      email: contactData.email.trim(),
+      city: 'Rajasthan',
+      interest: contactData.subject ? `Contact: ${contactData.subject}` : 'Website Inquiry',
+      source: 'Website Contact Form',
+      status: 'New',
+      notes: contactData.message,
+    }).catch((err) => console.warn('Contact Lead DB sync note:', err.message));
+
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",

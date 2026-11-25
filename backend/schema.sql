@@ -189,3 +189,24 @@ INSERT INTO `complaints` (`id`, `complaint_no`, `customer_name`, `customer_email
 (3, 'CMP-12340', 'Vikram Khanna', 'vikram@sbsolar.com', '+91 9414566778', 'Battery', 'Backup', 'Battery Replacement', 'Battery backup discharging too quickly', 'Closed'),
 (4, 'CMP-12338', 'Sneha Rao', 'sneha@sbsolar.com', '+91 9828044556', 'Accessories', 'Wiring', 'Wire loose connection', 'Terminal block loose wire tightened', 'Closed')
 ON DUPLICATE KEY UPDATE `complaint_no`=VALUES(`complaint_no`);
+
+-- TABLE: news_updates (Dynamic Blogs, Industry News, Ticker Updates)
+CREATE TABLE IF NOT EXISTS `news_updates` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) NOT NULL,
+  `brief` TEXT NOT NULL,
+  `image_url` VARCHAR(500) DEFAULT NULL,
+  `category` VARCHAR(100) DEFAULT 'Solar News',
+  `link` VARCHAR(255) DEFAULT '',
+  `is_active` TINYINT(1) DEFAULT 1,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- SEED DATA FOR NEWS & UPDATES
+INSERT INTO `news_updates` (`id`, `title`, `brief`, `image_url`, `category`, `link`, `is_active`) VALUES
+(1, 'PM Surya Ghar Yojana 2026: Get ₹78,000 Direct Subsidy in Rajasthan', 'Under PM Surya Ghar Muft Bijli Yojana, homeowners can get up to ₹78,000 central financial assistance directly into their bank accounts. SB Solar handles the end-to-end DISCOM approval & net-metering process.', 'https://images.unsplash.com/photo-1509391365360-2e959784a276?w=800&auto=format&fit=crop&q=80', 'Govt Subsidy', '/emi-solar-plan', 1),
+(2, 'Next-Gen Bi-facial & TOPCon Solar Panels: Up to 30% Extra Power', 'SB Solar now installs Tier-1 dual-glass bifacial panels in Rajasthan that capture reflected sunlight from the roof surface, providing superior power generation even during hot peak summers.', 'https://images.unsplash.com/photo-1508873696983-2df570464756?w=800&auto=format&fit=crop&q=80', 'Technology', '/products', 1),
+(3, 'Milestone: SB Solar Crosses 500+ Rooftop Installations in South Rajasthan', 'We are proud to announce the milestone of over 500 residential, commercial, and agricultural installations across Dungarpur, Banswara, Udaipur, and surrounding districts with 99.8% customer satisfaction.', 'https://images.unsplash.com/photo-1545209179-a5dc550496ac?w=800&auto=format&fit=crop&q=80', 'Milestone', '/about', 1),
+(4, 'Zero Down Payment Solar Loans at 6.5% - Offset 100% of Your Electricity Bill', 'With partnerships across nationalized banks, residential rooftop solar is now 100% collateral-free. The money saved on your electricity bill covers your EMI from the very first month.', 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=800&auto=format&fit=crop&q=80', 'Finance & EMI', '/emi-solar-plan', 1)
+ON DUPLICATE KEY UPDATE `title`=VALUES(`title`);

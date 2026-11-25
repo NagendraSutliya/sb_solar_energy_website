@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { leadsApi, dealsApi, tasksApi } from '../services/api';
+import { leadsApi, dealsApi, tasksApi, complaintsApi } from '../services/api';
 import { 
   LayoutDashboard, 
   Users, 
@@ -14,7 +14,9 @@ import {
   LogOut, 
   Menu, 
   X,
-  ExternalLink
+  ExternalLink,
+  AlertCircle,
+  Newspaper
 } from 'lucide-react';
 
 const AdminLayout: React.FC = () => {
@@ -24,6 +26,7 @@ const AdminLayout: React.FC = () => {
     leads: 5,
     deals: 7,
     tasks: 5,
+    complaints: 0,
   });
 
   // Fetch real counts from MySQL database on load and on route change
@@ -52,6 +55,15 @@ const AdminLayout: React.FC = () => {
         }
       })
       .catch((err) => console.warn('Sidebar tasks count error:', err.message));
+
+    complaintsApi.getAll()
+      .then((res) => {
+        if (res.success && res.data) {
+          const openCount = res.data.filter((c: any) => c.status !== 'Closed').length;
+          setBadgeCounts((prev) => ({ ...prev, complaints: openCount }));
+        }
+      })
+      .catch((err) => console.warn('Sidebar complaints count error:', err.message));
   }, [location.pathname]);
 
   // Main CRM Navigation items with live database counts
@@ -61,11 +73,18 @@ const AdminLayout: React.FC = () => {
     { name: 'Deals', path: '/admin/deals', icon: Briefcase, badge: String(badgeCounts.deals) },
     { name: 'Contacts', path: '/admin/contacts', icon: Users },
     { name: 'Tasks', path: '/admin/tasks', icon: CheckSquare, badge: String(badgeCounts.tasks) },
+    { 
+      name: 'Complaints', 
+      path: '/admin/complaints', 
+      icon: AlertCircle, 
+      badge: badgeCounts.complaints > 0 ? String(badgeCounts.complaints) : undefined 
+    },
   ];
 
   // Manage Navigation items matching requirements screenshots
   const manageNavItems = [
     { name: 'Vendors', path: '/admin/vendors', icon: Store },
+    { name: 'News & Blogs', path: '/admin/news', icon: Newspaper },
     { name: 'Reports', path: '/admin/reports', icon: BarChart3 },
     { name: 'Users & roles', path: '/admin/users', icon: ShieldCheck },
     { name: 'Settings', path: '/admin/settings', icon: Sliders },
@@ -79,7 +98,7 @@ const AdminLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#f4f6fa] font-sans text-slate-800">
+    <div className="min-h-screen flex bg-[#f4f6fa] font-sans text-slate-800 w-full max-w-full overflow-x-hidden">
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#0c1222] border-b border-slate-800/80 px-4 flex items-center justify-between z-40">
         <div className="flex items-center gap-2.5">
@@ -261,8 +280,8 @@ const AdminLayout: React.FC = () => {
       </aside>
 
       {/* Main Content Area - Full Canvas Width on Cool Gray Background */}
-      <main className="flex-1 md:ml-64 flex flex-col min-h-screen pt-16 md:pt-0 bg-[#f4f6fa]">
-        <div className="p-6 md:p-8 lg:p-10 w-full flex-1">
+      <main className="flex-1 md:ml-64 flex flex-col min-h-screen pt-16 md:pt-0 bg-[#f4f6fa] min-w-0 max-w-full overflow-x-hidden">
+        <div className="p-4 sm:p-6 md:p-8 lg:p-10 w-full flex-1 min-w-0">
           <Outlet />
         </div>
       </main>

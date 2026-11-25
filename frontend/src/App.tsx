@@ -34,6 +34,8 @@ import ReportsManagement from './pages/admin/ReportsManagement';
 import UserManagement from './pages/admin/UserManagement';
 import VendorManagement from './pages/admin/VendorManagement';
 import SystemSettings from './pages/admin/SystemSettings';
+import ComplaintsManagement from './pages/admin/ComplaintsManagement';
+import NewsManagement from './pages/admin/NewsManagement';
 import EnergyDashboard from './pages/energy/EnergyDashboard';
 import { FaWhatsapp } from 'react-icons/fa';
 
@@ -92,6 +94,9 @@ const App = () => {
             <Route path="whatsapp/logs" element={<WhatsappLogs />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="vendors" element={<VendorManagement />} />
+            <Route path="news" element={<NewsManagement />} />
+            <Route path="blogs" element={<Navigate to="/admin/news" replace />} />
+            <Route path="complaints" element={<ComplaintsManagement />} />
             <Route path="settings" element={<SystemSettings />} />
           </Route>
         </Route>

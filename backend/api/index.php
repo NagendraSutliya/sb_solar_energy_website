@@ -40,6 +40,14 @@ switch ($route) {
     case 'complaints.php':
         require __DIR__ . '/complaints.php';
         break;
+    case 'news':
+    case 'news.php':
+    case 'blogs':
+    case 'blogs.php':
+    case 'posts':
+    case 'posts.php':
+        require __DIR__ . '/news.php';
+        break;
     case 'auth':
     case 'auth.php':
         require __DIR__ . '/auth.php';

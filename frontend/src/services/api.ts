@@ -189,6 +189,38 @@ export const usersApi = {
     request<{ success: boolean; message: string }>(`/users/${id}`, { method: 'DELETE' }),
 };
 
+// ==================== NEWS & UPDATES (BLOG) API ====================
+export interface NewsItem {
+  id: number | string;
+  title: string;
+  brief: string;
+  image_url?: string;
+  category?: string;
+  link?: string;
+  is_active?: number | boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export const newsApi = {
+  getAll: (adminView: boolean = false) =>
+    request<{ success: boolean; data: NewsItem[]; count?: number }>(`/news${adminView ? '?all=1' : ''}`),
+  getById: (id: string | number) =>
+    request<{ success: boolean; data: NewsItem }>(`/news/${id}`),
+  create: (data: {
+    title: string;
+    brief: string;
+    image_url?: string;
+    category?: string;
+    link?: string;
+    is_active?: number | boolean;
+  }) => request<{ success: boolean; data: NewsItem; message?: string }>('/news', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id: string | number, data: Partial<NewsItem>) =>
+    request<{ success: boolean; data: NewsItem; message?: string }>(`/news/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (id: string | number) =>
+    request<{ success: boolean; message: string }>(`/news/${id}`, { method: 'DELETE' }),
+};
+
 // Health Check
 export const checkBackendHealth = async () => {
   try {

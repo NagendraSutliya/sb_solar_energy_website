@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FileText, Clock, CheckCircle, PlusCircle, AlertCircle } from 'lucide-react';
+import { complaintsApi } from '../../services/api';
 
 const DashboardCard = ({ title, count, icon: Icon, colorClass, link }: any) => (
   <Link to={link} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group flex items-start justify-between">
@@ -14,6 +16,26 @@ const DashboardCard = ({ title, count, icon: Icon, colorClass, link }: any) => (
 );
 
 const UserDashboard = () => {
+  const [complaints, setComplaints] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const userEmail = localStorage.getItem('sb_user_email') || '';
+    complaintsApi.getAll(userEmail ? { email: userEmail } : undefined)
+      .then((res) => {
+        if (res.success && res.data) {
+          setComplaints(res.data);
+        }
+      })
+      .catch((err) => console.warn('User dashboard complaints fetch note:', err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const totalCount = complaints.length;
+  const pendingCount = complaints.filter((c) => c.status === 'Not Process Yet').length;
+  const inProcessCount = complaints.filter((c) => c.status === 'In Process').length;
+  const closedCount = complaints.filter((c) => c.status === 'Closed').length;
+
   return (
     <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -22,7 +44,7 @@ const UserDashboard = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-            <p className="text-sm text-slate-500">Welcome back! Here's an overview of your complaints.</p>
+            <p className="text-sm text-slate-500">Welcome back! Here's an overview of your complaints & requests.</p>
           </div>
           <Link
             to="/portal/complaints/new"
@@ -37,28 +59,28 @@ const UserDashboard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <DashboardCard 
             title="Total Complaints" 
-            count="12" 
+            count={loading ? '...' : totalCount} 
             icon={FileText} 
             colorClass="bg-blue-500" 
             link="/portal/complaints/history" 
           />
           <DashboardCard 
             title="Pending processing" 
-            count="3" 
+            count={loading ? '...' : pendingCount} 
             icon={AlertCircle} 
             colorClass="bg-amber-500" 
             link="/portal/complaints/history?status=pending" 
           />
           <DashboardCard 
             title="In Process" 
-            count="4" 
+            count={loading ? '...' : inProcessCount} 
             icon={Clock} 
             colorClass="bg-purple-500" 
             link="/portal/complaints/history?status=in-process" 
           />
           <DashboardCard 
             title="Closed Complaints" 
-            count="5" 
+            count={loading ? '...' : closedCount} 
             icon={CheckCircle} 
             colorClass="bg-emerald-500" 
             link="/portal/complaints/history?status=closed" 
@@ -76,51 +98,50 @@ const UserDashboard = () => {
               <thead className="bg-slate-50">
                 <tr>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Complaint No</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nature / Issue</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Reg Date</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
                   <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Action</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-slate-100">
-                {/* Dummy Row 1 */}
-                <tr className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">#CMP-12345</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Oct 24, 2026</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
-                      Not Process Yet
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link to="/portal/complaints/details/12345" className="text-primary hover:text-primary/80">View Details</Link>
-                  </td>
-                </tr>
-                {/* Dummy Row 2 */}
-                <tr className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">#CMP-12344</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Oct 20, 2026</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                      In Process
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link to="/portal/complaints/details/12344" className="text-primary hover:text-primary/80">View Details</Link>
-                  </td>
-                </tr>
-                {/* Dummy Row 3 */}
-                <tr className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">#CMP-12340</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">Oct 15, 2026</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">
-                      Closed
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link to="/portal/complaints/details/12340" className="text-primary hover:text-primary/80">View Details</Link>
-                  </td>
-                </tr>
+                {complaints.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-10 text-center text-slate-400 text-sm">
+                      {loading ? 'Loading your complaints...' : 'No complaints submitted yet. Click "Lodge New Complaint" to raise an issue.'}
+                    </td>
+                  </tr>
+                ) : (
+                  complaints.slice(0, 5).map((c) => (
+                    <tr key={c.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900">
+                        {c.complaint_no || `#CMP-${c.id}`}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                        {c.nature || c.category || 'General issue'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                        {c.created_at ? new Date(c.created_at).toLocaleDateString() : 'Recent'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                          c.status === 'Closed'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : c.status === 'In Process'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-amber-100 text-amber-800'
+                        }`}>
+                          {c.status || 'Not Process Yet'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <Link to={`/portal/complaints/details/${c.id}`} className="text-primary hover:text-primary/80">
+                          View Details
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

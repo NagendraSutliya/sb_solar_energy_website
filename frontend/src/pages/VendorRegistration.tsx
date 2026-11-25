@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import AnimatedBackground from '../components/AnimatedBackground';
 import { saveVendor } from '../data/vendorStorage';
 import { indiaStatesDistricts } from '../data/indiaStatesDistricts';
+import { vendorsApi } from '../services/api';
 
 const VendorRegistration = () => {
   const [formData, setFormData] = useState({
@@ -49,6 +50,24 @@ const VendorRegistration = () => {
       });
     } catch (localErr) {
       console.warn("Could not save to localStorage:", localErr);
+    }
+
+    // Save directly into MySQL database vendors table (Status: Pending for Admin review)
+    try {
+      await vendorsApi.create({
+        name: formData.companyName.trim(),
+        contactPerson: formData.contactPerson.trim(),
+        email: formData.email.trim(),
+        contact: formData.phone.trim(),
+        address: formData.address.trim(),
+        state: formData.state || 'Rajasthan',
+        district: formData.district || '',
+        businessType: formData.businessType || 'dealer',
+        status: 'Pending',
+        tags: ['Channel Partner', 'Website Enrollment'],
+      });
+    } catch (apiErr: any) {
+      console.warn("Could not save vendor to MySQL:", apiErr.message);
     }
 
     try {
